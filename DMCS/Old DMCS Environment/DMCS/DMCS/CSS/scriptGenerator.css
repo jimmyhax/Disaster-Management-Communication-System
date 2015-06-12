@@ -1,0 +1,14 @@
+﻿section {
+    width: 100%;
+    margin: auto;
+}
+div#one_center {
+    width: 100%;
+}
+div#two_left {
+    width: 50%;
+    float: left;
+}
+div#two_right {
+    margin-left: 50%;
+}
