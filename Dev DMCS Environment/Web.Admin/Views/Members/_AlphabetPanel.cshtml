@@ -1,0 +1,21 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+<div class="btn-group" style="margin-top:5px;vertical-align:top">
+    <a class="btn btn-default btn-xs" id="alphabet-filter-clear" href="#" style="vertical-align:top" >All</a>
+</div>
+<div class="btn-group" data-toggle="buttons-checkbox" style="margin-top:5px;margin-bottom:10px;">
+@{
+    string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    int charIndex = 0;
+
+    foreach (Char Later in Alphabet)
+    {
+	    <div class="btn btn-default alphabet-filter btn-xs" data-filter-index="@charIndex">@Later</div>
+        charIndex++;
+    }       
+ }
+ </div>

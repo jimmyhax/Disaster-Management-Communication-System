@@ -1,0 +1,67 @@
+﻿
+@{ 
+ var templateId = String.Format("dialog-view-{0}", DateTime.Now.Ticks.ToString());
+ var dialogId = templateId.Replace("-view-", "-");
+ var contentId = templateId.Replace("-view-", "-content-");
+}
+
+<template type="text/template" id="@templateId" data-dialog-tittle="Add Domain" data-dialog-spinner="spinner-@dialogId">
+    <div id="notify-message"></div>
+    <div class="form-group">
+        <label for="role-name">Name</label>
+        <input type="text" class="input-xlarge form-control" id="domain-name" style="color:black" maxlength="64" />
+    </div><br/>
+    <div class="form-group">
+        <label for="domain-desc">Description</label>
+        <textarea class="input-xlarge form-control" id="domain-desc" rows="10" style="color:black" maxlength="4000"></textarea>
+    </div>
+</template>
+
+<script type="text/javascript">
+
+    $(function () {
+        var dialog = App.DialogBootstrap("#@templateId", 580, 620, true,
+        {
+            Add: function () {
+
+                var roleInfo = {
+                    DomainID: -1,
+                    Name: $("#domain-name").val(),
+                    Description: $("#domain-desc").val()
+                };
+
+                $("#spinner-@dialogId").addClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                // Removing file by AJAX request
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SaveDomain", "Domains")",
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(roleInfo),
+                    cache: false,
+                    success: function (data) {
+                        switch (data.NotifyType) {
+                            case 0: $("#general-message").html(data.Html); dialog.close(); break
+                            case 1: $("#@dialogId").find("#notify-message").html(data.Html); break;
+                            case 2: $(data.Html).prependTo('body'); dialog.close(); break;
+                            case 3: $(data.Html).prependTo('body'); dialog.close(); break;
+                        };
+
+                        if (data.NotifyType == 0) {
+                            setTimeout(function (e) { App.DomainsManagement.ReloadDomains(null, null, false); }, 700);
+                        }
+
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        App.DialogError(xhr, textStatus, errorThrown);
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                    }
+                });
+
+            }//,
+            //Cancel: function () { $(this).dialog("close"); }
+        })
+    });
+</script>

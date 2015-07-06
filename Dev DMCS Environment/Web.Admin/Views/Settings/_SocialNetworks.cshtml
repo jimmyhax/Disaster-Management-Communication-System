@@ -1,0 +1,232 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    var social_twitter_enabled = AppSession.Parameters.SocialTwitterEnabled; 
+    var social_twitter_consumer_key = AppSession.Parameters.SocialTwitterConsumerKey;
+    var social_twitter_consumer_secret = AppSession.Parameters.SocialTwitterConsumerSecret;
+    var social_facebook_enabled = AppSession.Parameters.SocialFacebookEnabled;
+    var social_facebook_app_id = AppSession.Parameters.SocialFacebookAppID;
+    var social_facebook_app_secret = AppSession.Parameters.SocialFacebookAppSecret;
+    var social_goole_enabled = AppSession.Parameters.SocialGooleEnabled;
+    var social_yahoo_enabled = AppSession.Parameters.SocialYahooEnabled;
+    var social_twitter_roles = AppSession.Parameters.SocialTwitterRoles;
+    var social_facebook_roles = AppSession.Parameters.SocialFacebookRoles;
+    var social_google_roles = AppSession.Parameters.SocialGoogleRoles;
+    var social_yahoo_roles = AppSession.Parameters.SocialYahooRoles;
+
+    var social_livejournal_enabled = AppSession.Parameters.SocialLiveJournalEnabled;
+    var social_livejournal_roles = AppSession.Parameters.SocialLiveJournalRoles;
+
+    var social_blogger_enabled = AppSession.Parameters.SocialBloggerEnabled;
+    var social_blogger_roles = AppSession.Parameters.SocialBloggerRoles;
+
+    var social_openid_enabled = AppSession.Parameters.SocialOpenIDEnabled;
+    var social_openid_roles = AppSession.Parameters.SocialOpenIDRoles;
+
+    var social_myopenid_enabled = AppSession.Parameters.SocialMyOpenIDEnabled;
+    var social_myopenid_roles = AppSession.Parameters.SocialMyOpenIDRoles;
+
+    if (AppSession.DemoMode)
+    {
+        social_twitter_consumer_key.Value = social_twitter_consumer_secret.Value = social_twitter_consumer_key.Value = social_facebook_app_id.Value = social_facebook_app_secret.Value = "*********************************";
+    }
+    
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label class="control-label" for="@social_twitter_enabled.Name">Twitter&nbsp;&nbsp;<img src="@Url.Content("~/content/images/social/24x24/twitter.png")" /></label>
+
+                <label class="checkbox muted">
+                    <input type="checkbox" class="input-xlarge app-settings" id="@social_twitter_enabled.Name" name="@social_twitter_enabled.Name" @if (social_twitter_enabled.Value == "true"){ @Html.Raw("checked='checked'") } />
+                    <p class="muted">Enable login via Twitter </p>
+                </label>
+                
+               <div class="row">
+                   <div class="col-md-6">
+                       <div class="row">
+                           <div class="col-md-8">
+                               <input type="text" class="input-xlarge app-settings input-settings-box form-control form-control" maxlength="@social_twitter_consumer_key.TypeSize" id="@social_twitter_consumer_key.Name" name="@social_twitter_consumer_key.Name" value="@social_twitter_consumer_key.Value" />
+                               <p class="muted"> </p>
+                           </div>
+                           <div class="col-md-4">
+                               Consumer key
+                           </div>
+                       </div> 
+                       <div class="row">
+                           <div class="col-md-8">
+                               <input type="text" class="input-xlarge app-settings input-settings-box form-control form-control" maxlength="@social_twitter_consumer_secret.TypeSize" id="@social_twitter_consumer_secret.Name" name="@social_twitter_consumer_secret.Name" value="@social_twitter_consumer_secret.Value" />
+                               <p class="muted"> </p>
+                           </div>
+                           <div class="col-md-4">
+                               Consumer secret
+                           </div>
+                       </div>
+
+                       <div class="row">
+                           <div class="col-md-8">
+                               <input type="text" class="input-xlarge app-settings input-settings-box form-control form-control" maxlength="@social_twitter_roles.TypeSize" id="@social_twitter_roles.Name" name="@social_twitter_roles.Name" value="@social_twitter_roles.Value" />
+                               <p class="muted"> </p>
+                           </div>
+                           <div class="col-md-4">
+                               Add member to roles
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-md-5">
+                               <p class="muted">You must first <a href="https://dev.twitter.com/apps/new">setup a Twitter App.</a></p>
+                           </div>
+                        </div>
+                   </div>
+                   <div class="col-md-4">
+                       You need to register your application with Twitter. That means you should have your production URL ready before you think to start your development. When you finished with registration, you will receive consumer key and consumer secret. These unique credentials will help your app to interact with Twitter. No big deal. You can visit your all registered applications on <a href="http://twitter.com/oauth">http://twitter.com/oauth</a>. And to register for new app you need to visit <a href="http://twitter.com/apps/new">http://twitter.com/apps/new</a>.  
+                   </div>
+                </div>
+
+            <label class="control-label" for="@social_facebook_enabled.Name">
+                Facebook&nbsp;&nbsp;<img src="@Url.Content("~/content/images/social/24x24/facebook.png")" />
+            </label>
+            <label class="checkbox muted">
+                <input type="checkbox" class="input-xlarge app-settings" id="@social_facebook_enabled.Name" name="@social_facebook_enabled.Name" @if (social_facebook_enabled.Value == "true") { @Html.Raw("checked='checked'")     } />
+                <p class="muted">Enable login via Facebook </p>
+            </label>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input type="text" class="input-xlarge app-settings input-settings-box form-control form-control" maxlength="@social_facebook_app_id.TypeSize" id="@social_facebook_app_id.Name" name="@social_facebook_app_id.Name" value="@social_facebook_app_id.Value" />
+                            <p class="muted"> </p>
+                        </div>
+                        <div class="col-md-4">
+                            App ID
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input type="text" class="input-xlarge app-settings input-settings-box form-control form-control" maxlength="@social_facebook_app_secret.TypeSize" id="@social_facebook_app_secret.Name" name="@social_facebook_app_secret.Name" value="@social_facebook_app_secret.Value" />
+                            <p class="muted"> </p>
+                        </div>
+                        <div class="col-md-4">
+                            App Secret
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input type="text" class="input-xlarge app-settings input-settings-box form-control form-control" maxlength="@social_facebook_roles.TypeSize" id="@social_facebook_roles.Name" name="@social_facebook_roles.Name" value="@social_facebook_roles.Value" />
+                            <p class="muted"> </p>
+                        </div>
+                        <div class="col-md-4">
+                            Add member to roles
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p class="muted">You must <a href="https://developers.facebook.com/apps">first setup a Facebook App.</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    It is recommended that users be able to authenticate with Facebook when using Socialize so as to maximize the exposure and promotion of your app.
+                    First step for Facebook is retrieve the App ID and App Secret  (it is based on oAuth 2.0), so register you application on <a href="https://developers.facebook.com/apps">https://developers.facebook.com/apps</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<legend>OpenID Networks</legend>
+<div class="row">
+    <div class="col-md-4">
+    <div class="form-group">
+     <label class="control-label" for="@social_goole_enabled.Name">Google&nbsp;&nbsp;<img src="@Url.Content("~/content/images/social/24x24/google.png")"/></label>
+        <div class="controls">	
+        <label class="checkbox muted">
+        <input type="checkbox" class="input-xlarge app-settings" id="@social_goole_enabled.Name" name="@social_goole_enabled.Name" @if (social_goole_enabled.Value == "true"){ @Html.Raw("checked='checked'")}/>
+        <p class="muted">Enable login via Google</p>
+        </label>               
+    </div>
+    <div class="controls">
+		<input type="text" class="input-xlarge app-settings input-settings-box form-control " maxlength="@social_google_roles.TypeSize" id="@social_google_roles.Name" name="@social_google_roles.Name"  value="@social_google_roles.Value"/>
+		<p class="muted"></p>
+	</div>
+
+        <label class="control-label" for="@social_yahoo_enabled.Name">Yahoo&nbsp;&nbsp;<img src="@Url.Content("~/content/images/social/24x24/yahoo.png")"/></label>
+        <div class="controls">	
+        <label class="checkbox muted">
+        <input type="checkbox" class="input-xlarge app-settings" id="@social_yahoo_enabled.Name" name="@social_yahoo_enabled.Name" @if (social_yahoo_enabled.Value == "true"){ @Html.Raw("checked='checked'")}/>
+        <p class="muted">Enable login via Yahoo </p>
+        </label>       
+    </div>
+        <div class="controls">
+		<input type="text" class="input-xlarge app-settings input-settings-box form-control" maxlength="@social_yahoo_roles.TypeSize" id="@social_yahoo_roles.Name" name="@social_yahoo_roles.Name"  value="@social_yahoo_roles.Value"/>
+		<p class="muted"></p>
+	</div>
+
+        <label class="control-label" for="@social_livejournal_enabled.Name">Live Journal&nbsp;&nbsp;<img src="@Url.Content("~/content/images/social/24x24/livejournal.png")"/></label>
+        <div class="controls">	
+        <label class="checkbox muted">
+        <input type="checkbox" class="input-xlarge app-settings" id="@social_livejournal_enabled.Name" name="@social_livejournal_enabled.Name" @if (social_livejournal_enabled.Value == "true"){ @Html.Raw("checked='checked'")}/>
+        <p class="muted">Enable login via Live Journal</p>
+        </label>       
+    </div>
+        <div class="controls">
+		<input type="text" class="input-xlarge app-settings input-settings-box form-control" maxlength="@social_livejournal_roles.TypeSize" id="@social_livejournal_roles.Name" name="@social_livejournal_roles.Name"  value="@social_livejournal_roles.Value"/>
+		<p class="muted"></p>
+	</div>
+    </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="control-label" for="@social_blogger_enabled.Name">Blogger&nbsp;&nbsp;<img src="@Url.Content("~/content/images/social/24x24/blogger.png")" /></label>
+
+                <label class="checkbox muted">
+                    <input type="checkbox" class="input-xlarge app-settings" id="@social_blogger_enabled.Name" name="@social_blogger_enabled.Name" @if (social_blogger_enabled.Value == "true") { @Html.Raw("checked='checked'") } />
+                    <p class="muted">Enable login via Live Blogger</p>
+                </label>
+
+
+                <input type="text" class="input-xlarge app-settings input-settings-box form-control" maxlength="@social_blogger_roles.TypeSize" id="@social_blogger_roles.Name" name="@social_blogger_roles.Name" value="@social_blogger_roles.Value" />
+                <p class="muted"></p>
+
+
+
+                <label class="control-label" for="@social_openid_enabled.Name">OpenID&nbsp;&nbsp;<img src="@Url.Content("~/content/images/social/24x24/openid.png")" /></label>
+
+                <label class="checkbox muted">
+                    <input type="checkbox" class="input-xlarge app-settings" id="@social_openid_enabled.Name" name="@social_openid_enabled.Name" @if (social_openid_enabled.Value == "true") { @Html.Raw("checked='checked'") } />
+                    <p class="muted">Enable login via OpenID</p>
+                </label>
+
+
+                <input type="text" class="input-xlarge app-settings input-settings-box form-control" maxlength="@social_openid_roles.TypeSize" id="@social_openid_roles.Name" name="@social_openid_roles.Name" value="@social_openid_roles.Value" />
+                <p class="muted"></p>
+
+
+                <label class="control-label" for="@social_myopenid_enabled.Name">myOpenID&nbsp;&nbsp;<img src="@Url.Content("~/content/images/social/24x24/myopenid.png")" /></label>
+
+                <label class="checkbox muted">
+                    <input type="checkbox" class="input-xlarge app-settings" id="@social_myopenid_enabled.Name" name="@social_myopenid_enabled.Name" @if (social_myopenid_enabled.Value == "true") { @Html.Raw("checked='checked'") } />
+                    <p class="muted">Enable login via myOpenID</p>
+                </label>
+
+
+                <input type="text" class="input-xlarge app-settings input-settings-box form-control" maxlength="@social_myopenid_roles.TypeSize" id="@social_myopenid_roles.Name" name="@social_myopenid_roles.Name" value="@social_myopenid_roles.Value" />
+                <p class="muted"></p>
+
+        </div>
+    </div>
+</div>
+

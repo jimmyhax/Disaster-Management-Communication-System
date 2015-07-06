@@ -1,0 +1,9 @@
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.Libraries\DotNetOpenAuth.ApplicationBlock\bin\Release\DotNetOpenAuth.ApplicationBlock.dll
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.Libraries\DotNetOpenAuth.ApplicationBlock\bin\Release\DotNetOpenAuth.ApplicationBlock.pdb
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.Libraries\DotNetOpenAuth.ApplicationBlock\bin\Release\DotNetOpenAuth.dll
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.Libraries\DotNetOpenAuth.ApplicationBlock\bin\Release\System.Net.Http.dll
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.Libraries\DotNetOpenAuth.ApplicationBlock\bin\Release\DotNetOpenAuth.pdb
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.Libraries\DotNetOpenAuth.ApplicationBlock\bin\Release\DotNetOpenAuth.xml
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.Libraries\DotNetOpenAuth.ApplicationBlock\bin\Release\System.Net.Http.xml
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.Libraries\DotNetOpenAuth.ApplicationBlock\obj\Release\DotNetOpenAuth.ApplicationBlock.dll
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.Libraries\DotNetOpenAuth.ApplicationBlock\obj\Release\DotNetOpenAuth.ApplicationBlock.pdb

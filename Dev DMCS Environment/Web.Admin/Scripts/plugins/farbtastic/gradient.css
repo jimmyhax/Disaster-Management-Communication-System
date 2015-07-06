@@ -1,0 +1,71 @@
+/* default set*/
+div.gradient_picker {
+  height: 16px;
+  width: 16px;
+  padding: 0 !important;
+  border: 1px solid #000;
+  background: url(arrow.gif) no-repeat bottom right;
+  cursor: pointer;
+  line-height: 15px;
+  display:inline-block;
+  z-index:100000;
+}
+
+
+div.gradient_selector {
+  position: absolute;
+  border: 5px solid #598FEF;
+  background-color:green;
+  padding: 0px;
+  margin: 0px;
+  width:180px;
+}
+
+
+
+
+div.gradient_selector label 
+{
+    font-size: 95%; 
+    color: #2F2F2F; 
+    margin: 0;
+    width: 15%;
+}
+div.gradient_selector input 
+{
+    margin: 0;
+    padding: 0; 
+    font-size: 95%; 
+    border: 1px solid #000; 
+    width: 35%; 
+}
+
+
+div.gradient_swatch {
+  height: 14px;
+  width: 12px;
+  cursor: pointer;
+  line-height: 12px;
+  float:left;
+  border: 0;
+
+}
+
+div.gradient_swatch_one {
+  height: 12px;
+  width: 12px;
+  border: 1px solid #000;
+  margin: 2px;
+  display:block;
+}
+
+div.gradient_mouseover
+{      
+        
+   
+}
+
+div.gradient_mouseout
+{
+    
+}

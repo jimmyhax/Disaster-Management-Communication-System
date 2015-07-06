@@ -1,0 +1,70 @@
+﻿@model AvatarPanelModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    var Avatar = Members.GetBy(Model.MemberID).Avatar;
+}
+<div id="avatar-notify-message"></div>
+<div class="row">
+    <div style="display:inline-block;width:110px;vertical-align:text-top" class="col-md-2">
+        @{
+            MemberSocialNetwork _memberNetwork = MemberSocialNetworks.GetByMemberID(Model.MemberID);
+
+            if (Avatar != null && Avatar.Length > 0)
+            {
+                var Name = String.Format("~/Avatar/{0}.jpg", Avatar);
+                <img class="img-circle" src="@Url.Content(Name)" id="member-avatar" style="width:100px;height:100px;" />
+            }
+            else
+            {
+                if (_memberNetwork.MemberSocialNetworkID > 0 && _memberNetwork.SocialNetworkID == 1)
+                {
+                    <img class="img-circle" id="member-avatar" style="width:100px;height:100px;" src="https://graph.facebook.com/@_memberNetwork.SocialNetworkUserID/picture?type=large" />
+                }
+                else if (_memberNetwork.MemberSocialNetworkID > 0 && _memberNetwork.SocialNetworkID == 2)
+                {
+                    <img class="img-circle" id="member-avatar" style="width:100px;height:100px;" src="http://api.twitter.com/1/users/profile_image?screen_name=@_memberNetwork.SocialNetworkUserName&size=bigger" />
+                }
+                else
+                {
+                    <img class="img-circle" src="@Url.Content("~/Content/Images/no-photo.png")" style="width:100px;height:100px;" id="member-avatar" />
+                }
+            }
+        }
+    </div>
+    <div style="padding-top:0px;padding-bottom:5px;display:inline-block;vertical-align:text-top" id="avatar-control" class="col-md-8">
+        <div style="display:inline-block;vertical-align:text-top"><b style="font-size:15px">Upload a Photo</b>&nbsp;</div>
+        <div id="avatr-uploading-in-progess" class="glyphicon glyphicon-refresh glyphicon-refresh-animate" style="display:none;vertical-align:text-top"></div>
+        <p style="margin-top:5px">@AppSession.GetLabel("Profile.AvatarPanel.Comment")</p>
+        <div class="btn btn-default btn-info btn-sm" id="upload-avatar" style="margin-top:2px">@AppSession.GetLabel("Profile.AvatarPanel.Upload")</div>
+        <div class="btn btn-default btn-danger btn-sm" id="reset-avatar" style="margin-top:2px">@AppSession.GetLabel("Profile.AvatarPanel.Reset")</div>
+        <p class="muted"></p><input type="hidden" id="avatar-panel-warning-message" value="@AppSession.GetLabel("Profile.AvatarPanel.OnlyImage")" />
+        @{
+            if (_memberNetwork.MemberSocialNetworkID > 0 && _memberNetwork.SocialNetworkID == 1)
+            {
+
+                <img src="@Url.Content("~/content/images/social/24x24/facebook.png")" /><span>&nbsp;</span><b>Authenticated via Facebook.</b>
+            }
+            else if (_memberNetwork.MemberSocialNetworkID > 0 && _memberNetwork.SocialNetworkID == 2)
+            {
+                <img src="@Url.Content("~/content/images/social/24x24/twitter.png")" /><span>&nbsp;</span><b>Authenticated via Twitter.</b>
+            }
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {  
+    App.InitAvatarUpload($('#upload-avatar'), '@Url.Content("~")', 'upload-avatar', '@Url.Action("UploadAvatarImage", "Profile")', '@Url.Action("ResizeAvatarDialog", "Profile")',@Model.MemberID);
+
+    $("#reset-avatar").bind("click", function (e) {
+        if (confirm('@AppSession.GetLabel("Profile.AvatarPanel.ResetConfirm")')) {
+            App.ResetAvavtarImage('@Url.Action("ResetAvatarImage", "Profile")',@Model.MemberID);
+        }
+    });
+});
+</script>

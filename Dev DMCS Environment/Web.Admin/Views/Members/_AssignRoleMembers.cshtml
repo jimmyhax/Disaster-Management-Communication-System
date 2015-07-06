@@ -1,0 +1,102 @@
+﻿@model MemberListModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    var templateId = String.Format("dialog-view-{0}", DateTime.Now.Ticks.ToString());
+    var dialogId = templateId.Replace("-view-", "-");
+    var contentId = templateId.Replace("-view-", "-content-");
+    var Title = Model.Assign ? "Assign Roles" : "Reset Roles";
+}
+
+<template type="text/template" id="@templateId" data-dialog-tittle="@Title" data-dialog-spinner="spinner-@dialogId">
+    <div id="notify-message"></div>
+    @if (Model.Assign)
+    {
+        <div class="alert alert-info">
+            <h4>Are you sure to assign the <span style='background-color:#@Model.Role.BackColor' class="label">@Model.Role.Name</span> role to selected members?</h4>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            <h4>Are you sure to reset the <span style='background-color:#@Model.Role.BackColor' class="label">@Model.Role.Name</span> for selected members?</h4>
+        </div>
+    }
+    
+    <table id="table-@templateId" width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-condensed" height"300px">
+        <thead>
+            <tr>
+                <th style="width:10%">ID</th>
+                <th style="width:30%">Name</th>
+                <th style="width:30%">Email</th>
+                <th style="width:30%">Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Member member in Model.Members)
+            {
+                <tr>
+                    <td style="width:10%">@member.MemberID</td>
+                    <td style="width:30%">@member.Name</td>
+                    <td style="width:30%">@member.Email</td>
+                    <td style="width:30%">@member.Created.ToString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</template>
+
+<script type="text/javascript">
+    $(function () {
+        var dialog = App.DialogBootstrap("#@templateId",640,530, true,
+        {
+            Yes: function () {
+                $("#spinner-@dialogId").addClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                var _checked = [];
+                $(".member-select").each(function(e){
+                    if($(this).is(":checked")){
+                        _checked.push(parseInt($(this).attr("data-member-id")));
+                    }
+                });
+
+                // Removing file by AJAX request
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("AssignRoleMembers", "Members")",
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({RoleID : @Model.Role.RoleID, AssignMembers: _checked, Assign : @Model.Assign.ToString().ToLower() }),
+                    cache: false,
+                    success: function (data) {
+
+                        if(data.NotifyType == 1)
+                        {
+                            $("#@dialogId").find("#notify-message").html(data.Html);
+                            $("#@dialogId").animate({ scrollTop: 0 }, 'slow');
+                        }
+
+                        setTimeout(function(e){
+                            App.MembersManagement.ReloadMembers(null,null,false);}, 700);
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                        
+                        if(data.NotifyType != 1 ){
+                            dialog.close();
+                        }
+
+                    },
+                    error: function(xhr, textStatus, errorThrown){
+                        App.DialogError(xhr,textStatus, errorThrown);
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                    }
+                });
+            }//,
+            //"Cancel": function () {$(this).dialog("close");}
+        });
+
+    });
+</script> 

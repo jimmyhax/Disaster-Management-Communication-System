@@ -1,0 +1,102 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+<br/>
+<legend>IP Address Restriction&nbsp;&nbsp;<a href="http://www.stokia.com/support/misc/web-config-ip-address-restriction.aspx"><span class="label label-info">See source</span></a></legend>
+
+The web.config file can be used to restrict website access, by the client IP address. Web.config can be used to restrict access to a single page, a directory and all sub directories, or even the entire web site. You can block all IP addresses and only let a few trusted IP addresses in, or you could allow everyone and block specific IP addresses or subnets.
+<br/><br/>
+
+<h4>Allow all, but block specific IPs or networks</h4><br/>
+       <pre class="prettyprint linenums">&lt;security&gt;
+       &lt;ipSecurity allowUnlisted="true"&gt;                          <font color="#008000">&lt;!-- this line allows everybody, except those listed below --&gt;</font>            
+       &lt;clear/&gt;                                                   <font color="#008000">&lt;!-- removes all upstream restrictions --&gt;</font>                
+       &lt;add ipAddress="83.116.19.53"/&gt;                            <font color="#008000">&lt;!-- blocks the specific IP of 83.116.19.53  --&gt;</font>                
+       &lt;add ipAddress="83.116.119.0" subnetMask="255.255.255.0"/&gt; <font color="#008000">&lt;!--blocks network 83.116.119.0 to 83.116.119.255--&gt;</font>                
+       &lt;add ipAddress="83.116.0.0" subnetMask="255.255.0.0"/&gt;     <font color="#008000">&lt;!--blocks network 83.116.0.0 to 83.116.255.255--&gt;</font>                
+       &lt;add ipAddress="83.0.0.0" subnetMask="255.0.0.0"/&gt;         <font color="#008000">&lt;!--blocks entire /8 network of 83.0.0.0 to 83.255.255.255--&gt;</font>                
+   &lt;/ipSecurity&gt;
+&lt;/security&gt;
+</pre>
+        <br/>
+<h4>Deny all, but allow specific IPs or networks</h4><br/>
+        <pre class="prettyprint linenums">&lt;security&gt;
+    &lt;ipSecurity allowUnlisted="false"&gt;                        <font color="#008000">&lt;!-- this line blocks everybody, except those listed below --&gt;</font>                
+        &lt;clear/&gt;                                              <font color="#008000">&lt;!-- removes all upstream restrictions --&gt;</font>
+        &lt;add ipAddress="127.0.0.1" allowed="true"/&gt;           <font color="#008000">&lt;!-- allow requests from the local machine --&gt;</font>
+        &lt;add ipAddress="83.116.19.53" allowed="true"/&gt;        <font color="#008000">&lt;!-- allow the specific IP of 83.116.19.53  --&gt;</font>                
+        &lt;add ipAddress="83.116.119.0" subnetMask="255.255.255.0" allowed="true"/&gt;   <font color="#008000">&lt;!--allow network 83.116.119.0 to 83.116.119.255--&gt;</font>                
+        &lt;add ipAddress="83.116.0.0" subnetMask="255.255.0.0" allowed="true"/&gt;   <font color="#008000">&lt;!--allow network 83.116.0.0 to 83.116.255.255--&gt;</font>                
+        &lt;add ipAddress="83.0.0.0" subnetMask="255.0.0.0" allowed="true"/&gt;   <font color="#008000">&lt;!--allow entire /8 network of 83.0.0.0 to 83.255.255.255--&gt;</font>                
+    &lt;/ipSecurity&gt;
+&lt;/security&gt;
+</pre>
+<h4>Using IP Address Restrictions</h4><br/>
+
+<ul>
+ <li>Use a text editor to create a file named web.config </li>
+ <li>Save the web.config file with the appropriate content </li>
+ <li>Place the web.config file in the directory that you wish to protect </li>
+</ul>
+
+<br/>
+
+
+<h4>There isn't an existing web.config in the directory, your new web.config should look something like this</h4><br/>
+            <pre class="prettyprint linenums">&lt;?xml version="1.0"?&gt;
+&lt;configuration&gt;
+   &lt;system.webServer&gt;
+      &lt;security&gt;
+        &lt;ipSecurity allowUnlisted="true"&gt;    <font color="#008000">&lt;!-- this line blocks everybody, except those listed below --&gt;</font>                
+           &lt;clear/&gt; <font color="#008000">&lt;!-- removes all upstream restrictions --&gt;</font>
+           &lt;add ipAddress="83.116.19.53"/&gt;   <font color="#008000">&lt;!-- block one IP  --&gt;</font>                
+           &lt;add ipAddress="83.116.119.0" subnetMask="255.255.255.0"/&gt;   <font color="#008000">&lt;!--block network 83.116.119.0 to 83.116.119.255--&gt;</font>               
+        &lt;/ipSecurity&gt;
+      &lt;/security&gt;
+      &lt;modules runAllManagedModulesForAllRequests="true"/&gt;
+   &lt;/system.webServer&gt;
+&lt;/configuration&gt;
+</pre>
+
+<h4>If there is an existing web config, without a &lt;system.webServer&gt; section... Your new web.config should look like this</h4><br/> 
+<pre class="prettyprint linenums"><font color="#808080">&lt;?xml version="1.0"?&gt;
+&lt;configuration&gt;
+   &lt;system.web&gt;
+     .. existing text ..
+     .. existing text ..
+   &lt;/system.web&gt;</font>
+   &lt;system.webServer&gt;
+      &lt;security&gt;
+        &lt;ipSecurity allowUnlisted="true"&gt;    <font color="#008000">&lt;!-- this line blocks everybody, except those listed below --&gt;</font>                
+           &lt;clear/&gt; <font color="#008000">&lt;!-- removes all upstream restrictions --&gt;</font>
+           &lt;add ipAddress="83.116.19.53"/&gt;   <font color="#008000">&lt;!-- block one IP  --&gt;</font>                
+           &lt;add ipAddress="83.116.119.0" subnetMask="255.255.255.0"/&gt;   <font color="#008000">&lt;!--block network 83.116.119.0 to 83.116.119.255--&gt;</font>               
+        &lt;/ipSecurity&gt;
+      &lt;/security&gt;
+      &lt;modules runAllManagedModulesForAllRequests="true"/&gt;
+   &lt;/system.webServer&gt;
+<font color="#808080">&lt;/configuration&gt;</font>
+</pre>
+
+<h4>If your existing web.config already has a &lt;system.webServer&gt; section, just add the&lt;security&gt;&lt;ipSecurity&gt; section</h4><br/> 
+<pre class="prettyprint linenums"><font color="#808080">&lt;?xml version="1.0"?&gt;
+&lt;configuration&gt;
+   &lt;system.web&gt;
+     .. existing text ..
+     .. existing text ..
+   &lt;/system.web&gt;
+   &lt;system.webServer&gt;</font>
+      &lt;security&gt;
+        &lt;ipSecurity allowUnlisted="true"&gt;    <font color="#008000">&lt;!-- this line blocks everybody, except those listed below --&gt;</font>                
+           &lt;clear/&gt; <font color="#008000">&lt;!-- removes all upstream restrictions --&gt;</font>
+           &lt;add ipAddress="83.116.19.53"/&gt;   <font color="#008000">&lt;!-- block one IP  --&gt;</font>                
+           &lt;add ipAddress="83.116.119.0" subnetMask="255.255.255.0"/&gt;   <font color="#008000">&lt;!--block network 83.116.119.0 to 83.116.119.255--&gt;</font>               
+        &lt;/ipSecurity&gt;
+      &lt;/security&gt;
+      <font color="#808080">&lt;modules runAllManagedModulesForAllRequests="true"/&gt;
+   &lt;/system.webServer&gt;
+&lt;/configuration&gt;</font>
+</pre>
+

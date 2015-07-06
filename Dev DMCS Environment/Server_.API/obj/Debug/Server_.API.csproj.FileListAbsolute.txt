@@ -1,0 +1,16 @@
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\SimpleTools.RoleAdmin.API.XML
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\Server_.API.dll
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\Server_.API.pdb
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\System.Web.Helpers.dll
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\System.Web.Razor.dll
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\System.Web.WebPages.dll
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\System.Web.Helpers.xml
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\System.Web.Razor.xml
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\System.Web.WebPages.xml
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\James Miller\Desktop\DMCS\Server_.API\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\James Miller\Desktop\DMCS\Server_.API\obj\Debug\Server_.API.dll
+C:\Users\James Miller\Desktop\DMCS\Server_.API\obj\Debug\Server_.API.pdb

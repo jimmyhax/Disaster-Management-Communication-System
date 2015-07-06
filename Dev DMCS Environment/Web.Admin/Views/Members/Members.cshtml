@@ -1,0 +1,55 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+<h2>Members</h2>
+<div id="general-message"></div>
+<div class="subnav" style="padding:7px">
+    <div class="btn-toolbar">
+
+        <a class="btn btn-default btn-success btn-sm" style="vertical-align:top !important" id="add-member"><i class="glyphicon glyphicon-user"></i>  Add</a>
+        <a class="btn btn-default btn-danger btn-sm" style="vertical-align:top !important" id="remove-member"><i class="glyphicon glyphicon-minus icon-white"></i> Remove</a>
+        @{Html.RenderPartial(@"~/Views/Members/_RolesDropDownAssign.cshtml", null);}
+        @{Html.RenderPartial(@"~/Views/Members/_RolesDropDownReset.cshtml", null);}
+        <div class="input-group-sm" style="display:inline-block;vertical-align:top">
+            <input size="40" type="text" id="members-search" class="input-xs" style="height:33px" /><button id="btn-member-search" style="vertical-align:top;margin-left:-1px;" class="btn btn-sm btn-info" type="button"><i class="glyphicon glyphicon-search icon-white"></i></button>
+        </div>
+
+        <div style="float:right">
+            <div class="btn-group" style="vertical-align:top !important">
+                <button class="btn btn-default dropdown-toggle  btn-sm" data-toggle="dropdown"><i class="glyphicon glyphicon-download"></i>&nbsp;Export&nbsp;<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="@Url.Action("Download", new { FileType = DownloadFileType.CSV })">CSV</a></li>
+                </ul>
+            </div><!-- /btn-group -->
+
+            <div class="btn-group" style="vertical-align:top !important;margin-left:4px">
+                <button class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"><i class="glyphicon glyphicon-upload"></i>&nbsp;Import&nbsp;<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a id="members-import-csv" href="#">CSV</a></li>
+                </ul>
+            </div>&nbsp;<!-- /btn-group -->
+
+            <a class="btn btn-default btn-info  btn-sm" id="refresh-member"><i class="glyphicon glyphicon-refresh icon-white"></i>&nbsp;Refresh&nbsp;</a>
+
+        </div>
+    </div>
+</div>
+
+<div class="btn-toolbar" style="margin-top:10px;">@{Html.RenderPartial(@"~/Views/Members/_RolesPanelList.cshtml", null);}</div>
+<div class="btn-toolbar" style="margin-top:10px;white-space:nowrap">@{Html.RenderPartial(@"~/Views/Members/_AlphabetPanel.cshtml",null);}<br/></div>
+<div id="div-members-list-0">@{Html.RenderPartial(@"~/Views/Members/_MemberList.cshtml", new MemberListModel("members-list-0"));}</div>	 
+
+<template id="div-members-importing" data-dialog-tittle="Importing Members <span class='glyphicon glyphicon-refresh glyphicon-refresh-animate importing-message-spinner'></span>">
+    <div id="importing-notify-message"></div>
+    <h3 class="importing-message-spinner">&nbsp;&nbsp;In progress, please wait ...</h3>
+</template>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        App.MembersManagement = new MembersManagement();
+        App.MembersManagement.initManagement("members-list-0","@Url.Action("","Members")");
+    });
+</script>

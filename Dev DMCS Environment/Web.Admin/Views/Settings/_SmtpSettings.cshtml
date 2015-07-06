@@ -1,0 +1,60 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    var mailserver_smtp_host = AppSession.Parameters.MailServerSmtpHost;
+    var mailserver_smtp_email = AppSession.Parameters.MailServerSmtpEmail;
+    var mailserver_smtp_user = AppSession.Parameters.MailServerSmtpUser;
+    var mailserver_smtp_pass = AppSession.Parameters.MailServerSmtpPassword;
+    var mailserver_smtp_port = AppSession.Parameters.MailServerSmtpPort;
+    var mailserver_smtp_ssl = AppSession.Parameters.MailServerSmtpSSLEnabled;
+    
+    if (AppSession.DemoMode)
+    {
+        mailserver_smtp_pass.Value = "***********";
+    }
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="control-label" for="@mailserver_smtp_host.Name">SMTP Host</label>
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@mailserver_smtp_host.TypeSize" id="@mailserver_smtp_host.Name" name="@mailserver_smtp_host.Name" value="@mailserver_smtp_host.Value" />
+            <p class="muted">SMTP server host used (e.g. smtp.domainname.com)</p>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="@mailserver_smtp_port.Name">SMTP Port</label>
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@mailserver_smtp_port.TypeSize" id="@mailserver_smtp_port.Name" name="@mailserver_smtp_port.Name" value="@mailserver_smtp_port.Value" />
+            <p class="muted">The port for SMTP server used for sending emails</p>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="@mailserver_smtp_ssl.Name">SSL</label>
+            <label class="checkbox muted">
+                <input type="checkbox" class="input-xlarge app-settings" id="@mailserver_smtp_ssl.Name" name="@mailserver_smtp_ssl.Name" @if (mailserver_smtp_ssl.Value == "true") { @Html.Raw("checked")   } />
+                Enable SSL connection between application and mail server.
+            </label>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="control-label" for="@mailserver_smtp_user.Name">SMTP User Name</label>
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@mailserver_smtp_user.TypeSize" id="@mailserver_smtp_user.Name" name="@mailserver_smtp_user.Name" value="@mailserver_smtp_user.Value" />
+            <p class="muted">The user name for SMTP account used for sending emails</p>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="@mailserver_smtp_email.Name">SMTP User Email</label>
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@mailserver_smtp_email.TypeSize" id="@mailserver_smtp_email.Name" name="@mailserver_smtp_email.Name" value="@mailserver_smtp_email.Value" />
+            <p class="muted">The user emal for SMTP account used for sending emails</p>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="@mailserver_smtp_pass.Name">SMTP Password </label>
+            <input type="password" class="input-xlarge app-settings form-control" maxlength="@mailserver_smtp_pass.TypeSize" id="@mailserver_smtp_pass.Name" name="@mailserver_smtp_pass.Name" value="@mailserver_smtp_pass.Value" />
+            <p class="muted">The password for the SMTP account used for sending emails</p>
+        </div>
+    </div>
+</div>

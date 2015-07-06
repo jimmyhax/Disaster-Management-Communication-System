@@ -1,0 +1,52 @@
+﻿@using Web.Admin.Controllers
+@using Web.Admin.Logic.Collections;
+
+@{
+    var ThemeName = AppSession.Parameters.ThemesCurrentName;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Roles & Members</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="@Url.Content("~/Content/style.public.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/bootstrap/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/plugins/jquery/jquery-1.11.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/jquery/jquery-ui.1.11.2.custom.min.js")" type="text/javascript"></script>
+    <link rel="stylesheet" href="@Url.Content("~/Content/zocial/zocial.css")" type="text/css" media="screen, projection" />    
+  </head>
+
+  <body>
+    <div class="wrapper">
+       <div class="container-flued">
+      <div class="row-flued">        
+           @RenderBody()
+      </div><!--/row-->
+      <div class="push"><!--//--></div>
+    </div><!--/.fluid-container-->
+    </div>
+    <footer class="public-footer">
+       <p>© DMCS 2012</p>
+    </footer>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->   
+       
+    <script src="@Url.Content("~/Scripts/plugins/scroll-to/jquery.scrollTo.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/bootstrap.3.3.2/bootstrap.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/plugins/block-ui/jquery.blockUI.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/public/simple.tools.core.js")" type="text/javascript"></script>
+    <script type="text/javascript">App.BaseURL("@AppSession.AppDomainAppVirtualPath");</script>
+  </body>
+</html>

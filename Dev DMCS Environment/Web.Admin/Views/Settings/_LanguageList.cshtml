@@ -1,0 +1,17 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+@using Web.Admin.Controllers
+
+@{
+    var language_public_default = AppSession.Parameters.LanguagePublicDefault;
+}
+
+<select class="input-xlarge app-settings app-languages form-control" id="@language_public_default.Name" name="@language_public_default.Name" >
+@foreach (Language language in AppSession.GetLanguages())
+{ 
+    <option value="@language.Code" @if(language.Code == AppSession.Parameters.LanguagePublicDefault.Value){@Html.Raw("selected ")} >@language.Code - @language.EnglishName</option>
+}
+</select>

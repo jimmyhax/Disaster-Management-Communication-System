@@ -1,0 +1,43 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+<div class="btn-group" style="vertical-align:top !important">
+  <button class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">Assign&nbsp;<span class="caret"></span></button>
+  <ul class="dropdown-menu dropdown-menu-scroll" role="menu">
+    @{
+        foreach (Role role in Web.Admin.Logic.Collections.Roles.Get())
+        {
+	         <li><a href="#" data-role-id="@role.RoleID" class="member-assign-role">@role.Name</a></li>
+        }       
+     }  
+  </ul>
+</div>
+
+<script>
+   $(".member-assign-role").bind("click", function (e)   {
+          e.preventDefault();
+          $(".open").toggleClass("open");
+          var _this = $(this);
+           setTimeout( function(){
+               var _checked = [];
+
+                $(".member-select").each(function(e){
+                    if($(this).is(":checked"))
+                        _checked.push(parseInt($(this).attr("data-member-id")));
+                });
+        
+                if(_checked.length == 0)
+                {
+                    alert("Please, select members and try again.")
+                    return false;
+                }
+
+                App.DialogGet("@Url.Action("GetAssignRoleMembersDialog", "Members")",e, {RoleID: parseInt(_this.attr("data-role-id")),AssignMembers: _checked, Assign: true});
+                }, 10);
+
+            return false;
+    }); 
+</script>

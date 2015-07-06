@@ -1,0 +1,28 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    var api_enabled = AppSession.Parameters.AppApiEnabled;
+    var api_secret_url = AppSession.Parameters.AppApiSecretURL;
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+	        <label class="control-label" for="@api_enabled.Name">API Enabled:</label>
+	        <label class="muted checkbox">
+            <input type="checkbox" class="input-xlarge app-settings" id="@api_enabled.Name" name="@api_enabled.Name" @if (api_enabled.Value == "true") { @Html.Raw("checked")} />
+	        Enables API support.
+            </label>
+        </div>
+        <div class="form-group">
+           <label class="control-label" for="@api_secret_url.Name">Secret URL</label>
+           <input type="text" class="input-xlarge app-settings form-control"  maxlength="@api_secret_url.TypeSize" id="@api_secret_url.Name" name="@api_secret_url.Name" value="@api_secret_url.Value"/>
+           <p class="muted">The URL which will be used for API method execution</p>
+        </div>
+    </div>
+</div>

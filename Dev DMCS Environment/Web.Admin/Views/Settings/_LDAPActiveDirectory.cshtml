@@ -1,0 +1,74 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+     var ldap_enabled = AppSession.Parameters.LDAPEnabled;
+     var ldap_add_role_group = AppSession.Parameters.LDAPAddRoleGroup;
+     var ldap_path = AppSession.Parameters.LDAPPath;
+     var ldap_add_to_roles = AppSession.Parameters.LDAPAddToRoles; 
+     var ldap_use_only = AppSession.Parameters.LDAPUseOnly;
+     var ldap_domain = AppSession.Parameters.LDAPDomain;
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="form-group">
+	        <label class="control-label" for="@ldap_enabled.Name">LDAP Enabled</label>
+
+	        <label class="muted checkbox">
+            <input type="checkbox" class="input-xlarge app-settings" id="@ldap_enabled.Name" name="@ldap_enabled.Name" @if (ldap_enabled.Value == "true") { @Html.Raw("checked")} />
+	        Using LDAP as primary for a member authentication.
+            </label>
+
+            <label class="control-label" for="@ldap_use_only.Name">LDAP Use Only</label>
+
+	        <label class="muted checkbox">
+            <input type="checkbox" class="input-xlarge app-settings" id="@ldap_use_only.Name" name="@ldap_use_only.Name" @if (ldap_use_only.Value == "true") { @Html.Raw("checked")} />
+	        Using LDAP authentication only. <b>Please, add LDAP admin user to Admins role before.</b>
+            </label>
+            
+            <label class="control-label" for="@ldap_add_role_group.Name">Add group as role</label>
+
+            <label class="muted checkbox">
+                <input type="checkbox" class="input-xlarge app-settings" id="@ldap_add_role_group.Name" name="@ldap_add_role_group.Name" @if (ldap_add_role_group.Value == "true") { @Html.Raw("checked")  } />
+                Add members groups as role automatically if it doesn't exists.
+            </label>
+
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group">
+            
+            
+            <label class="control-label" for="@ldap_domain.Name">LDAP Domain</label>
+
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@ldap_domain.TypeSize" id="@ldap_domain.Name" name="@ldap_domain.Name" value="@ldap_domain.Value" />
+            <p class="muted">LDAP mail domain which will be used for member name</p>
+
+            <label class="control-label" for="@ldap_path.Name">LDAP Path</label>
+
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@ldap_path.TypeSize" id="@ldap_path.Name" name="@ldap_path.Name" value="@ldap_path.Value" />
+            <p class="muted"></p>
+
+            <label class="control-label" for="@ldap_add_to_roles.Name">Add Member to Role</label>
+
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@ldap_add_to_roles.TypeSize" id="@ldap_add_to_roles.Name" name="@ldap_add_to_roles.Name" value="@ldap_add_to_roles.Value" />
+            <p class="muted">Add created member to the roles</p>
+
+        </div>
+    </div>
+</div>
+
+<p>
+    <br />
+    When connecting to AD you can use "serverless" binding or you can specify a serverbound to use everytime (server bound). Here's an example of using both:
+    <table class="table table-striped table-bordered table-condensed" style="width:55% !important">
+        <tr><td><b>Type</b></td><td><b>URL Example</b></td></tr>
+        <tr><td>Serverless</td><td>LDAP://dc=domainname,dc=com</td></tr>
+        <tr><td>Serverbound</td><td>LDAP://domainControllerName/dc=domainName,dc=com </td></tr>
+    </table>
+</p>

@@ -1,0 +1,181 @@
+﻿@model ProfileFieldGroupFieldModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+ @{
+     var imagetitle = ProfileFieldTypes.Get((int)Model.Field.FieldTypeID).FieldTypeName;
+     var imagename = "";
+     switch (Model.Field.FieldTypeID)
+     {
+         case ProfileFieldTypeEnum.String: imagename = "textfield-big.png"; break;
+         case ProfileFieldTypeEnum.StringMultiline: imagename = "textfield-multi-line-big.png"; break;
+         case ProfileFieldTypeEnum.Number: imagename = "textfield-numeric-big.png"; break;
+         case ProfileFieldTypeEnum.ListSingleSelect: imagename = "list-big.png"; break;
+         case ProfileFieldTypeEnum.ComboBox: imagename = "combo-box-big.png"; break;
+         case ProfileFieldTypeEnum.ListMultiSelect: imagename = "list-multi-big.png"; break;
+         case ProfileFieldTypeEnum.CheckBox: imagename = "checkbox-big.png"; break;
+         case ProfileFieldTypeEnum.Radio: imagename = "radiobutton-group-big.png"; break;
+     }
+
+     string activeTabNam = "general";
+     if(Model.tabIndex == 2){
+         activeTabNam = "domains";
+     }
+     if(Model.tabIndex == 3){
+         activeTabNam = "roles";
+     };     
+ }
+
+
+@{ 
+ var templateId = String.Format("dialog-view-{0}", DateTime.Now.Ticks.ToString());
+ var dialogId = templateId.Replace("-view-", "-");
+ var contentId = templateId.Replace("-view-", "-content-");
+}
+
+<template type="text/template" id="@templateId" data-dialog-tittle="<img src='@Url.Content("~/Content/Images")/@imagename' title='@imagetitle' />&nbsp; Edit Field &nbsp;&nbsp;<div style='color:#888;display:inline-block'>@Model.Field.FieldName</div>" data-dialog-spinner="spinner-@dialogId">
+    <div id="notify-message"></div>
+    <ul class="nav nav-tabs">
+        <li class="@if(Model.tabIndex == 1){@Html.Raw("active");}">
+            <a href="#general" data-toggle="tab">General</a>
+        </li>
+        <li class="@if(Model.tabIndex == 2){@Html.Raw("active");}"><a href="#domains" data-toggle="tab">Restricted By Domains</a></li>
+        <li class="@if(Model.tabIndex == 3){@Html.Raw("active");}"><a href="#roles" data-toggle="tab">Restricted By Roles</a></li>
+    </ul>
+    <br/>
+    <div class="tab-content">
+        <div class="tab-pane fade @if(Model.tabIndex == 1){@Html.Raw("active in");}" id="general">
+            <label class="member-label" for="profile-field-name"><b>Name</b></label>
+            <input type="text" class="input-xlarge" id="profile-field-name" style="width:97%;color:black" maxlength="64" value="@Model.Field.FieldName" />
+
+            <label class="member-label" for="profile-field-type"><b>Type</b></label>
+            <select style="width:98%" id="profile-field-type" class="form-control">
+                @{
+                    List<ProfileFieldType> profileFieldTypes = ProfileFieldTypes.Get();
+                    foreach (ProfileFieldType profileFieldType in profileFieldTypes)
+                    {
+                        <option value="@Convert.ToInt16(profileFieldType.FieldTypeID)" @if (Model.Field.FieldTypeID == profileFieldType.FieldTypeID) { @Html.Raw("selected")   ; }>@profileFieldType.FieldTypeName</option>
+                    }
+                }
+            </select>
+
+            <label class="member-label" for="profile-field-comment"><b>Comment</b></label>
+            <textarea type="text" class="input-xlarge" id="profile-field-comment" style="width:97%; height:30px; color:black">@Model.Field.Comment</textarea>
+
+            <label class="member-label" for="profile-field-possible-values"><b>Possible Values</b></label>
+            <textarea type="text" class="input-xlarge" id="profile-field-possible-values" style="width:97%; height:100px; color:black">@Model.Field.PossibleValues</textarea>
+
+            <label class="member-label" for="profile-field-text-select-value"><b>Text (Please, select value)</b></label>
+            <input type="text" class="input-xlarge" id="profile-field-text-select-value" style="width:97%;color:black" maxlength="64" value="@Model.Field.TextSelectValue" />
+
+            <div style="padding:7px" id="#field-prop">
+                <input style="vertical-align: middle; margin: 0px" type="checkbox" id="profile-field-is-mandatory" @if (Model.Field.IsMandatory == 1) { @Html.Raw("checked")  ; } /><span style="vertical-align: middle; margin: 0px;padding-right:12px">&nbsp;<b>Is Mandatory</b></span><br />
+                <input style="vertical-align: middle; margin: 0px" id="profile-field-show-in-signup" @if (Model.Field.ShowInSignUp == 1) { @Html.Raw("checked")  ; } type="checkbox" /><span style="vertical-align: middle; margin: 0px;">&nbsp;<b>Show On SignUp Form</b></span><br />
+                <input style="vertical-align: middle; margin: 0px" id="profile-field-show-sort-values" @if (Model.Field.SortValues == 1) { @Html.Raw("checked")  ; } type="checkbox" /><span style="vertical-align: middle; margin: 0px;">&nbsp;<b>Sort possible values</b></span><br />
+                <input style="vertical-align: middle; margin: 0px" id="profile-field-show-is-active" @if (Model.Field.IsActive == 1) { @Html.Raw("checked")  ; } type="checkbox" /><span style="vertical-align: middle; margin: 0px;">&nbsp;<b>Is Active</b> (If unchecked then the field is hidden.)</span><br />
+                <input style="vertical-align: middle; margin: 0px" id="profile-field-show-admin-use-only" @if (Model.Field.AdminUseOnly == 1) { @Html.Raw("checked")  ; } type="checkbox" /><span style="vertical-align: middle; margin: 0px;">&nbsp;<b>Admin Use Only</b> (The admin member will see this field.)</span><br />
+                <input style="vertical-align: middle; margin: 0px" id="profile-field-show-vertical-layout" @if (Model.Field.VerticalLayout == 1) { @Html.Raw("checked")  ; } type="checkbox" /><span style="vertical-align: middle; margin: 0px;">&nbsp;<b>Vertical Layout</b> (Use vertical layout for checkbox and radio button group only.)</span><br />
+                @if (Model.Field.Encrypted == 1)
+                {
+                    <img src="@Url.Content("~/content/images/key.png")" title="The field value will be encrypted in the database." />
+                    <span>&nbsp;</span><b>Encrypted</b><span> (If you set this flag the field value will be stored encrypted in the database.)</span><br />
+                }
+            </div>
+
+            <label class="member-label" for="field-group"><b>Group name</b></label>
+            <input type="text" class="input-xlarge" id="group" style="width:97%;color:black" maxlength="64" value="@ProfileFieldGroups.GetBy(Model.Field.FieldGroupID).FieldGroupName" readonly />
+        </div>
+        <div class="tab-pane fade @if(Model.tabIndex == 2){@Html.Raw("active in");}" id="domains">
+            @{Html.RenderPartial(@"~/Views/Fields/_FieldDomains.cshtml", Model.Field);}
+        </div>
+        <div class="tab-pane fade @if(Model.tabIndex == 3){@Html.Raw("active in");}" id="roles">
+            @{Html.RenderPartial(@"~/Views/Fields/_FieldRoles.cshtml", Model.Field);}
+        </div>
+    </div>
+</template>
+    
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var dialog = App.DialogBootstrap("#@templateId",840,730, true,
+        {
+            Save: function () {
+                var _this = this;
+
+                var _checkedDomains = [];
+                var _checkedRoles = [];
+
+                $(".domain-select").each(function (e) {
+                    if ($(this).is(':checked') == true)
+                        _checkedDomains.push(parseInt($(this).attr("data-domain-id")));
+                });
+
+                $(".role-select-inline").each(function (e) {
+                    if ($(this).is(':checked') == true)
+                        _checkedRoles.push(parseInt($(this).attr("data-role-id")));
+                });
+
+                var Values = {
+                    FieldID: @Model.Field.FieldID,
+                    Name: $("#profile-field-name").val(),
+                    FieldType: $("#profile-field-type").val(),
+                    Comment:  $("#profile-field-comment").val(),
+                    PossibleValues: $("#profile-field-possible-values").val(),
+                    SelectText: $("#profile-field-text-select-value").val(),
+                    IsMandatory: $("#profile-field-is-mandatory").is(':checked'),
+                    ShowInSignup: $("#profile-field-show-in-signup").is(':checked'),
+                    SortValues: $("#profile-field-show-sort-values").is(':checked'),
+                    IsActive: $("#profile-field-show-is-active").is(':checked'),
+                    AdminUseOnly: $("#profile-field-show-admin-use-only").is(':checked'),
+                    VerticalLayout: $("#profile-field-show-vertical-layout").is(':checked'),
+                    SelectedDomains: _checkedDomains,
+                    SelectedRoles: _checkedRoles
+                }
+
+                $("#spinner-@dialogId").addClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SaveField", "Fields")",
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(Values),
+                    cache: false,
+                    success: function (data) {
+                        debugger;
+                        switch(data.NotifyType)
+                        {
+                            case 0: $("#general-message").html(data.Html);dialog.close();break
+                            case 1: $("#@dialogId").find("#notify-message").html(data.Html);break;
+                            case 2: $(data.Html).prependTo('body');dialog.close();break;
+                        };
+
+                        if(data.NotifyType == 1)
+                            $("#@dialogId").animate({ scrollTop: 0 }, 'slow');
+
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                        if(data.Html == "")
+                        {
+                            dialog.close();
+
+                            setTimeout(function(){
+                                $("#member-profile-fields").load("@Url.Action("GetMemberFields", "Fields")",function() {App.FieldsManagement.InitDragAndDrop();});
+                            },150);
+                        };
+
+                    },
+                    error: function(xhr, textStatus, errorThrown){
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                        dialog.close();
+                    }
+                });
+
+            }//,
+            //Cancel: function () {$(this).dialog("close");}
+        })
+    });
+</script>

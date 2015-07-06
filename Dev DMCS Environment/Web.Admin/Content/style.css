@@ -1,0 +1,522 @@
+*:focus {outline: none !important;}
+
+
+html {
+    height: 92%;
+}
+
+body {
+    height: 92%;
+    padding-top: 60px;
+    padding-bottom: 40px;    
+}
+
+.hover{
+ cursor:pointer !important;  
+ background-color:#0088cc;
+ color: White !important; 
+}
+
+#userfile.hover{
+ cursor:pointer !important;  
+}
+    
+footer {
+    padding: 17px 0 18px 0;
+    border-top: 1px solid #eee;
+    text-align:center;
+}
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -13px;
+}
+.push {
+    height: 13px;
+}
+/* not required for sticky footer; just pushes hero down a bit */
+.wrapper > .container {    
+
+}
+
+.hide-encrypted{
+    display: none !important;
+}
+
+.jcrop img {max-width:640px !important; max-height:480px}
+
+.error-message-list{
+padding-bottom:0px !important;margin-bottom:0px; margin-bottom:0px !important;
+}
+
+div.shadow {
+  -moz-box-shadow: 3px 3px 4px #444;
+  -webkit-box-shadow: 3px 3px 4px #444;
+  box-shadow: 3px 3px 4px #444;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#444444')";
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#444444');
+}
+
+input[type="password"] {font:small-caption !important;font-size:16px!important}
+
+.sidebar-nav {
+  padding: 9px 0;
+}
+
+.role-edit{
+  text-decoration:none !important;
+}
+
+.label-role-info{
+  color: #777;
+  /*font-size:10px;*/
+  vertical-align: super;
+  font-weight:bold;
+}
+
+.spinner{    
+    background-image: url(images/ajax-loader.gif) !important;
+    background-position:center;
+    background-repeat: no-repeat;
+    height:16px;
+    width:16px;
+}
+
+.dropdown-menu-scroll {
+    max-height: 450px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.row-higlighted
+{
+  background-color:#f1f0cb !important;   
+}
+
+.role-sort-column {
+    cursor:pointer;
+}
+
+.domain-sort-column {
+    cursor:pointer;
+}
+
+.css_right {
+    float: right;
+}
+
+.ui-icon-carat-2-n-s {
+    background-position: -128px 0;
+}
+
+.ui-state-default .ui-icon {
+    background-image: url(images/ui-icons_888888_256x240.png);
+}
+
+.ui-icon {
+    width: 16px;
+    height: 16px;
+    display: block;
+    text-indent: -99999px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+}
+
+.ui-icon-triangle-1-n {
+    background-position: 0 -16px;
+}
+
+.ui-icon-triangle-1-s {
+    background-position: -64px -16px;
+}
+
+.alphabet-filter{
+
+}
+
+:-moz-any-link:focus {
+    outline: none;
+}
+
+* {
+outline: none;
+}
+
+
+.panel-roles-selected{
+    background-color: #0d5e96;
+    color: white !important;
+    -webkit-border-radius: .3em; 
+    -moz-border-radius: .3em;
+    border-radius: .3em;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+
+.panel-roles-place{
+    padding-top:2px;
+    padding-bottom:2px;
+    padding-left:6px;
+    padding-right:6px;
+    white-space:nowrap;
+    font-size:12px;
+}
+    
+    
+input[type="text"], input[type="password"], .ui-autocomplete-input, textarea, .uneditable-input {
+    border: 1px solid #CCCCCC !important;
+    border-radius: 3px 3px 3px 3px !important;
+    color: black !important;
+    display: inline-block !important;
+    font-size: 13px !important;
+    line-height: 18px !important;
+    padding: 4px !important;
+
+}
+
+.table-date-full{
+    font-size:10px;
+    height:15px;
+    border:none;
+    margin-top:-3px;
+}
+
+.table-date-relative{
+    font-size:11px !important;
+    height:15px;
+    border:none;
+    margin-top:-5px;
+}
+
+.table-date-td-width{
+    width:110px;
+}
+
+.login-header-top {
+    background: whiteSmoke;
+    padding: 20px 20px 10px;
+    margin: 0 0 30px 0;
+    border-bottom: 1px solid #DDD;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+
+
+.login-box{
+    position: absolute;
+    height: 200px;
+    width: 420px;
+    margin: -165px 0 0 -200px;
+    top: 50%;
+    left: 50%;
+    display:block;                
+}
+
+.login-title{
+    width: auto;
+    letter-spacing: -1px;
+    margin: 0;
+    border-bottom: 1px solid #DDD;
+    background: #F7F7F7;
+    padding: 15px 30px;
+    font-size: 22px;
+    color: #444;
+    -moz-border-radius-topleft: 6px;
+    -moz-border-radius-topright: 6px;
+    text-align:center;
+
+}
+
+.login-form{
+    width:400px;
+    min-height:180px;
+    border:1px solid #ccc;   
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    display:block;        
+}
+
+.login-form-inner{
+    padding-top:10px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-bottom:20px;
+    display:block;
+}
+
+.login-form-buttons{
+    padding:15px;
+    vertical-align:bottom;
+    margin:1px;
+    background-color: #eee;
+    display:block;
+    border-top:1px solid #ddd;
+    height:30px;
+}
+.pop-up-message{
+    position:fixed;
+    top:140px;
+    left: 40%; 
+    box-shadow: 0px 0px 0px 10px gba(0, 0, 0, 0.2) ;
+}
+
+
+.less-size
+{
+   font-size:11px;
+   white-space:nowrap 
+}
+
+.div-table-info{
+    display:inline-block;
+    width:100%;
+    min-height:30px;
+}
+
+.div-table-info-fl{
+    display:inline-block;
+    float:left;
+}
+
+.div-table-info-fr{
+    display:inline-block;
+    float:right;
+}
+
+.member-role-label{
+    vertical-align:text-top !important;
+    display:inline-block;
+}
+
+.member-role-label-cross{
+    display:inline-block;
+    cursor:pointer;
+    padding-left:3px;
+    padding-bottom:1px;
+    padding-right:1px;
+}
+
+.member-add-role-inline
+{
+    display:inline-block;
+    font-size:9px; 
+    float:right;
+}
+
+.highlight {
+    background-color: yellow;
+    -moz-border-radius: 5px; /* FF1+ */
+    -webkit-border-radius: 5px; /* Saf3-4 */
+    border-radius: 1px; /* Opera 10.5, IE 9, Saf5, Chrome */
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* FF3.5+ */
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* Saf3.0+, Chrome */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* Opera 10.5+, IE 9.0 */
+}
+
+.highlight {
+    padding:1px 4px;
+    margin:0 -4px;
+}
+
+/* Subnav */
+.subnav {
+  width: 100%;
+  background-color: #eeeeee; /* Old browsers */
+  background-repeat: repeat-x; /* Repeat the gradient */
+  background-image: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); /* FF3.6+ */
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+  background-image: -webkit-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* Chrome 10+,Safari 5.1+ */
+  background-image: -ms-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* IE10+ */
+  background-image: -o-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* Opera 11.10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+  background-image: linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* W3C */
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+.subnav .nav {
+  margin-bottom: 0;
+}
+.subnav .nav > li > a {
+  margin: 0;
+  padding-top:    11px;
+  padding-bottom: 11px;
+  border-left: 1px solid #f5f5f5;
+  border-right: 1px solid #e5e5e5;
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
+}
+.subnav .nav > .active > a,
+.subnav .nav > .active > a:hover {
+  padding-left: 13px;
+  color: #777;
+  background-color: #e9e9e9;
+  border-right-color: #ddd;
+  border-left: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
+     -moz-box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
+          box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
+}
+.subnav .nav > .active > a .caret,
+.subnav .nav > .active > a:hover .caret {
+  border-top-color: #777;
+}
+.subnav .nav > li:first-child > a,
+.subnav .nav > li:first-child > a:hover {
+  border-left: 0;
+  padding-left: 12px;
+  -webkit-border-radius: 4px 0 0 4px;
+     -moz-border-radius: 4px 0 0 4px;
+          border-radius: 4px 0 0 4px;
+}
+.subnav .nav > li:last-child > a {
+  border-right: 0;
+}
+.subnav .dropdown-menu {
+  -webkit-border-radius: 0 0 4px 4px;
+     -moz-border-radius: 0 0 4px 4px;
+          border-radius: 0 0 4px 4px;
+}
+
+/* Fixed subnav on scroll, but only for 980px and up (sorry IE!) */
+@media (min-width: 980px) {
+  .subnav-fixed {
+    position: fixed;
+    top: 51px;
+    left: 0;
+    right: 0;
+    z-index: 980; /* 10 less than .navbar-fixed to prevent any overlap */
+    border-color: #d5d5d5;
+    border-width: 0 0 1px; /* drop the border on the fixed edges */
+    -webkit-border-radius: 0;
+       -moz-border-radius: 0;
+            border-radius: 0;
+   /*
+   -webkit-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+       -moz-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+            box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false); */ /* IE6-9 */
+   
+  }
+  .subnav-fixed .nav {
+    width: 938px;
+    margin: 0 auto;
+    padding: 0 1px;
+  }
+  .subnav .nav > li:first-child > a,
+  .subnav .nav > li:first-child > a:hover {
+    -webkit-border-radius: 0;
+       -moz-border-radius: 0;
+            border-radius: 0;
+  }
+}
+
+.restiction-label {
+    font-size:10px !important;
+    float:right;
+    cursor:pointer;
+    margin-left:3px;
+}
+
+.ui-sortable-helper  {
+    border-bottom:1px solid #ddd;
+}
+
+
+
+.form-horizontal .control-label {
+    margin-bottom: 5px !important;
+}
+
+/*
+.muted {
+    color: #444;
+    font-size:12px;
+    margin-top:5px;
+}
+*/
+
+.form-horizontal .form-group {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+legend {
+    margin-top:15px;
+    padding-bottom:10px;
+}
+
+.form-group .muted {
+    font-size:12px;
+    color:#777;
+    margin-top:2px;
+}
+
+legend {
+    padding-bottom:10px !important;
+}
+
+.form-group {
+    padding-bottom: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.modal-backdrop {
+    background-color: #aaa !important;
+    opacity:.25 !important;
+}
+
+.bootstrap-dialog .modal-header.bootstrap-dialog-draggable {
+    cursor: move;
+}
+
+/* http://stackoverflow.com/questions/14793367/how-to-add-a-spinner-icon-to-button-when-its-in-the-loading-state */
+/* http://jsfiddle.net/AndrewDryga/zcX4h/1/ */
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 1.5s infinite linear;
+    font-size:17px;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+
+
+.bootstrap-dialog.type-default .modal-header {
+     background-color:transparent !important;
+ }
+
+ .bootstrap-dialog-close-button {
+     color:#555;
+ }
+
+ .bootstrap-dialog.type-default .bootstrap-dialog-title {
+     color: #777 !important;
+ }
+
+ .close {
+     color : #555 !important;
+}
+
+legend {
+    background-color: transparent !important;
+}
+
+.fa-spin {
+    animation: 2s linear 0s normal none infinite running fa-spin;
+}

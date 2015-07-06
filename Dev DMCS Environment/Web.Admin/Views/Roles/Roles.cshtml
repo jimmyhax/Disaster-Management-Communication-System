@@ -1,0 +1,49 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+<h2>Roles</h2>
+<div id="general-message"></div>
+<div class="subnav" style="padding:7px">
+   <a class="btn btn-default btn-success btn-sm" style="vertical-align:top !important" id="role-add"><i class="glyphicon glyphicon-tasks"></i>  Add</a>
+   <a class="btn btn-default btn-danger btn-sm" style="vertical-align:top !important" id="role-remove"><i class="glyphicon glyphicon-minus icon-white"></i> Remove</a>&nbsp;
+   <div class="pull-right">
+      <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"><i class="glyphicon glyphicon-download"></i>&nbsp;Export&nbsp;<span class="caret"></span></button>
+          <ul class="dropdown-menu" role="menu">
+              <li><a href="@Url.Action("Download", new { FileType = DownloadFileType.CSV })">CSV</a></li>
+          </ul>
+      </div> <!-- /btn-group -->
+
+
+      <div class="btn-group">
+          <button class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"><i class="glyphicon glyphicon-upload"></i>&nbsp;Import&nbsp;<span class="caret"></span></button>
+          <ul class="dropdown-menu">
+              <li><a href="#" id="roles-import">CSV</a></li>
+          </ul>
+      </div><!-- /btn-group -->
+      &nbsp;<a class="btn btn-default btn-info btn-sm" style="vertical-align:top !important" id="role-refresh"><i class="glyphicon glyphicon-refresh icon-white"></i>&nbsp;Refresh&nbsp;</a>
+    </div>
+</div>
+
+<p/>
+<div id="div-roles-list-0">
+    @{Html.RenderPartial(@"~/Views/Roles/_RoleList.cshtml", new RoleListModel("roles-list-0"));}
+</div>	
+
+<template id="div-roles-importing" data-dialog-tittle="Importing Role <span class='glyphicon glyphicon-refresh glyphicon-refresh-animate importing-message-spinner'></span>">
+    <div id="importing-notify-message"></div>
+    <h3 class="importing-message-spinner">&nbsp;&nbsp;In progress, please wait ...</h3>
+</template>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        App.RolesManagement = new RolesManagement();
+        App.RolesManagement.initManagement("roles-list-0","@Url.Action("","Roles")");
+
+        App.FieldsManagement = new FieldsManagement();
+        App.FieldsManagement.initManagement("@Url.Action("","Fields")");
+    });
+</script>

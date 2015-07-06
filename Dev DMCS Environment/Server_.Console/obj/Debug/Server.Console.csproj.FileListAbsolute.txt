@@ -1,0 +1,17 @@
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\SimpleTools.RoleAdmin.Console.exe.config
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\SimpleTools.RoleAdmin.Console.exe
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\SimpleTools.RoleAdmin.Console.pdb
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\SimpleTools.RoleAdmin.API.dll
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\System.Web.Razor.dll
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\System.Web.WebPages.dll
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\SimpleTools.RoleAdmin.API.pdb
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\SimpleTools.RoleAdmin.API.xml
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\System.Web.Razor.xml
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\System.Web.WebPages.xml
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\obj\Debug\Server_.Console.csprojResolveAssemblyReference.cache
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\obj\Debug\SimpleTools.RoleAdmin.Console.exe
+C:\Users\James Miller\Desktop\DMCS\SimpleTools.RoleAdmin.Console\obj\Debug\SimpleTools.RoleAdmin.Console.pdb

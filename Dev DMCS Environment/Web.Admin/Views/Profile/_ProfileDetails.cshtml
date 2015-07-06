@@ -1,0 +1,22 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+<div style="display:block;width:600px;padding-top:25px">
+@{
+    List<MemberProfileField> memberProfileFields = MemberProfileFields.GetByMember(AppSession.Profile.Member.MemberID);
+    foreach (ProfileField field in ProfileFields.GetAll())
+    {
+        var value = MemberProfileFields.GetField(memberProfileFields, field.FieldID).FieldValue;
+        <div class="form-group">
+            <label class="control-label" for="profile-field-@field.FieldID">@field.FieldName</label>
+               @{
+                  Html.RenderPartial(@"~/Views/Profile/_ProfileField.cshtml", new ProfileFieldModel(field, ProfileFieldMode.Edit, value));
+                }
+        </div>
+    }
+}
+</div>

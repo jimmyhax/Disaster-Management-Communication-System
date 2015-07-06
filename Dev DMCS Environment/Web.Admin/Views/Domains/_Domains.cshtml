@@ -1,0 +1,44 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    var ui_app_name = AppSession.Parameters.AppUIName;
+    var ui_paging_size =  AppSession.Parameters.AppUiPagingSize;
+    var ui_app_fluid = AppSession.Parameters.AppFluid;
+}
+
+@{
+     var _domains = Domains.Get();
+ }
+
+ <div class="subnav" style="padding:7px">
+    <div class="btn btn-default btn-success btn-sm" id="add-domain">Add Domain</div>
+    <div class="btn btn-default btn-danger btn-sm" id="remove-selected-domains">Remove Selected Domain</div>
+    <div style="float:right;display:inline-block">
+        <div class="btn btn-default btn-info btn-sm" id="refresh-domains">Refresh</div>
+    </div>
+</div>
+ <p>&nbsp;</p>
+ <div id="domain-list">
+    @{Html.RenderPartial(@"~/Views/Domains/_DomainList.cshtml", null);}
+ </div>
+
+<script type="text/javascript">
+    $("#add-domain").bind("click", function (e) { App.DialogGet("Domains/GetAddDomainDialog", e); });
+    $("#refresh-domains").bind("click", function (e) { $('#domain-list').fadeOut('fast').load('Domains/GetDomainList').fadeIn("fast"); });
+    $(".domain-edit").live("click", function (e) { App.DialogGet("Domains/GetEditDomainDialog", e, { DomainID: parseInt($(this).attr("data-domain-id")) }); });
+
+    $("#remove-selected-domains").bind("click", function (e) {
+        
+        $('#domain-list').fadeOut('fast').load('Domains/GetDomainList').fadeIn("fast"); 
+    });
+
+</script>
+
+
+
+

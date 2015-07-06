@@ -1,0 +1,64 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+<br/>
+<p>
+This tool allows you to generate random keys for validation and ecnryption/decryption of the view state (and other purposes). It builds a &lt;machineKey&gt; element which you need to include in your web.config file.
+The tool creates a 256-bit decryption key and a 512-bit validation key, with Rijndael as the data validation algorithm.
+Once the keys are generated, they are converted into a string of hexadecimal characters
+</p>
+<br/>
+<p>
+	<textarea cols="20" maxlength="1024" class="input-xlarge" id="machine-key-text" style="width:98%;height:100px"></textarea><br/>    
+    <br/><input type="checkbox" id="machine-key-audit"  checked="checked" /><span  style="vertical-align:middle"> Generated key will be saved in audit log.</span>&nbsp;&nbsp;
+    <a class="btn btn-default btn-primary"data-loading-text="Making keys ..." data-complete-text="Finished!" name="generate-machine-key" class="btn btn-default btn-primary" id="generate-machine-key">Generate</a>    
+    
+</p>
+<h4>Why do you need this ?</h4><br/>
+<p>
+    How can we make the two applications recognize each other’s authentication ticket and cookie? In fact, it is pretty simple in ASP.NET. The only thing that needs to be done is to change the settings in the <machineKey> element of the web.config file. Here are the default settings for machinKey:
+<pre class="prettyprint linenums">
+&lt;machineKey 
+validationKey="AutoGenerate,IsolateApps" 
+decryptionKey="AutoGenerate,IsolateApps" 
+validation="SHA1" 
+decryption="Auto"/&gt;
+</pre>
+
+<p>
+    With these settings, the .NET framework uses the automatically generated validationKey and decrytionKey to create an authentication ticket and cookie. Each application uses different keys. To make multiple applications to share the same authentication ticket and cookie, we just need to set the validationKey and decrytionKey in all the applications to the same values. Similar to the following:
+</p>
+
+<pre class="prettyprint linenums">
+&lt;machineKey validationKey="211770DA514DB8002C355725722E0FC9846E93E2DF89481F772829885291A9B0285E7D6A504B1055EB68822C57E5F25C"
+decryptionKey="37AC0906DD2307E0E0EE16534FF1912A0E3B253C4929F8D70F02541ACB550938"
+validation="SHA1"
+decryption="AES"/&gt;
+</pre>
+
+</p>
+<script>
+    $("#generate-machine-key").bind("click", function (e) {
+        $("#generate-machine-key").button('loading')
+        $.ajax({
+            type: "POST",
+            url:  "@Url.Action("GenerateMachineKey","Tools")",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({Audit: $("#machine-key-audit").attr("checked") == "checked" ? true : false}),
+            cache: false,
+            success: function (data) {
+                  $("#generate-machine-key").button('reset')
+                  $("#machine-key-text").val(data.Key);            
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                App.DialogError(xhr, textStatus, errorThrown);
+                $("#generate-machine-key").button('reset')
+            }
+        });
+        
+        return false;
+    })
+</script>

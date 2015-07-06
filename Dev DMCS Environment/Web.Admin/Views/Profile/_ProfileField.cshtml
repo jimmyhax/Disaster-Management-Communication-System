@@ -1,0 +1,157 @@
+﻿@model ProfileFieldModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+<div id="profile-field-div-@Model.Field.FieldID" style="display:inline-block;width:100%">
+@{
+    if (Model.Value == null)
+    {
+        Model.Value = "";        
+    };
+
+    if (Model.Field.Encrypted == 1 && Model.Value != null && Model.Value.Length > 0)
+    {
+        Model.Value = Encryptor.DecryptStringAES(Model.Value, AppSession.EncryptionKey);
+    }
+
+    switch (Model.Field.FieldTypeID)
+    {
+        case ProfileFieldTypeEnum.String:
+            { 
+            <input type="text" class="input-xlarge form-control login-form-field profile-field" id="profile-field-@Model.Field.FieldID" style="width:97%;color:black" maxlength="64" value="@Model.Value" />
+            <div class="muted"><p>@Model.Field.Comment</p></div>
+
+                break;
+            }
+        case ProfileFieldTypeEnum.StringMultiline:
+            {
+                <textarea type="text" class="input-xlarge form-control login-form-field profile-field" id="profile-field-@Model.Field.FieldID" style="width:97%; height:100px; color:black" maxlength="64">@Model.Value</textarea>
+            <div class="muted"><p>@Model.Field.Comment</p></div>
+
+                break;
+            }
+        case ProfileFieldTypeEnum.ComboBox:
+            {
+                if (Model.Field.PossibleValues != null)
+                {
+                    List<string> listValues = new List<string>(Model.Field.PossibleValues.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries));
+                    if (Model.Field.SortValues == 1) { listValues.Sort(); }
+                    string[] Values = listValues.ToArray();
+
+                    <select style="width:100%" id="profile-field-@Model.Field.FieldID" class="profile-field form-control">
+                        <option value="">@Model.Field.TextSelectValue</option>
+                        @foreach (string Value in Values)
+                        {
+                            if (Value != null && Value.Trim() == Model.Value.Trim())
+                            {
+                                <option selected="selected" value="@Value.Trim()">@Value.Trim()</option>
+                            }
+                            else
+                            {
+                                <option value="@Value.Trim()">@Value.Trim()</option>
+                            }
+                        }
+                    </select>
+                }
+            <div class="muted"><p>@Model.Field.Comment</p></div>
+
+                break;
+            }
+        case ProfileFieldTypeEnum.ListMultiSelect:
+        case ProfileFieldTypeEnum.ListSingleSelect:
+            {
+                if (Model.Field.PossibleValues != null)
+                {
+                    List<string> listValues = new List<string>(Model.Field.PossibleValues.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries));
+                    if (Model.Field.SortValues == 1) { listValues.Sort(); }
+                    string[] Values = listValues.ToArray();
+                    string[] SelectedValues = Model.Value.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+                    <select style="width:100%;height:110px" id="profile-field-@Model.Field.FieldID" size="4" class="profile-field form-control" @if (Model.Field.FieldTypeID == ProfileFieldTypeEnum.ListMultiSelect) { @Html.Raw("multiple=\"multiple\"") ; }>
+                        @if (Model.Field.IsMandatory == 0)
+                        {
+                            <option value="">@Model.Field.TextSelectValue</option>
+                        }
+                        @foreach (string Value in Values)
+                        {
+                            if (SelectedValues.Length > 0 && Array.Exists(SelectedValues, element => element.Trim().ToLower() == Value.Trim().ToLower()))
+                            {
+                                <option selected="selected" value="@Value.Trim()">@Value.Trim()</option>
+                            }
+                            else
+                            {
+                                <option value="@Value.Trim()">@Value.Trim()</option>
+                            }
+                        }
+                    </select>
+                }
+            <div class="muted"><p>@Model.Field.Comment</p></div>
+
+                break;
+            }
+        case ProfileFieldTypeEnum.Number:
+            {
+                <input type="text" class="input-xlarge form-control login-form-field profile-field profile-field-number" id="profile-field-@Model.Field.FieldID" style="width:97%;color:black" maxlength="64" value="@Model.Value" />
+            <div class="muted"><p>@Model.Field.Comment</p></div>
+
+                break;
+            }
+        case ProfileFieldTypeEnum.CheckBox:
+            {
+                <input style="vertical-align: middle; margin: 0px;padding-right:4px" type="checkbox" class="input-xlarge form-control login-form-field profile-field profile-field-number" id="profile-field-@Model.Field.FieldID" style="color:black" maxlength="64" @if (Model.Value.ToLower() == "true") { @Html.Raw("checked") } />
+            <span style="vertical-align: middle;margin: 0px">@Model.Field.TextSelectValue</span><br/>
+            <span class="muted">@Model.Field.Comment</span>
+            <div style="height:10px"></div>
+            
+                                                                                                                                                                                                                                                     break;
+            }
+        case ProfileFieldTypeEnum.Radio:
+            {
+         <div id="profile-radio-field-@Model.Field.FieldID" style="margin-top:4px">
+         @if (Model.Field.PossibleValues != null)
+         {
+             List<string> listValues = new List<string>(Model.Field.PossibleValues.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries));
+             if (Model.Field.SortValues == 1) { listValues.Sort(); }
+             string[] Values = listValues.ToArray();
+             string[] SelectedValues = Model.Value.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+             int i = 0;
+             foreach (string Value in Values)
+             {
+                <div style="display:@if (Model.Field.VerticalLayout == 1){@Html.Raw("block");}else{@Html.Raw("inline-block")};padding:0px; padding-right:12px;height:24px">                 
+                 @if (SelectedValues.Length > 0 && Array.Exists(SelectedValues, element => element.Trim().ToLower() == Value.Trim().ToLower()))
+                 {
+                     <input style="vertical-align: middle; margin: 0px;padding-right:4px" type="radio" name="profile-radio-field-@Model.Field.FieldID" id="profile-radio-field-@i" value="@Value.Trim()" class="profile-radio-field" checked="checked"/>
+                     <span style="vertical-align: middle; margin: 0px;">@Value.Trim()</span>
+                 }
+                 else
+                 {
+                     <input style="vertical-align: middle; margin: 0px;padding-right:4px" type="radio" name="profile-radio-field-@Model.Field.FieldID" id="profile-radio-field-@i" value="@Value.Trim()" class="profile-radio-field"/>
+                     <span style="vertical-align: middle; margin: 0px;"> @Value.Trim()</span>
+                 }
+
+                 @{i++;}
+                 </div>
+             }
+         }
+        </div>                 
+        <div class="muted"><p>@Model.Field.Comment</p></div>            
+         break;
+        }
+    }
+}
+</div>
+
+@if (Model.Field.Encrypted == 1 && Model.Value != null && Model.Value.Length > 0)
+{
+  <script type="text/javascript">
+      $(function () {
+          $("#profile-field-div-@Model.Field.FieldID").addClass("hide-encrypted");
+          $("<div id=\"show-profile-field-@Model.Field.FieldID\" data-linked-control=\"profile-field-div-@Model.Field.FieldID\" style=\"width:97%;margin-bottom:7px;display:inline-block;border:1px solid #ddd;padding:5px;\"><a href=\"#\">@AppSession.GetLabel("Profile.HideEncrypted")</a></div>").insertAfter("#profile-field-div-@Model.Field.FieldID");
+          $("#show-profile-field-@Model.Field.FieldID").bind("click", function () {$(this).hide();$("#" + $(this).attr("data-linked-control")).removeClass("hide-encrypted");return false;
+          });
+      });
+  </script>
+}

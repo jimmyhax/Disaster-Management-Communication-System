@@ -1,0 +1,214 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+<h2>Profile of @AppSession.Profile.Member.Name</h2>
+<p/>
+ @{  
+     string currentDomainName = "";
+     var groupTab = 1;
+     
+     if(Request.UrlReferrer != null){
+         currentDomainName = Request.UrlReferrer.Host;
+     }
+     else if (Request.Url.Host == HttpContext.Current.Request.Url.Host)
+     {
+         currentDomainName = HttpContext.Current.Request.Url.Host;
+     }else
+     {
+         currentDomainName = Request.Url.Host;
+         <p>The profile for current domain is switched off. Please contact site administrator for explanation. Domain: @currentDomainName</p>
+         return;
+     }
+
+     Domain memberDomain = Domains.GetByMember(AppSession.Profile.Member.MemberID, currentDomainName);
+     if (memberDomain.DomainID <= 0)
+     {
+         <p>The profile for current domain is switched off. Please contact site administrator for explanation. Domain: @currentDomainName</p>
+         return;
+     }
+}
+
+<div id="general-message"></div>
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#1" data-toggle="tab">General</a>
+        </li>
+        @{  
+            var profileFieldGroups = ProfileFieldGroups.GetAllActiveNonAdminByDomainRoleMember(AppSession.Profile.Member.MemberID, currentDomainName);
+            List<MemberProfileField> memberProfileFields = MemberProfileFields.GetByMember(AppSession.Profile.Member.MemberID);
+
+            foreach (ProfileFieldGroup group in profileFieldGroups)
+            {
+                var _fields = ProfileFields.GetByDomainRoleGroupID(AppSession.Profile.Member.MemberID, currentDomainName, group.FieldGroupID);
+
+                if (_fields.Count == 0)
+                {
+                    continue;
+                }
+                groupTab++;
+              <li><a href="#@groupTab" data-toggle="tab">@group.FieldGroupName</a></li>
+            }
+        }
+        
+    </ul>
+    <form class="form-horizontal" method="post" id="settings-form" style="width:100%" action="~">
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="1">
+    		<legend>General</legend>            
+            <br/> 
+            <div class="row">
+                <div class="col-md-6">
+                    @{Html.RenderPartial(@"~/Views/Profile/_ProfileGeneral.cshtml", Model);}                 
+                </div>
+            </div>
+        </div>
+        @{
+            groupTab = 1;
+
+            foreach (ProfileFieldGroup group in profileFieldGroups)
+            {
+                if (group.AdminUseOnly == 1)
+                {
+                    continue;
+                }
+
+                var _fields = ProfileFields.GetByDomainRoleGroupID(AppSession.Profile.Member.MemberID, currentDomainName, group.FieldGroupID);
+                if (_fields.Count == 0)
+                {
+                    continue;
+                }
+
+                groupTab++;
+              <div class="tab-pane fade in" id="@groupTab">
+                <legend>@group.FieldGroupName</legend>
+                <div class="col-md-6'">
+                @{
+                foreach (ProfileField field in _fields)
+                {
+                    if (field.IsActive <= 0 || field.AdminUseOnly == 1)
+                    {
+                        continue;
+                    }
+
+                    var value = MemberProfileFields.GetField(memberProfileFields, field.FieldID).FieldValue;
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="profile-field-@field.FieldID">@field.FieldName
+                            @if (field.IsMandatory == 1)
+                            {
+                                <span style="color:red;font-size:14px">&nbsp;<b>*</b></span>
+                            }
+                            </label>                                    
+                            @{
+                            Html.RenderPartial(@"~/Views/Profile/_ProfileField.cshtml", new ProfileFieldModel(field, ProfileFieldMode.Edit, value));
+                            }
+                        </div>
+                    </div>
+                }
+              }
+                  </div>                                    
+              </div>         
+            }
+        }
+        <div>
+            <span style="color:red;font-size:14px">&nbsp;<b>*</b></span> @AppSession.GetLabel("Account.CreateAccount.Required")<br/>&nbsp;<br/>
+        </div>
+    </div>
+    <div class="form-actions" style="padding-top:15px;padding-bottom:15px">
+		<button data-loading-text="Saving..." data-complete-text="Changes saved" name="save-member-profile" id="save-member-profile" class="btn btn-default btn-primary save-settings btn-sm">Save changes</button>
+    </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $("#save-member-profile").bind("click", function (e) {
+        e.preventDefault();
+        var profileFiedlInfo = new Array();
+        var TimeZoneID = $("#member-time-zone").val();
+
+        $(".save-settings").button('loading')
+
+        $(".profile-field").each(function (e) {
+           var profileField = {};
+
+           if ($(this).attr("type") == "checkbox")
+               profileField = { ID: $(this).attr("id").replace("profile-field-", ""), Value: $(this).is(":checked") };
+           else
+               profileField = { ID: $(this).attr("id").replace("profile-field-", ""), Value: $(this).val() != null ? $(this).val().toString() : ""};
+            
+            profileFiedlInfo.push(profileField);
+        });
+
+         $('div[id*="profile-radio-field-"]').each(function (e) {
+              var fieldId = $(this).attr("id").replace("profile-radio-field-", "")
+              
+              var profileField = {
+                  ID: fieldId,
+                  Value: $(this).find('input:checked').val()
+              }
+              
+              profileFiedlInfo.push(profileField);
+         });
+
+        $.ajax({
+            type: "POST",
+            url:  "@Url.Action("SaveProfile", "Profile")",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({FieldInfo: profileFiedlInfo, TimeZoneID : TimeZoneID}),
+            cache: false,
+            success: function (data) {
+                  $(".save-settings").button('reset')
+
+                  if(data.MemberFields != null && data.MemberFields.length > 0)
+                  {
+                        for(var i=0; i < data.MemberFields.length;i++)
+                        {
+                            var element = data.MemberFields[i];
+                            if(element.Type == 6)
+                            {
+                               if(element.Value == "true")
+                                    $("#"+element.Name).attr('checked', true);
+                               else
+                                    $("#"+element.Name).attr('checked', false);
+                            }else  if(element.Type == 7)
+                            {
+                                $('[name='+element.Name+']').prop('checked',false);
+                                $('[name="'+element.Name+'"][value=\"'+element.Value+'\"]').prop('checked',true);
+                            }
+                            else
+                            {
+                               $("#"+element.Name).val(element.Value);
+                            }
+                        }
+                  }
+                  
+                  if(data.TimeZoneID)
+                  {
+                    $("#member-time-zone").val(data.TimeZoneID);
+                  }
+
+                  if(data.Message != null && data.Message.length > 0)
+                  {
+                    $("#general-message").html(data.Message);
+                  }
+
+                 setTimeout(function (e) {
+                   $.scrollTo($("body"), { duration: 900, axis: 'y' });
+                 }, 500);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                App.DialogError(xhr, textStatus, errorThrown);
+                $(".save-settings").button('reset')
+            }
+        });
+
+
+        return false;
+    });
+</script>

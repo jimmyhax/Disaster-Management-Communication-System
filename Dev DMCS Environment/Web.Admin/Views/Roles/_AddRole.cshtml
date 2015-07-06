@@ -1,0 +1,92 @@
+﻿
+@{ var templateId = String.Format("dialog-view-{0}", DateTime.Now.Ticks.ToString());
+   var dialogId = templateId.Replace("-view-", "-");
+   var contentId = templateId.Replace("-view-", "-content-");
+}
+
+<template type="text/template" id="@templateId" data-dialog-tittle="Add New Role" data-dialog-spinner="spinner-@dialogId">
+     <div id="notify-message"></div>
+     <div class="form-group">
+         <label for="role-name">Name</label>
+         <input type="text" class="input-xlarge form-control" id="role-name" style="color:black" maxlength="64"/>
+     </div><br/>
+     <div class="form-group">
+       <label for="role-settings">Settings</label>
+       <textarea class="input-xlarge form-control" id="role-settings" rows="3" style="color:black" maxlength="4000" ></textarea>
+     </div><br/><br/>
+     <div class="form-group" style="height:100px;vertical-align:top">
+        <div class="form-item" style="display:inline-block;vertical-align:top">
+            <label for="b-color">Background color:</label><input type="text" id="role-color" name="role-color" class="colorwell" value="#123456" maxlength="7" />
+        </div>
+        <div id="picker" style="display:inline-block"></div>
+      </div>
+</template>
+
+<script type="text/javascript">
+
+   function addRoleOnShown(dialogRef){
+        $('#color1').gradientColorPicker();     
+
+        var f = $.farbtastic('#picker');
+  
+        $('.colorwell')
+          .each(function () { 
+              f.linkTo(this); ///$(this).css('opacity', 0.75);
+              f.setColor('#AABBCC');
+          });
+    }
+    
+    $(function () {  
+        var dialog = App.DialogBootstrap("#@templateId", 550, 620, true,
+        {
+            Add: function () {
+                
+                var roleInfo = {
+                    RoleID:-1,
+                    Name :     $("#role-name").val(),
+                    Settings : $("#role-settings").val(),
+                    Color :    $("#role-color").val()
+                };
+                
+                $("#spinner-@dialogId").addClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                 // Removing file by AJAX request
+                 $.ajax({
+                   type: "POST",
+                   url: "@Url.Action("SaveRole", "Roles")",
+                   dataType: "json",
+                   contentType: 'application/json; charset=utf-8',
+                   data: JSON.stringify(roleInfo),
+                   cache: false,
+                   success: function (data) {
+                      switch (data.NotifyType)
+                      {
+                          case 0: $("#general-message").html(data.Html);dialog.close(); break
+                          case 1: $("#@dialogId").find("#notify-message").html(data.Html);break;
+                          case 2: $(data.Html).prependTo('body'); dialog.close(); break;
+                          case 3: $(data.Html).prependTo('body'); dialog.close();break;
+                      };
+
+                       if (data.NotifyType == 1)
+                           $("#@dialogId").animate({ scrollTop: 0 }, 'slow');
+
+                      if(data.NotifyType == 0 ){                 
+                        setTimeout(function(e){App.RolesManagement.ReloadRoles(null, null,false);}, 700);
+                      }
+
+                      $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                   },        
+                   error: function(xhr, textStatus, errorThrown){
+                       App.DialogError(xhr,textStatus, errorThrown);
+                       $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                   }   
+                });   
+         
+            }//,
+            //Cancel: function () {$(this).dialog("close");}
+        },
+        true,
+        addRoleOnShown
+        )
+     });
+</script>

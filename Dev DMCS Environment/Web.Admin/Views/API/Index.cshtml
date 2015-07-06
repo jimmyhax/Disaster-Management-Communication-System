@@ -1,0 +1,179 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+<h2>API</h2><br/>
+ @if (Parameters.GetBy("api-enabled").Value == "false")
+ {
+    <div class="alert">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>API functionality is switched off.</strong> You can enabled it on the settings page. Go to <a href="/settings">Settings</a> to switch it on.
+    </div>
+ }
+
+<p>API, or Application Programming Interface, is a set of functions that one computer program makes available to other programs (or developers) so they can talk to it directly without having to give it access to the source code.</p>
+<p>This package provides simple API C# library which you can use by your web applications in order to authenticate, get role and members list from centralize repository. At the moment the library contains small set of methods pub it will be extended in the future.</p>
+<p>The API library use HTTP protocol to execute admin site methods. In order to access the API, you need two pieces of information. The first is a member email which is a unique code that we use to identify your account. The other is an API Token which acts as a password when you connect to the API. You can get both of those here.</p>
+<p>On Members page click on member name and after on API tab. After that you should click on the "Generate a new API Token" to display it. You'll need to remember both of those later when you start writing code.</p>
+<p>
+
+Remember: In order to use API you should:
+    <ul>
+        <li>Generate member token;</li>
+        <li>Add a member to the API Members role;</li>
+        <li>Add reference to Server_.API.DLL file.</li>
+    </ul>
+</p>
+
+<h3>How to use it</h3><br/>
+<p>The first of all you should to add reference to Server_.API library. After that, add the following declaration to each C# class file where API will be used.</p>
+<p>The library contains 4 collection classes:
+<ul>
+    <li>Roles</li>
+    <li>Members</li>
+    <li>AuditEvents</li>
+    <li>AuditEventDatails</li>
+</ul>
+<p>Utilities Classes</p>
+<ul>
+    <li>Credentials</li>
+    <li>Exception</li>
+</ul>
+
+Those classes have static methods which return collection of Roles, Members, AuditEvents, AuditEventDatails by different conditions. Let's have a look on each collection and their methods.
+</p>
+
+<h3>Role Collection</h3><br/>
+<pre class="prettyprint linenums">
+    List&lt;Role&gt;GetRoles(){};                            // Returns whole list of roles
+    List&lt;Role&gt; GetMemberRoles(long MemberID){};        // Returns roles which by member unique ID 
+    List&lt;Role&gt; GetMemberRoles(string Email){};         // Returns roles by member email 
+</pre>
+
+<h3>Member Collection</h3><br/>
+<pre class="prettyprint linenums">
+    List&lt;Member> GetMembers(CollectionFilter Filter){};   // Returns members by a filter
+    /*
+    For  now the filter class contains two property 
+        int ItemsPerPage;
+        int CurrentPage.
+    */
+    Member GetMember(long MemberID){};                       // Returns member by ID
+    Member GetMember(String Email){};                        // Returns member by email
+    Member AssignRoles(long MemberID, long RoleID){};        // Adds member to role by ID
+    Member AssignRoles(long MemberID, long[] RoleID){};      // Adds member to roles by ID
+    Member AssignRoles(string Email, string RoleName){};     // Adds member to role by email
+    Member AssignRoles(string Email, string[] RoleName){};   // Adds member to role
+    Member UnAssignRoles(long MemberID, long RoleID){};      // Removes member from role by ID
+    Member UnAssignRoles(long MemberID, long[] RoleID){};    // Removes member from roles by ID
+    Member UnAssignRoles(string Email, string RoleName){};   // Removes member from role by Email
+    Member UnAssignRoles(string Email, string[] RoleName){}; // Removes member from roles by
+</pre>
+
+<h3>AuditEvents Collection</h3><br/>
+<pre class="prettyprint linenums">
+    GetEvents(CollectionFilter Filter){};                       // Returns event list by a filter.
+    /*
+    For now the filter class contains two properties 
+	    int ItemsPerPage;
+	    int CurrentPage. 
+   */
+</pre>
+
+<h3>AuditEventDatails<h3><br/>
+<pre class="prettyprint linenums">
+    List&lt;AuditEventDetail&gt; GetEventDatails(long EventID){};  //  Returns detail items for certain audit event.
+</pre>
+
+<h3>Utilities Classes</h3><br/>
+<pre class="prettyprint linenums">
+  public class Credentials
+  {
+      public string URL   { get; set; }   //  API entry point
+      public string Email { get; set; }   //  Member email
+      public string Token { get; set; }   //  Member API token
+  }
+</pre>
+
+
+<h3>Exception</h3><br/>
+<p>
+This class inherits from System.Exception and reflects application exceptions on the server side.
+<pre class="prettyprint linenums">
+ public class Exception : System.Exception
+ {
+     public Exception(String Message)
+         : base(Message)
+     { 
+     
+     }
+ }
+</pre>
+
+<h3>Code example: (C# .Net)</h3><br/>
+<pre class="prettyprint linenums">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Net;
+using System.IO;
+
+using Server_.API;
+using Server_.API.Collections;
+using Server_.API.Objects;
+using Server_.API.Utilities;
+
+namespace SimpleTools.RoleAdmin.App
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Connection Connection =
+                new Connection
+                (
+                    "http://localhost:50000/admin/api", 
+                    "example@demo.com", 
+                    "HYXMvDsQWhGhbShE7yS1"
+                );
+                
+            Tools.Connection = Connection;
+            Roles.Connection = Connection;
+            Members.Connection = Connection;
+            AuditEvents.Connection = Connection;
+            AuditEventDatails.Connection = Connection;
+
+            // General
+            Console.WriteLine(Tools.Ping().Data);
+            
+            // Roles
+            List&lt;Role&gt; _Roles = Roles.GetRoles();
+            
+            _Roles = Roles.GetMemberRoles(102);
+            _Roles = Roles.GetMemberRoles("admin@demo.com");
+
+            // Members
+            List&lt;Member&gt; _Members = Members.GetMembers(new CollectionFilter() { CurrentPage = 1, ItemsPerPage = 30 });
+                         _Members = Members.GetMembers(new CollectionFilter() { CurrentPage = 2, ItemsPerPage = 30 });
+
+            Member _Member = Members.GetMember(130);
+                   _Member = Members.GetMember("admin@demo.com");
+
+            // Audit items
+            List&lt;AuditEvent&gt; _Events = AuditEvents.GetEvents(new CollectionFilter() { CurrentPage = 1, ItemsPerPage = 30 });
+                            _Events = AuditEvents.GetEvents(new CollectionFilter() { CurrentPage = 2, ItemsPerPage = 30 });
+
+            // Audit Item Details
+            foreach (AuditEvent Event in _Events)
+            {
+                List&lt;AuditEventDetail&gt; _EventDetails = AuditEventDatails.GetEventDatails(Event.EventID);
+            }
+
+        }
+    }
+}
+</pre>
+</p>

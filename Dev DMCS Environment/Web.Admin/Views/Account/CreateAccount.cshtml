@@ -1,0 +1,97 @@
+﻿@using Web.Admin.Controllers
+@using Web.Admin.Logic.Collections;
+@using Web.Admin.Logic.Objects;
+@using Web.Admin.Models
+
+@{
+   var RetutnUrl = "";
+    if (AppSession.NoAuthReturnUrl != null && !User.Identity.IsAuthenticated) 
+    {
+        RetutnUrl = AppSession.NoAuthReturnUrl;
+    }
+    else if (AppSession.ReturnUrl != null)
+    {
+        RetutnUrl = AppSession.ReturnUrl;
+    }
+
+    AppSession.SignUpDomain = "";
+    
+    if (Request.UrlReferrer != null)
+    {
+        AppSession.SignUpDomain = Request.UrlReferrer.DnsSafeHost;
+    }
+
+    
+}
+
+<div class="login-header-top">
+    <div class="container">
+           <h1>
+            @AppSession.GetLabel("Account.CreateAccount.HeaderBig")&nbsp;
+            <small>
+                @AppSession.GetLabel("Account.CreateAccount.HeaderSmall")
+                @if (@RetutnUrl  != "") { <a style="float:right" class="btn btn-default" href="@RetutnUrl ">Back to Application</a>}
+            </small>
+            </h1>
+    </div>
+</div>
+
+<style>
+ .public-footer{
+   margin-top:100px;
+}
+</style>
+
+<div class="login-box login-box-pos-top-fixed" style="left: 43%;position: relative !important; top:150px !important;">
+    <div class="login-form" style="width:650px !important">
+        <div class="login-title">
+        @AppSession.GetLabel("Account.CreateAccount.NeedsAnAccount")
+        </div>
+        <div class="login-form-inner">
+               <div id="notify-message"></div>
+
+               <label class="member-label" for="member-name"><b>@AppSession.GetLabel("Account.CreateAccount.YourName")</b>&nbsp;<span style="color:red;font-size:14px">&nbsp;<b>*</b></span></label>
+               <input type="text" class="input-xlarge login-form-field" id="member-name" style="width:97%;color:black" maxlength="64"/>
+               <div class="muted"><p>@AppSession.GetLabel("Account.CreateAccount.Comment1")</p></div>
+
+               <label class="member-label" for="member-email"><b>@AppSession.GetLabel("Account.CreateAccount.Email")</b>&nbsp;<span style="color:red;font-size:14px">&nbsp;<b>*</b></span></label>
+               <input type="text" class="input-xlarge login-form-field" id="member-email" style="width:97%;color:black" maxlength="64"/>
+               <div class="muted"><p>@AppSession.GetLabel("Account.CreateAccount.Comment2")</p></div>
+               
+               @{
+                  var domainName = "";
+                  if(Request.UrlReferrer != null){
+                      domainName = Request.UrlReferrer.DnsSafeHost;
+                  }
+                  
+                  List<ProfileFieldGroup> profileGroups = ProfileFieldGroups.GetAllActiveNonAdminByDomain(domainName,"Admins");  
+                  foreach(ProfileFieldGroup profileGroup in profileGroups)
+                  {
+                      Html.RenderPartial(@"~/Views/Profile/_ProfileFieldByGroup.cshtml", new ProfileFieldGroupModel(profileGroup.FieldGroupName, domainName));
+                  }
+               }
+
+               <label class="member-pass" for="member-pass"><b>@AppSession.GetLabel("Account.CreateAccount.Password")</b>&nbsp;<span style="color:red;font-size:14px">&nbsp;<b>*</b></span></label>
+               <input type="password" class="input-xlarge login-form-field" id="member-pass" style="width:97%;color:black" maxlength="30"/>
+               <div class="muted"><p>@AppSession.GetLabel("Account.CreateAccount.Comment3")</p></div>
+               <label class="member-pass" for="member-pass-confirm"><b>@AppSession.GetLabel("Account.CreateAccount.PasswordConfirmation")</b>&nbsp;<span style="color:red;font-size:14px">&nbsp;<b>*</b></span></label>
+
+               <input type="password" class="input-xlarge login-form-field" id="member-pass-confirm" style="width:97%;color:black" maxlength="30"/>
+               <div class="muted"><p>@AppSession.GetLabel("Account.CreateAccount.Comment4")</p></div>
+               <div><span style="color:red;font-size:14px">&nbsp;<b>*</b></span> @AppSession.GetLabel("Account.CreateAccount.Required")<br/>&nbsp;<br/></div>
+               <p>@AppSession.GetLabel("Account.CreateAccount.Comment5") <a href="/terms" title="@AppSession.GetLabel("Account.CreateAccount.Comment6")" target="_blank">@AppSession.GetLabel("Account.CreateAccount.Comment7")</a> @AppSession.GetLabel("Account.CreateAccount.Comment8")  <a href="/privacy" title="@AppSession.GetLabel("Account.CreateAccount.Comment9")" target="_blank">@AppSession.GetLabel("Account.CreateAccount.Comment10")</a>.</p>
+
+         </div>
+        <div class="login-form-buttons">
+              <button class="btn btn-default btn-success create-account-btn  login-form-button btn-sm">@AppSession.GetLabel("Account.CreateAccount.CreateAccount")</button>&nbsp;<div class="glyphicon glyphicon-refresh glyphicon-refresh-animate" style="vertical-align:middle;display:none"></div>
+              <div style="float:right;margin-top:5px"><a href="@Url.Content("SignIn")">@AppSession.GetLabel("Account.CreateAccount.SignIn")</a>&nbsp;&nbsp;
+
+              @{AppSession.Parameters.RefreshAppParameters();}                              
+              @if (AppSession.Parameters.RegistrationResetPassword.Value == "true")
+              {<a href="@Url.Content("ForgotPassword")">@AppSession.GetLabel("Account.CreateAccountForgotPassword")</a>}
+              
+         </div>
+    </div>
+    </div>
+    <br/><br/><br/><br/>
+</div>   

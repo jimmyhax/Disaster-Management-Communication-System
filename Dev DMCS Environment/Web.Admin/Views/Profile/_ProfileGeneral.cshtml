@@ -1,0 +1,43 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+
+@{Html.RenderPartial(@"~/Views/Profile/_AvatarPanel.cshtml", new AvatarPanelModel(){ MemberID = AppSession.Profile.Member.MemberID });}              
+<p/>
+<div class="form-group">
+    <label class="control-label" for="member-time-zone">@AppSession.GetLabel("Account.CreateAccount.YourTimeZone")</label>
+    @{
+        var TimeZones = TimeZoneInfo.GetSystemTimeZones();
+        <select id="member-time-zone" class="form-control">
+            <option value="">@AppSession.GetLabel("Account.CreateAccount.YourTimeZoneEmty")</option>
+            @foreach (TimeZoneInfo Info in TimeZones)
+            {
+                if (AppSession.Profile.Member.TimeZoneID == Info.Id)
+                {
+                    <option value="@Info.Id" selected="selected">@Info.DisplayName</option>
+                }
+                else
+                {
+                    <option value="@Info.Id">@Info.DisplayName</option>
+                }
+            }
+        </select>
+    }
+    <p class="muted">@AppSession.GetLabel("Account.CreateAccount.YourTimeZoneComment")</p>
+</div>
+
+<div class="form-group">
+    <label class="control-label" for="">@AppSession.GetLabel("Account.CreateAccount.YourName")</label>
+    <input type="text" readonly class="input-xlarge app-settings form-control" maxlength="64" id="" name="" value="@AppSession.Profile.Member.Name" />
+    <p class="muted"></p>
+</div>
+
+<div class="form-group">
+    <label class="control-label" for="">@AppSession.GetLabel("Account.CreateAccount.Email")</label>
+    <input type="text" readonly class="input-xlarge app-settings form-control" maxlength="54" id="" name="" value="@AppSession.Profile.Member.Email" />
+    <p class="muted"></p>
+</div>

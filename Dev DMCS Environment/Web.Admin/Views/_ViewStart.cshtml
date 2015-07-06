@@ -1,0 +1,61 @@
+﻿@using Web.Admin.Logic.Collections;
+@{ 
+    String controllerName = (String)ViewContext.Controller.ValueProvider.GetValue("controller").RawValue;
+    String actionName = (String)ViewContext.Controller.ValueProvider.GetValue("action").RawValue;
+    
+    actionName =  actionName.ToLower();
+}
+
+@{   
+
+    if(Request.IsAjaxRequest() && Request.Url.AbsoluteUri.ToLower().IndexOf("signin") > 0)        
+    {
+        Response.StatusCode = 200;  
+        Response.ClearContent();
+        Response.ContentType = "application/json; charset=utf-8";
+        Response.Write(String.Format("\"redirect\":\"{0}\"", @Url.Content("~/SignIn?returnUrl=") + HttpUtility.UrlEncode(Request.UrlReferrer.AbsoluteUri)));
+        Response.Flush();
+        Response.End();
+        return;
+    }
+ 
+    if (Request.IsAuthenticated && 
+        actionName != "sigin" && 
+        actionName != "signup" &&
+        actionName != "createaccount" && 
+        actionName != "forgotpassword" && 
+        actionName != "register" &&  
+        actionName != "activate" &&  
+        actionName != "sendchangepasswordlink" &&  
+        actionName != "changepassword" &&  
+        actionName != "changepasswordaccount")
+    {
+        
+        if(AppSession.IsMemberInAdminRole)
+        {
+            if (Request.Url.AbsolutePath.ToLower().IndexOf("profile") >= 0 && AppSession.ReturnUrl != null && AppSession.ReturnUrl.Length > 0)
+            {
+                Layout = "Shared/_LayoutMember.cshtml";
+            }
+            else
+            {
+                Layout = "Shared/_LayoutAdmin.cshtml";        
+            }
+        } 
+        else 
+        {
+            if (controllerName.ToLower() != "profile"  )
+            {
+                Response.Redirect(Url.Content("~/Profile"));
+            }
+            else
+            {
+                Layout = "Shared/_LayoutMember.cshtml";
+            }
+        }        
+    }
+    else    
+    {
+        Layout = "Shared/_LayoutPublic.cshtml";
+    }
+}

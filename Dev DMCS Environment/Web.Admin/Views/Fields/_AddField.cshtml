@@ -1,0 +1,156 @@
+﻿@model ProfileFieldGroupModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{ 
+ var templateId = String.Format("dialog-view-{0}", DateTime.Now.Ticks.ToString());
+ var dialogId = templateId.Replace("-view-", "-");
+ var contentId = templateId.Replace("-view-", "-content-");
+}
+<template type="text/template" id="@templateId" data-dialog-tittle="Add Profile Field" data-dialog-spinner="spinner-@dialogId">
+        <div id="notify-message"></div><br/>
+
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#general" data-toggle="tab">General</a>
+            </li>
+            <li><a href="#domains" data-toggle="tab">Restricted By Domains</a></li>
+            <li><a href="#roles" data-toggle="tab">Restricted By Roles</a></li>
+        </ul>
+        <br />
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="general">
+                <label class="member-label" for="profile-field-name"><b>Name</b></label>
+                <input type="text" class="input-xlarge" id="profile-field-name" style="width:97%;color:black" maxlength="64" value="" />
+
+                <label class="member-label" for="profile-field-type"><b>Type</b></label>
+                <select style="width:98%" id="profile-field-type" class="form-control">
+                    @{
+                        List<ProfileFieldType> profileFieldTypes = ProfileFieldTypes.Get();
+                        foreach (ProfileFieldType profileFieldType in profileFieldTypes)
+                        {
+                            <option value="@Convert.ToInt16(profileFieldType.FieldTypeID)">@profileFieldType.FieldTypeName</option>
+                        }
+                    }
+                </select>
+
+                <label for="profile-field-comment"><b>Comment</b></label>
+                <textarea type="text" class="input-xlarge form-control" id="profile-field-comment" style="width:97%; height:30px; color:black"></textarea>
+
+                <label for="profile-field-possible-values"><b>Possible Values</b></label>
+                <textarea type="text" class="input-xlarge form-control" id="profile-field-possible-values" style="width:97%; height:100px; color:black"></textarea>
+
+                <label for="profile-field-text-select-value"><b>Text (Please, select value)</b></label>
+                <input type="text" class="input-xlarge form-control" id="profile-field-text-select-value" style="width:97%;color:black" maxlength="64" value="" />
+
+                <div style="padding:7px">
+                    <input style="vertical-align: middle; margin: 0px" type="checkbox" id="profile-field-is-mandatory" /><span style="vertical-align: middle; margin: 0px;padding-right:12px">&nbsp;<b>Is Mandatory</b></span><br />
+                    <input style="vertical-align: middle; margin: 0px" id="profile-field-show-in-signup" type="checkbox" /><span style="vertical-align: middle; margin: 0px;">&nbsp;<b>Show On SignUp Form</b></span><br />
+                    <input style="vertical-align: middle; margin: 0px" id="profile-field-show-sort-values" type="checkbox" /><span style="vertical-align: middle; margin: 0px;">&nbsp;<b>Sort possible values</b></span><br />
+                    <input style="vertical-align: middle; margin: 0px" id="profile-field-show-is-active" type="checkbox" /><span style="vertical-align: middle; margin: 0px;">&nbsp;<b>Is Active</b> (If unchecked then the field is hidden.)</span><br />
+                    <input style="vertical-align: middle; margin: 0px" id="profile-field-show-admin-use-only" type="checkbox" /><span style="vertical-align: middle; margin: 0px;">&nbsp;<b>Admin Use Only</b> (The admin member will see this field.)</span><br />
+                    <input style="vertical-align: middle; margin: 0px" id="profile-field-show-vertical-layout" type="checkbox" /><span style="vertical-align: middle; margin: 0px;">&nbsp;<b>Vertical Layout</b> (Use vertical layout for checkbox and radio button group only.)</span><br />
+                    <input style="vertical-align: middle; margin: 0px" id="profile-field-encrypted" type="checkbox" /><span style="vertical-align: middle; margin: 0px;">&nbsp;<b>Encrypted</b> (The field value will be stored encrypted in the database and you can't edit this flag after.)</span><br />
+
+                </div>
+
+                <label  for="field-group"><b>Group name</b></label>
+                <input type="text" class="input-xlarge form-control" id="group" style="width:97%;color:black" maxlength="64" value="@ProfileFieldGroups.GetBy(Model.FieldGroup.FieldGroupID).FieldGroupName" readonly />
+            </div>
+            <div class="tab-pane fade" id="domains">
+                @{Html.RenderPartial(@"~/Views/Fields/_FieldDomains.cshtml", new ProfileField());}
+            </div>
+            <div class="tab-pane fade" id="roles">
+                @{Html.RenderPartial(@"~/Views/Fields/_FieldRoles.cshtml", new ProfileField());}
+            </div>
+        </div>
+</template>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        var dialog = App.DialogBootstrap("#@templateId",840,730, true,
+        {
+            Save: function () {
+                var _this = this;
+
+                var _checkedDomains = [];
+                var _checkedRoles = [];
+
+                $(".domain-select").each(function (e) {
+                    if ($(this).is(':checked') == true)
+                        _checkedDomains.push(parseInt($(this).attr("data-domain-id")));
+                });
+
+                $(".role-select-inline").each(function (e) {
+                    if ($(this).is(':checked') == true)
+                        _checkedRoles.push(parseInt($(this).attr("data-role-id")));
+                });
+
+                var Values = {
+                    Name: $("#profile-field-name").val(),
+                    FieldType: $("#profile-field-type").val(),
+                    Comment:  $("#profile-field-comment").val(),
+                    PossibleValues: $("#profile-field-possible-values").val(),
+                    SelectText: $("#profile-field-text-select-value").val(),
+                    IsMandatory: $("#profile-field-is-mandatory").is(':checked'),
+                    ShowInSignup: $("#profile-field-show-in-signup").is(':checked'),
+                    SortValues: $("#profile-field-show-sort-values").is(':checked'),
+                    IsActive: $("#profile-field-show-is-active").is(':checked'),
+                    AdminUseOnly: $("#profile-field-show-admin-use-only").is(':checked'),
+                    VerticalLayout: $("#profile-field-show-vertical-layout").is(':checked'),
+                    Encrypted: $("#profile-field-encrypted").is(':checked'),
+                    FieldGroupID: @Model.FieldGroup.FieldGroupID,
+                    SelectedDomains: _checkedDomains,
+                    SelectedRoles: _checkedRoles
+                };
+
+                $("#spinner-@dialogId").addClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("AddField", "Fields")",
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(Values),
+                    cache: false,
+                    success: function (data) {
+
+                        switch(data.NotifyType)
+                        {
+                            case 0: $("#general-message").html(data.Html);dialog.close();break
+                            case 1: $("#@dialogId").find("#notify-message").html(data.Html);break;
+                            case 2: $(data.Html).prependTo('body');dialog.close();break;
+                        };
+
+                        if(data.NotifyType == 1)
+                            $("#@dialogId").animate({ scrollTop: 0 }, 'slow');
+
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                        if(data.Html == "")
+                        {
+                            dialog.close();
+
+                            setTimeout(function(){
+                                $("#member-profile-fields").load("@Url.Action("GetMemberFields", "Fields")",function() {App.FieldsManagement.InitDragAndDrop()});
+                            },10);
+
+                        };
+
+                    },
+                    error: function(xhr, textStatus, errorThrown){
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                        dialog.close();
+                    }
+                });
+
+            }//,
+            //Cancel: function () {$(this).dialog("close");}
+        })
+    });
+
+</script>

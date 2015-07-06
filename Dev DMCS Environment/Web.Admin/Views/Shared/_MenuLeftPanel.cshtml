@@ -1,0 +1,45 @@
+﻿
+<div class="well sidebar-nav">
+    <ul class="nav nav-list">
+      <li class="nav-header">Sidebar</li>
+      <li class="active"><a href="@Url.Action("Index","Home")">Home</a></li>
+      <li><a href="@Url.Action("Members","Members")">Members</a></li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li>
+      <li class="nav-header">Sidebar</li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li>
+      <li class="nav-header">Sidebar</li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#" id="button-refresh-dynamic">Show Dialog</a></li>
+    </ul>
+ </div><!--/.well -->
+
+<script type="text/javascript">
+    $("#button-refresh-dynamic").live("click", function (e) {
+        e.preventDefault();        
+        var _this = $(this)
+        _this.attr("disabled", "disabled");
+
+        $.ajax({
+           type: "POST",
+           url: "@Url.Action("GetDynamicDialog", "Home")",
+           data: {},
+           cache: false,
+           dataType: "json",
+           success: function (data) {
+                $(data.Html).appendTo('body');
+                _this.removeAttr("disabled");
+           },        
+           error: function(xhr, textStatus, errorThrown){
+                alert('request failed'); 
+                _this.removeAttr("disabled");
+            }   
+        });
+    }); 
+</script>      

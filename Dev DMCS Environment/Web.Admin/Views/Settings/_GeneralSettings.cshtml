@@ -1,0 +1,74 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    var general_admin_email = AppSession.Parameters.GeneralAdminEmail;
+    var general_domain_name = AppSession.Parameters.GeneralDomainName;
+    var general_audit_enabled = AppSession.Parameters.GeneralAuditEnabled;
+    var general_app_path = AppSession.Parameters.GeneralAppPath;
+    var general_cookie_name = AppSession.Parameters.GeneralCookieName;
+
+    var general_app_secret_admin_url = AppSession.Parameters.GeneralSecretAdminUrl;
+    var general_app_maintenance_url = AppSession.Parameters.GeneralMaintenanceUrl;
+    var general_app_maintenance_enabled = AppSession.Parameters.GeneralMaintenanceEnabled;
+}
+
+<div class="row">
+   <div class="col-md-4">
+        <div class="form-group">
+	        <label class="control-label" for="@general_admin_email.Name">Admin Email</label>
+		    <input type="text" class="input-xlarge app-settings form-control" maxlength="@general_admin_email.TypeSize" id="@general_admin_email.Name" name="@general_admin_email.Name" value="@general_admin_email.Value"/>
+		    <p class="muted">The email address of site admin</p>
+        </div>
+
+        <div class="form-group">
+	        <label class="control-label" for="@general_app_path.Name">Application Path</label>
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@general_app_path.TypeSize" id="@general_app_path.Name" name="@general_app_path.Name" value="@general_app_path.Value" />
+		    <p class="muted">Application's absolute path</p>
+        </div>
+
+        <div class="form-group">
+	        <label class="control-label" for="@general_domain_name.Name">Domain Name</label>
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@general_domain_name.TypeSize" id="@general_domain_name.Name" name="@general_domain_name.Name" value="@general_domain_name.Value" />
+		    <p class="muted">The name of domain</p>
+        </div>
+
+        <div class="form-group">
+	        <label class="control-label" for="@general_cookie_name.Name">Auth Cookie Name</label>
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@general_cookie_name.TypeSize" id="@general_cookie_name.Name" name="@general_cookie_name.Name" value="@general_cookie_name.Value" />
+		    <p class="muted">Name of cookie which will use for the authentication</p>
+        </div>
+
+        <div class="form-group">
+	        <label class="control-label" for="@general_audit_enabled.Name">Audit</label>
+		    <label class="checkbox muted">
+                <input type="checkbox" class="input-xlarge app-settings" id="@general_audit_enabled.Name" name="@general_audit_enabled.Name" @if (general_audit_enabled.Value == "true") { @Html.Raw("checked='checked'") } />
+		        <p class="muted">Enable audit functionality</p>
+            </label>       
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="control-label" for="@general_app_secret_admin_url.Name">Secret Admin URL</label>
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@general_app_secret_admin_url.TypeSize" id="@general_app_secret_admin_url.Name" name="@general_app_secret_admin_url.Name" value="@general_app_secret_admin_url.Value" />
+            <p class="muted">Admin UI virtual path</p>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="@general_audit_enabled.Name">Maintenance Time URL</label>
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@general_app_maintenance_url.TypeSize" id="@general_app_maintenance_url.Name" name="@general_app_maintenance_url.Name" value="@general_app_maintenance_url.Value" />
+            <p class="muted">Local or external path of maintenance page</p>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="@general_audit_enabled.Name">Maintenance Time</label>
+            <label class="checkbox muted">
+                <input type="checkbox" class="input-xlarge app-settings" id="@general_app_maintenance_enabled.Name" name="@general_app_maintenance_enabled.Name" @if (general_app_maintenance_enabled.Value == "true") { @Html.Raw("checked='checked'") } />
+                <p class="muted">Switch to the maintenance mode</p>
+            </label>
+            <p class="muted">&nbsp;</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model MemberListModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{ var id = String.Format("dialog-view-{0}", DateTime.Now.Ticks.ToString());}
+
+@if (@Model.Members[0].Token.MemberTokenID > 0)
+{
+   <div class="well">@Model.Members[0].Token.Token</div>
+}
+else
+{ 
+   
+}
+<div style="padding-bottom:14px">
+@if (@Model.Members[0].Token.Created != DateTime.MinValue)
+{
+    <span>Created: @Model.Members[0].Token.Created.ToString("dd MMM yyyy HH:mm:ss")&nbsp;&nbsp;(@Model.Members[0].Token.Created.ToLocalTime().ToRelativeTime())</span>
+}
+
+@if (@Model.Members[0].Token.Modified != DateTime.MinValue)
+{
+    <span><br/>Modified: @Model.Members[0].Token.Modified.ToString("dd MMM yyyy HH:mm:ss")&nbsp;&nbsp;(@Model.Members[0].Token.Modified.ToLocalTime().ToRelativeTime())</span>
+}
+</div>
+
+<div class="btn btn-default btn-success generate-member-token btn-xs" data-loading-text="Generating..." data-complete-text="Done!" style="vertical-align:top !important" id="generate-member-token" data-member-email="@Model.Members[0].Email" data-spinner-id="spinner-@id">Generate a new API Token</div>
+
+@if (@Model.Members[0].Token.MemberTokenID > 0)
+{
+ <div class="btn btn-default btn-danger remove-member-token btn-xs" data-loading-text="Removing..." data-complete-text="Done!" style="vertical-align:top !important" id="remove-member-token" data-member-email="@Model.Members[0].Email" data-spinner-id="spinner-@id">Remove Token</div>
+}
+        

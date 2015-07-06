@@ -1,0 +1,36 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+<h2>Audit</h2>
+    @if (Parameters.GetBy("general-audit-enabled").Value == "false"){
+    <div class="alert">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Adudit functionality is switched off.</strong> You can enabled it on the settings page. Go to <a href="/settings">Settings</a> to switch it on.
+    </div>
+     }
+<div id="general-message"></div>
+<div class="subnav" style="padding:7px">
+    <a class="btn btn-default btn-danger btn-sm" style="vertical-align:top !important" id="remove-event"><i class="glyphicon glyphicon-minus icon-white"></i> Remove</a>&nbsp;
+    <a class="btn btn-default btn-danger btn-sm" style="vertical-align:top !important" id="remove-event-all"><i class="glyphicon glyphicon-minus icon-white"></i> Remove All</a>&nbsp;
+    <div class="input-group" style="display:inline-block;vertical-align:top">
+        <input type="text" id="audit-events-search" style="height:33px" />
+        <button id="btn-audit-search" style="vertical-align:top;margin-left:-1px;" class="btn btn-default btn-info btn-sm" type="button"><i class="glyphicon glyphicon-search icon-white"></i></button>
+    </div>
+    <a class="btn btn-default btn-info btn-sm" style="vertical-align:top !important;float:right" id="refresh-member"><i class="glyphicon glyphicon-refresh icon-white"></i>&nbsp;Refresh&nbsp;</a>
+</div>
+<br/>
+<div id="div-audit-list-0">@{Html.RenderPartial(@"~/Views/Audit/_AuditEventList.cshtml", new AuditEventListModel("audit-list-0"));}</div>	 
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        App.AuditEventsManagement = new AuditEventsManagement();
+        App.AuditEventsManagement.initManagement("audit-list-0","@Url.Action("","audit")");
+    });
+
+</script>
+
+

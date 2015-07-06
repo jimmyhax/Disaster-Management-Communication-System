@@ -1,0 +1,174 @@
+
+html {
+    height: 100%;
+}
+body {
+    height: 92%;
+    margin:0;
+    padding:0;
+}
+footer {
+    padding: 17px 0 18px 0;
+    border-top: 1px solid #eee;
+    text-align:center;
+}
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -13px;
+}
+.push {
+    height: 13px;
+}
+/* not required for sticky footer; just pushes hero down a bit */
+.wrapper > .container {    
+
+}
+
+.jcrop img {max-width:640px !important; max-height:480px}
+
+input[type="password"] {font:small-caption !important;font-size:16px!important}
+
+.spinner{    
+    background-image: url(images/ajax-loader.gif) !important;
+    background-position:center;
+    background-repeat: no-repeat;
+    height:16px;
+    width:16px;
+}
+
+
+.ui-icon {
+    width: 16px;
+    height: 16px;
+    display: block;
+    text-indent: -99999px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+}
+
+.ui-icon-triangle-1-n {
+    background-position: 0 -16px;
+}
+
+.ui-icon-triangle-1-s {
+    background-position: -64px -16px;
+}
+
+.alphabet-filter{
+
+}
+
+:-moz-any-link:focus {
+    outline: none;
+}
+
+* {
+outline: none;
+}
+
+input[type="text"], input[type="password"], .ui-autocomplete-input, textarea, .uneditable-input {
+    border: 1px solid #CCCCCC !important;
+    border-radius: 3px 3px 3px 3px !important;
+    color: black !important;
+    display: inline-block !important;
+    /*font-size: 13px !important;*/
+    line-height: 18px !important;
+    padding: 4px !important;
+
+}
+
+.login-header-top {
+    background: whiteSmoke;
+    /*padding: 20px 0px 10px;*/
+    margin: 0 0 0px 0;
+    border-bottom: 1px solid #DDD;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    width:100% !important;
+}
+
+
+.login-box{
+    position: absolute;
+    width: 420px;
+    margin: -105px 0 0 -200px;
+    left: 50%;
+    display:block;                
+}
+
+.login-box-pos-top-fixed{
+   top: 200px !important;
+}
+
+.login-box-pos-top-relative{
+    top: 35%;
+}
+
+.login-title{
+    width: auto;
+    letter-spacing: -1px;
+    margin: 0;
+    border-bottom: 1px solid #DDD;
+    background: #F7F7F7;
+    padding: 15px 30px;
+    font-size: 22px;
+    color: #444;
+    -moz-border-radius-topleft: 6px;
+    -moz-border-radius-topright: 6px;
+    text-align:center;
+ 
+}
+
+.login-form{
+    width:420px;
+    min-height:180px;
+    border:1px solid #ccc;   
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    display:block;        
+    background-color:White;
+}
+
+.login-form-inner{
+    padding-top:10px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-bottom:20px;
+    display:block;
+}
+
+.login-form-buttons{
+    padding:15px;
+    vertical-align:bottom;
+    margin:1px;
+    background-color: #eee;
+    display:block;
+    border-top:1px solid #ddd;
+}
+
+/* http://stackoverflow.com/questions/14793367/how-to-add-a-spinner-icon-to-button-when-its-in-the-loading-state */
+/* http://jsfiddle.net/AndrewDryga/zcX4h/1/ */
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 1.5s infinite linear;
+    font-size:17px;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+.fa-spin {
+    animation: 2s linear 0s normal none infinite running fa-spin;
+}

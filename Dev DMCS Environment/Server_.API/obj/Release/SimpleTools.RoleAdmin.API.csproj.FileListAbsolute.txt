@@ -1,0 +1,4 @@
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.RoleAdmin.API\bin\Release\SimpleTools.RoleAdmin.API.dll
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.RoleAdmin.API\bin\Release\SimpleTools.RoleAdmin.API.pdb
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.RoleAdmin.API\obj\Release\SimpleTools.RoleAdmin.API.dll
+D:\SimpleTools.Projects\SimpleTools.RoleAdmin\SimpleTools.RoleAdmin.API\obj\Release\SimpleTools.RoleAdmin.API.pdb

@@ -1,0 +1,42 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    var ui_app_name = AppSession.Parameters.AppUIName;
+    var ui_paging_size =  AppSession.Parameters.AppUiPagingSize;
+    var ui_app_fluid = AppSession.Parameters.AppFluid;
+
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+	        <label class="control-label" for="@ui_app_name.Name">Application Name</label>
+	        <input type="text" class="input-xlarge app-settings form-control" maxlength="@ui_app_name.TypeSize" id="@ui_app_name.Name" name="@ui_app_name.Name"  value="@ui_app_name.Value"/>
+	        <p class="muted">The name of the application</p>
+        </div>
+
+        <div class="form-group">
+	        <label class="control-label" for="@ui_paging_size.Name">Default Paging Size</label>
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@ui_paging_size.TypeSize" id="@ui_paging_size.Name" name="@ui_paging_size.Name" value="@ui_paging_size.Value" />
+	        <p class="muted">The default page size for all grids</p>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="@ui_app_fluid.Name">Fluid</label>
+            <label class="checkbox muted">
+                <input type="checkbox" class="input-xlarge app-settings" id="@ui_app_fluid.Name" name="@ui_app_fluid.Name" @if (ui_app_fluid.Value == "true") { @Html.Raw("checked='checked'") } />
+            <p class="muted">Enable fluid behavior for admin UI</p>
+            </label>       
+        </div>
+    </div>
+</div>
+
+
+
+
+

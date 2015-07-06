@@ -1,0 +1,160 @@
+﻿@model ResizeAvatarImageModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{ 
+    var templateId = String.Format("dialog-view-{0}", DateTime.Now.Ticks.ToString());
+    var dialogId = templateId.Replace("-view-", "-");
+    var contentId = templateId.Replace("-view-", "-content-");
+
+    var size = String.Format("{0}px", AppSession.AvatarImageSize);
+    var sizeInt = AppSession.AvatarImageSize;
+    var width = "640px";
+
+    if (AppSession.AvatarTempImage.Width != null)
+    {
+        width = AppSession.AvatarTempImage.Width + "px";
+    }
+}
+
+<template type="text/template" id="@templateId" data-dialog-tittle="Resize Avatar Image" data-dialog-spinner="spinner-@dialogId">
+    <table>
+        <tr>
+            <td>
+                <div style="width:@size !important;height:@size !important;overflow:hidden;">
+                    <img id="previewImage"/>
+                </div>
+            </td>
+            <td>
+                <div style="font-size:12px;padding-left:20px">To the left is what your profile photo will look like.</div>
+                <div style="font-size:11px;padding-left:20px;padding-right:60px;color:#707070;">To make adjustments, you can drag around and resize the square below.<br /> When you are happy with your photo click the “Save Photo” button.</div>
+            </td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr>
+            <td colspan="2">
+                <div style="display:block;overflow:visible;max-width:640px !important" id="divUploadImage">
+                    <img style="display:block;width:@width" id="uploadedImage" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    
+    <input id="sizeX" name="sizeX" type="hidden" />
+    <input id="sizeY" name="sizeY" type="hidden" />
+    <input id="sizeH" name="sizeH" type="hidden" />
+    <input id="sizeW" name="sizeW" type="hidden" />
+</template>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        var dialog = App.DialogBootstrap("#@templateId",700,650, true,
+        {
+            Save: function () {
+
+                var imageInfo = {
+                    sizeX : $("#sizeX").val(),
+                    sizeY : $("#sizeY").val(),
+                    sizeH : $("#sizeH").val(),
+                    sizeW : $("#sizeW").val(),
+                    MemberID: @Model.MemberID,
+                    ImageName: '@Model.ImageName'
+                };
+
+                $("#spinner-@dialogId").addClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                // Removing file by AJAX request
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SetAvatarImage", "Profile")",
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(imageInfo),
+                    cache: false,
+                    success: function (data) {
+                        switch(data.NotifyType)
+                        {
+                            case 0: $("#general-message").html(data.Html);dialog.close();break
+                            case 1: $("#@dialogId").find("#notify-message").html(data.Html);break;
+                            case 2: $(data.Html).prependTo('body');dialog.close();break;
+                        };
+
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                        setTimeout(function(e){
+                            if(data.FileURL)
+                            {
+                                $("#member-avatar").attr("src",data.FileURL);
+                            }
+                        },500);
+                    },
+                    error: function(xhr, textStatus, errorThrown){
+                        App.DialogError(xhr,textStatus, errorThrown);
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                    }
+                });
+
+            }//,
+
+            //Cancel: function () { $(this).dialog("close");}
+
+        }, true ,onUploadFinish);
+
+        function onUploadFinish(dialogRef){
+
+            $('div#@dialogId').bind('dialogclose', function(event) {
+                App.ResetAvavtarUploadedImage('@Url.Action("ResetAvatarUploadedImage","Profile")');
+            });
+
+            $("#previewImage").attr("src", "");
+            $("#uploadedImage").attr("src", "");
+
+            $("#uploadedImage").attr("src", "@Url.Action("GetUploadedImage","Profile")?t=@Model.ImageName");
+            $("#previewImage").attr("src",  "@Url.Action("GetUploadedImage","Profile")?t=@Model.ImageName");
+
+            jQuery('#uploadedImage').Jcrop({
+                onChange: showPreview,
+                onSelect: storeCoords,
+                bgColor: 'white',
+                bgOpacity: .5,
+                setSelect: [1, 1, @sizeInt, @sizeInt],
+                aspectRatio: 1 / 1
+            });
+
+            function storeCoords(c) {
+                jQuery('#sizeX').val(c.x);
+                jQuery('#sizeY').val(c.y);
+                jQuery('#sizeW').val(c.w);
+                jQuery('#sizeH').val(c.h);
+                showPreview(c);
+            };
+
+            // Our simple event handler, called from onChange and onSelect
+            // event handlers, as per the Jcrop invocation above
+            function showPreview(coords) {
+                var _data = {
+                    w: @AppSession.AvatarTempImage.Width,
+                    h: @AppSession.AvatarTempImage.Height
+                    }
+
+                if (parseInt(coords.w) > 0) {
+                    var rx = @sizeInt / coords.w;
+                    var ry = @sizeInt / coords.h;
+
+                    jQuery('#previewImage').css({
+                        width: Math.round(rx * _data.w) + 'px',
+                        height: Math.round(ry * _data.h) + 'px',
+                        marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+                        marginTop: '-' + Math.round(ry * coords.y) + 'px'
+                    });
+                }
+            }
+        }
+    });
+
+</script>
+

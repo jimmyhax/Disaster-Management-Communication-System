@@ -1,0 +1,16 @@
+﻿@using Web.Admin.Logic.Collections
+
+@{
+    Layout = "~/Views/Shared/_LayoutError.cshtml";
+}
+
+<div style="margin-top:50px;margin-left:50px;">
+    <h1 style="margin-left:10px">404</h1>
+    <div class="col-md-6">
+        <p>@AppSession.GetLabel("ErrorPages.PageNotFound404Title")</p>
+        <blockquote>
+          <p>@AppSession.GetLabel("ErrorPages.PageNotFound404Message")</p>
+          <small>@AppSession.GetLabel("ErrorPages.Sign")</small>
+        </blockquote>
+    </div>
+</div>

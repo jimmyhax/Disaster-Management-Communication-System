@@ -1,0 +1,37 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+
+<h2>Domains</h2>
+<p>
+    <br/>This area provides a set of options which help to adjust the application to your needs. All available options are described on the <a href="@Url.Action("Index","Help")">Help</a> page. You can find some useful stuff on <a href="@Url.Action("Index","FAQ")">FAQ</a> page as well.
+</p><br/>
+
+<div id="general-message"></div>
+ <div class="subnav" style="padding:7px">
+    <div class="btn-toolbar">
+        <div class="btn btn-default btn-success btn-sm" id="add-domain">Add Domain</div>
+        <div class="btn btn-default btn-danger btn-sm" id="remove-domain">Remove Selected Domain</div>
+        <div style="float:right;display:inline-block">
+            <div class="btn btn-default btn-info btn-sm" id="refresh-domains">Refresh</div>
+        </div>
+    </div>
+</div>
+ <p>&nbsp;</p>
+
+<div id="div-domains-list-0">
+@{Html.RenderPartial(@"~/Views/Domains/_DomainList.cshtml", new DomainListModel("domains-list-0"));}
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        App.DomainsManagement = new DomainsManagement();
+        App.DomainsManagement.initManagement("domains-list-0","@Url.Action("","Domains")");
+
+        App.FieldsManagement = new FieldsManagement();
+        App.FieldsManagement.initManagement("@Url.Action("","Fields")");
+    });
+</script>

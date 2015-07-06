@@ -1,0 +1,106 @@
+﻿
+@{ 
+ var templateId = String.Format("dialog-view-{0}", DateTime.Now.Ticks.ToString());
+ var dialogId = templateId.Replace("-view-", "-");
+ var contentId = templateId.Replace("-view-", "-content-");
+}
+
+<style type="text/css">
+    .form-group {
+        padding-bottom:10px !important;
+    }
+</style>
+
+<template type="text/template" id="@templateId" data-dialog-tittle="Add Member" data-dialog-spinner="spinner-@dialogId">
+    <div id="notify-message"></div>
+    <div class="form-group">
+        <label for="member-name">Name</label>
+        <input type="text" class="input-xlarge formrm-control" id="member-name" style="width:97%;color:black" maxlength="64" />
+    </div>
+    <div class="form-group">
+        <label for="member-email">Email</label>
+        <input type="text" class="input-xlarge formrm-control" id="member-email" style="width:97%;color:black" maxlength="64" />
+    </div>
+    <div class="form-group">
+        <label for="member-time-zone">Time Zone</label>
+        <div style="width:97%;color:black">
+            @{
+                var TimeZones = TimeZoneInfo.GetSystemTimeZones();
+                <select style="width:99%" id="member-time-zone" class="form-control">
+                    <option value="">Please, select member time zone</option>
+                    @foreach (TimeZoneInfo Info in TimeZones)
+                    {
+                        <option value="@Info.Id">@Info.DisplayName</option>
+                    }
+                </select>
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="member-pass" for="member-email">Password</label>
+        <input type="password" class="input-xlarge form-control" id="member-pass" style="width:97%;color:black" maxlength="64" />
+    </div>
+    <div class="form-group">
+        <label class="member-pass-again" for="member-pass-again">Password Confirmation</label>
+        <input type="password" class="input-xlarge form-control" id="member-pass-confirmation" style="width:97%;color:black" maxlength="64" />
+    </div>
+</template>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        App.DialogBootstrap("#@templateId", 760, 640, true,
+        {
+            Add: function () {
+
+                var memberInfo = {
+                    Name: $("#member-name").val(),
+                    Email: $("#member-email").val(),
+                    Password: $("#member-pass").val(),
+                    Confirmation: $("#member-pass-confirmation").val(),
+                    TimeZoneID: $("#member-time-zone").val()
+                };
+
+                $("#spinner-@templateId").addClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                // Removing file by AJAX request
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SaveMember", "Members")",
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(memberInfo),
+                    cache: false,
+                    success: function (data) {
+                        switch (data.NotifyType) {
+                            case 0: $("#general-message").html(data.Html); dialog.close(); break
+                            case 1: $("#@dialogId").find("#notify-message").html(data.Html); break;
+                            case 2: $(data.Html).prependTo('body'); dialog.close(); break;
+                        };
+
+                        if (data.NotifyType == 1)
+                            $("#@dialogId").animate({ scrollTop: 0 }, 'slow');
+
+                        if (!data.Status)
+                            App.MembersManagement.ReloadMembers(null, null, false);
+
+                        if (data.MemberID) {
+                            setTimeout(function () {
+                                App.DialogGet("@Url.Action("GetEditMemberDialog", "Members")", $("#add-member"), { MemberID: data.MemberID });
+                            }, 500);
+                        }
+
+                        $("#spinner-@templateId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        App.DialogError(xhr, textStatus, errorThrown);
+                        $("#spinner-@templateId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                    }
+                });
+
+            }//,
+            //Cancel: function () { $(this).dialog("close"); }
+        })
+    });
+</script>

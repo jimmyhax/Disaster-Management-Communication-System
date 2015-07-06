@@ -1,0 +1,63 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+@using Web.Admin.Controllers
+
+@{
+    
+    var rules_redirect_after_login = AppSession.Parameters.RulesRedirectAfterLogin;
+    var rules_redirect_after_logout = AppSession.Parameters.RulesRedirectAfterLogout;
+    var rules_redirect_after_sing_up = AppSession.Parameters.RulesRedirectAfterSignUp;
+
+    var rules_member_mail_bcc = AppSession.Parameters.RulesMailBcc;
+    var rules_member_mail_bcc_registration = AppSession.Parameters.RulesMailBccRegistration;
+    var rules_member_mail_bcc_activation = AppSession.Parameters.RulesMailBccActivation;
+    var rules_member_mail_bcc_passworchange = AppSession.Parameters.RulesMailBccPasswordChange;
+
+    var rules_password_failed_roles = AppSession.Parameters.RulesPasswordFailedRoles;
+    var rules_password_failed_attempts = AppSession.Parameters.RulesPasswordFailedAttempts;
+    var rules_password_failed_redirect = AppSession.Parameters.RulesPasswordFailedRedirect;
+}
+<div class="row">
+   <div class="col-md-4"> 
+         <div class="form-group">
+	        <label class="control-label" for="@rules_redirect_after_login.Name">Redirect After Sign In</label>
+		    <input type="text" class="input-xlarge app-settings form-control" maxlength="@rules_redirect_after_login.TypeSize" id="@rules_redirect_after_login.Name" name="@rules_redirect_after_login.Name" value="@rules_redirect_after_login.Value" />
+		    <p class="muted">Redirect to the url after sign in if no back link</p>
+        </div>    
+         <div class="form-group">
+	        <label class="control-label" for="@rules_redirect_after_logout.Name">Redirect After Sign Out</label>
+             <input type="text" class="input-xlarge app-settings form-control" maxlength="@rules_redirect_after_logout.TypeSize" id="@rules_redirect_after_logout.Name" name="@rules_redirect_after_logout.Name" value="@rules_redirect_after_logout.Value" />
+		    <p class="muted">Redirect to the url after sign out if no back link</p>
+        </div>    
+         <div class="form-group">
+	        <label class="control-label" for="@rules_redirect_after_sing_up.Name">Redirect After Sing Up</label>
+             <input type="text" class="input-xlarge app-settings form-control" maxlength="@rules_redirect_after_sing_up.TypeSize" id="@rules_redirect_after_sing_up.Name" name="@rules_redirect_after_logout.Name" value="@rules_redirect_after_sing_up.Value" />
+		    <p class="muted">Redirect to the url after success sign up</p>
+        </div>    
+        <div class="form-group">
+	        <label class="control-label" for="@rules_password_failed_roles.Name">Add member to role</label>
+            <input type="text" class="input-xlarge app-settings form-control" style="width:100px" maxlength="@rules_password_failed_roles.TypeSize" id="@rules_password_failed_roles.Name" name="" value="@rules_password_failed_roles.Value" />&nbsp;if password was failed <input type="text" class="input-xlarge app-settings" style="width:20px"  maxlength="@rules_password_failed_attempts.TypeSize" id="@rules_password_failed_attempts.Name" name="" value="@rules_password_failed_attempts.Value"/> times.
+            <p class="muted">Role list (Blocked; Blocked > 5 for instance)</p>
+        </div>       
+	    <div class="form-group">
+	        <label class="control-label" for="@rules_password_failed_redirect.Name">And redirect to </label>
+            <input type="text" class="input-xlarge app-settings form-control" maxlength="@rules_password_failed_redirect.TypeSize" id="@rules_password_failed_redirect.Name" name="@rules_password_failed_redirect.Name" " value=" @rules_password_failed_redirect.Value " />
+            <p class="muted">Redirect to if account was blocked</p>
+        </div>  
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+	        <label class="control-label" for="@rules_member_mail_bcc.Name">Blind Carbon Copy (Bcc)</label>
+          <textarea type="text" style="height:150px" class="input-xlarge app-settings form-control" maxlength="@rules_member_mail_bcc.TypeSize" id="@rules_member_mail_bcc.Name" name="@rules_member_mail_bcc.Name">@rules_member_mail_bcc.Value</textarea>
+		    <span class="muted"><br/>This is a copy of an email message<br/>  sent to a recipient whose email address<br/> does not appear in the message.<br/> Use "," - comma as separator</span><br/>
+	        <input type="checkbox" class="input-xlarge app-settings" id="@rules_member_mail_bcc_registration.Name" name="@rules_member_mail_bcc_registration.Name" @if ( rules_member_mail_bcc_registration.Value == "true"){ @Html.Raw("checked")} />&nbsp;Registration<br/>      
+            <input type="checkbox" class="input-xlarge app-settings" id="@rules_member_mail_bcc_activation.Name" name="@rules_member_mail_bcc_activation.Name" @if ( rules_member_mail_bcc_activation.Value == "true"){ @Html.Raw("checked")} />&nbsp;Activation<br/>      
+            <input type="checkbox" class="input-xlarge app-settings" id="@rules_member_mail_bcc_passworchange.Name" name="@rules_member_mail_bcc_passworchange.Name" @if ( rules_member_mail_bcc_passworchange.Value == "true"){ @Html.Raw("checked")} />&nbsp;Password Change<br/>     
+        </div>    
+    </div>
+</div>
+ 

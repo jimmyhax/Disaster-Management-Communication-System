@@ -1,0 +1,106 @@
+﻿@model RoleListModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{ var templateId = String.Format("dialog-view-{0}", DateTime.Now.Ticks.ToString());
+ var dialogId = templateId.Replace("-view-", "-");
+ var contentId = templateId.Replace("-view-", "-content-");
+}
+<template type="text/template" id="@templateId" data-dialog-tittle="Edit Role" data-dialog-spinner="spinner-@dialogId">
+    <div id="notify-message"></div><br />
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#rolegeneral" data-toggle="tab">General</a>
+        </li>
+        <li><a href="#rolefields" data-toggle="tab">Assigned Profile Fields</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="rolegeneral">
+            <br/>
+            <div class="form-group">
+                <label for="role-name">Name</label>
+                <input type="text" class="input-xlarge form-control" id="role-name" style="color:black" maxlength="64" value="@Model.Roles[0].Name" @if (@Model.Roles[0].IsBuiltIn) { @Html.Raw("readonly=\"readonly\" disabled=\"disabled\"")   ; } />
+                @if (Model.Roles[0].IsBuiltIn)
+                {
+                    <span class="help-block">This rols is built in, so you can't change the role name.</span>
+                }
+            </div><br/>
+            <div class="form-group">
+                <label for="role-settings">Settings</label>
+                <textarea class="input-xlarge form-control" id="role-settings" rows="3" style="color:black" maxlength="4000">@Model.Roles[0].Settings</textarea>
+            </div><br />
+            <div class="form-group">
+                <div class="form-item" style="display:inline-block;vertical-align:top">
+                    <label for="b-color">Background color:</label><input type="text" id="role-color" name="role-color" class="colorwell" value="#123456" maxlength="7" />
+                </div>
+                <div id="picker" style="display:inline-block" "></div>
+            </div><br />
+        </div>
+        <div class="tab-pane fade in" id="rolefields">
+            <div id="member-profile-fields">
+                @{Html.RenderPartial(@"~/Views/Fields/MemberFieldsByDomainRole.cshtml", new ProfileFieldDomainRoleModel(Model.Roles[0].Name, ProfileFieldDomainRoleMode.Role));}
+            </div>
+        </div>
+    </div>
+</template>
+
+<script type="text/javascript">
+    function editRoleOnShown(dialogRef){
+
+        $('#color1').gradientColorPicker();
+        var f = $.farbtastic('#picker');
+        $('.colorwell')
+        .each(function () { f.linkTo(this);})
+        f.setColor('#@Model.Roles[0].BackColor');
+    };
+
+    $(function () {
+        var dialog = App.DialogBootstrap("#@templateId",550,620, true,
+        {
+            Save: function () {
+
+                var roleInfo = {
+                    RoleID :   @Model.Roles[0].RoleID,
+                    Name :     $("#role-name").val(),
+                    Settings : $("#role-settings").val(),
+                    Color :    $("#role-color").val()
+                };
+
+                $("#spinner-@dialogId").addClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SaveRole", "Roles")",
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(roleInfo),
+                    cache: false,
+                    success: function (data) {
+                        switch(data.NotifyType)
+                        {
+                            case 0: $("#general-message").html(data.Html);dialog.close(); break
+                            case 1: $("#@dialogId").find("#notify-message").html(data.Html);break;
+                            case 2: $(data.Html).prependTo('body');dialog.close(); break;
+                        };
+
+                        if (data.NotifyType == 1)
+                            $("#@dialogId").animate({ scrollTop: 0 }, 'slow');
+
+                        App.RolesManagement.ReloadRoles(null, null,false);
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                    },
+                    error: function(xhr, textStatus, errorThrown){
+                        App.DialogError(xhr,textStatus, errorThrown);
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                    }
+                });
+
+            }//,
+            //Cancel: function () {$(this).dialog("close");}
+        },
+        true,
+        editRoleOnShown);
+    });
+</script>

@@ -1,0 +1,96 @@
+﻿@model DomainListModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    var _itemsCount = Model.Domains.Count;
+    var _itemsStarting = (((Model.Filter.CurrentPage - 1) * Model.Filter.ItemsPerPage) + 1);
+    var _itemsEnding = (((Model.Filter.CurrentPage - 1) * Model.Filter.ItemsPerPage) + Model.Filter.ItemsPerPage);
+
+    if (_itemsCount < (_itemsEnding - _itemsStarting)){
+        _itemsEnding = _itemsStarting + _itemsCount - 1;
+    }
+}
+
+
+<div class="div-table-info">
+    <div class="div-table-info-fl">Showing <b>@_itemsStarting</b> to <b>@_itemsEnding</b> of <b>@Model.TotalItems</b> entries</div>
+    @if (@Model.TotalItems > Model.Filter.ItemsPerPage)
+    {
+        <div class="pagination-custom div-table-info-fr" id="table-domains-pagination-top-@Model.HolderName" name="table-domains-pagination-top-@Model.HolderName"></div>
+    }
+</div>
+
+<table id="@Model.HolderName"  width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-striped table-bordered table-condensed" data-items-per-page="@Model.Filter.ItemsPerPage"  data-current-page="@Model.Filter.CurrentPage"  data-total-items="@Model.TotalItems" data-sort-column="@Model.Filter.SortColumn" data-sort-order-asc="@Model.Filter.SortOrderAsc.ToString().ToLower()">
+	
+    <thead>
+        <tr>
+            <th style="width:3%;text-align:center"><input type="checkbox" class="domain-select-all-chb"/></th>
+            <th class="domain-sort-column" style="width:50px;">ID<span class="css_right ui-icon @Model.SortImageClass(1)"/></th>
+            <th class="domain-sort-column" style="width:280px;">Domain Name<span class="css_right ui-icon @Model.SortImageClass(2)"/></th>                        
+            <th class="domain-sort-column">Description<span class="css_right ui-icon @Model.SortImageClass(3)"/></th>
+			<th class="domain-sort-column table-date-td-width">Created<span class="css_right ui-icon @Model.SortImageClass(4)"/></th>
+            <th class="domain-sort-column table-date-td-width">Modified<span class="css_right ui-icon @Model.SortImageClass(5)"/></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (Domain domain in Model.Domains)
+        {
+          <tr>
+              <td style="text-align:center" class="table-first-column" style="width:2%">
+                <input  data-domain-id="@domain.DomainID"  class="domain-select" type="checkbox" />
+              </td>
+              <td style="text-align:right">@domain.DomainID</td>
+              <td>
+                <a href="#" class="domain-edit" data-domain-id="@domain.DomainID">@domain.Name</a>
+                @{
+                  List<ProfileFieldGroup> _profileGroups = ProfileFieldGroups.GetAllByDomain(domain.Name);
+                  if (_profileGroups.Count > 0)
+                  {
+                     <div class="btn-group restiction-label">
+                          <a class="btn btn-default btn-xs dropdown-toggle restiction-label" data-toggle="dropdown" href="#">Fields
+                              <span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu dropdown-menu-scroll" style="min-width:200px">
+                              <li>
+                                  <div style="padding-left:10px;padding-right:10px">
+                                    @foreach (ProfileFieldGroup _profileGroup in _profileGroups)
+                                    {
+                                        <h5>@_profileGroup.FieldGroupName</h5>
+                                        <p>
+                                        @{
+                                            List<ProfileField> _profileFields = ProfileFields.GetByDomainGroupID(domain.Name,_profileGroup.FieldGroupID);
+                                            foreach (ProfileField _profileField in _profileFields)
+                                            {
+                                                <span>@_profileField.FieldName</span><br/>
+                                            }
+                                        }
+                                        </p>
+                                    }
+                                  </div>
+                              </li>
+                          </ul>
+                     </div>
+                  }
+               }              
+              </td>
+              <td><div class="expander">@domain.Description</div></td>
+              <td style="white-space:nowrap"><div class="table-date-full">@if (@domain.Created != DateTime.MinValue){@AppSession.ToLocalTime(domain.Created).ToString("dd MMM yyyy HH:mm:ss")}</div><div class="muted table-date-relative">@if (@domain.Created != DateTime.MinValue){@AppSession.ToLocalTime(domain.Created).ToRelativeTime()}</div></td>
+              <td style="white-space:nowrap"><div class="table-date-full">@if (@domain.Modified!= DateTime.MinValue){@AppSession.ToLocalTime(domain.Modified).ToString("dd MMM yyyy HH:mm:ss")}</div><div class="muted table-date-relative">@if (@domain.Modified != DateTime.MinValue){@AppSession.ToLocalTime(domain.Modified).ToRelativeTime()}</div></td>
+          </tr>
+        }  
+        </tbody>
+</table>
+
+<div class="div-table-info">
+    <div class="div-table-info-fl">Showing <b>@_itemsStarting</b> to <b>@_itemsEnding</b> of <b>@Model.TotalItems</b> entries</div>
+    @if (@Model.TotalItems > Model.Filter.ItemsPerPage)
+    {
+        <div class="pagination-custom div-table-info-fr" id="table-domains-pagination-bottom-@Model.HolderName" name="table-domains-pagination-bottom-@Model.HolderName"></div>
+    }
+</div>
+<script type="text/javascript"> App.InitExpander();</script>

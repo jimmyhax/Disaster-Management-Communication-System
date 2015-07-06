@@ -1,0 +1,39 @@
+﻿@model ProfileField
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+ @{
+     var _domains = Domains.Get();
+     var _fieldDomains = Domains.GetFieldID(Model.FieldID);
+ }
+
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-striped table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th style="width:3%">&nbsp;</th>
+            <th style="width:80%">Domain</th>
+            <th class="table-date-td-width">Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Domain _domain in _domains)
+        {
+            string _checked = "";
+            if (_fieldDomains.Where(t => t.DomainID == _domain.DomainID).FirstOrDefault() != default(Domain))
+            {
+                _checked = "checked";
+            }
+                
+            <tr>
+                <td><input  data-domain-id="@_domain.DomainID"  class="domain-select" type="checkbox" @_checked /></td>
+                <td>@_domain.Name</td>
+                <td>@_domain.Created.ToString("dd.MM.yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

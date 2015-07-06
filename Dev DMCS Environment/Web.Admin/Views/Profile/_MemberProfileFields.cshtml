@@ -1,0 +1,59 @@
+﻿@model MemberProfileFieldModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+   var groupTab = 1;
+   var profileFieldGroups = ProfileFieldGroups.GetFilteredByDomainRoles(Model.Member.MemberID);
+   List<MemberProfileField> memberProfileFields = MemberProfileFields.GetByMember(@Model.Member.MemberID);
+   
+   foreach (ProfileFieldGroup group in profileFieldGroups)
+   {
+     groupTab++;
+     
+     if (group.IsActive == 0){
+         continue;
+     }
+     
+       <div id="@groupTab">
+           <h3>@group.FieldGroupName
+               @if(group.IsActive == 0){;<span class="label" style="margin-right:2px;margin-left:2px;xvertical-align:top;font-size:11px">Not Active</span>}else{;<span class="label label-success" style="margin-right:7px;;vertical-align:top;font-size:11px;margin-left:2px;">Active</span>}
+               @if(group.AdminUseOnly == 1){;<span class="label label-important" style="vertical-align:top;font-size:11px">Admin Use Only</span>}
+           </h3>
+           <div style="margin-top:10px;">
+           @{
+               foreach (ProfileField field in ProfileFields.GetByRoleDomainGroupID(group.FieldGroupID,Model.Member.MemberID))
+               {
+                   var value = MemberProfileFields.GetField(memberProfileFields, field.FieldID).FieldValue;
+                   <div class="form-group">
+                       <label class="control-label" for="profile-field-@field.FieldID">
+                       <b>@field.FieldName 
+                       @if (field.IsActive <= 0) {<span style="font-size:10px;vertical-align:top" class="label label-info"><b>Not Active</b></span>}
+                       @if (field.AdminUseOnly > 0) {<span style="font-size:10px;vertical-align:top;margin-left:3px;" class="label label-important"><b>Admin Use Only</b></span>}
+
+                       @if (field.IsMandatory == 1)
+                       {
+                           <span style="color:red;font-size:14px">&nbsp;<b>*</b></span>
+                       }
+                       @if (field.Encrypted == 1)
+                       {
+                           <img src="@Url.Content("~/content/images/key.png")" title="The field value will be encrypted in the database." />
+                       }                            
+                       </b></label>                           
+                       <div class="controls">
+                          @{
+                             Html.RenderPartial(@"~/Views/Profile/_ProfileField.cshtml", new ProfileFieldModel(field, ProfileFieldMode.Edit, value));
+                          }
+                       </div>                            
+                   </div>
+               }
+           }
+           </div>
+     </div><br/>         
+   }
+   
+   <div><span style="color:red;font-size:14px">&nbsp;<b>*</b></span> - Required field<br/>&nbsp;<br/></div>
+}

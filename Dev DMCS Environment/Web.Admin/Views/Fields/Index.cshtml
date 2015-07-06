@@ -1,0 +1,19 @@
+﻿
+<h2>Fields</h2>
+<p style="margin-top:7px">
+    This area provides the ability to create <u><b>member profile fields</b></u> which will keep additional information about a member. Any field can be included to sign up form. The fields can be grouped as well. To change the order of a field just click on a table row and drag & drop the row to specific position. To change a group order, please click on "Edit Group" button and drag & drop the group row to specific position. You can use these fields during sign up process or to fill that after the sign up.
+    <div style="float:right"><span style="color:red;font-size:14px">&nbsp;<b>*</b></span> - Required field<br/>&nbsp;<br/></div>    
+</p><br/><br/>
+<div id="general-message"></div>
+
+<div id="member-profile-fields">
+@{Html.RenderPartial(@"~/Views/Fields/MemberFields.cshtml",null);}
+</div>
+
+<script type="text/javascript">
+    App.InitExpander(20);
+    $(document).ready(function () {
+        App.FieldsManagement = new FieldsManagement();
+        App.FieldsManagement.initManagement("@Url.Action("","Fields")");
+    });
+</script>

@@ -1,0 +1,96 @@
+﻿@using Web.Admin.Logic.Collections;
+@using Web.Admin.Logic.Objects;
+@using System.Web.Mvc;
+
+@{
+    var RowFluid = (AppSession.Parameters.AppFluid.Value == "true") ? "row" : "row";
+}
+<style>
+    .admin-icons{
+     margin-top:2px;
+     margin-right:5px;
+     width:35px;
+     height:35px;
+    }
+</style>
+  <div class="jumbotron">
+    <h1>Hello, protected world!</h1>
+    <p>An admin portal for the DMCS web application.</p>
+    <p>
+        <a class="btn btn-default btn-primary btn-sm" href="@Url.Action("", "Help")">Learn more &raquo;</a>
+        <a class="btn btn-default btn-primary btn-sm" href="@Url.Action("", "Faq")">Read FAQ &raquo;</a>
+    </p>
+  </div>
+
+  <div class="page-header">
+          <h2>DMCS Member Management Tool <small>&nbsp;Helpfull Information:</small></h2>
+        </div>
+  <div class="@RowFluid">
+        <div class="col-md-3">
+          <label>
+            <h3><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> <a href="@Url.Action("","roles")">Roles</a></h3>
+            <p>Roles are given names that highlight the core functional responsibilities of the role. Each role has own color, name and settings properties.</p>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label>
+            <h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <a href="@Url.Action("", "Members")">Members</a></h3>
+            <p>Add members and define their roles according to members' responsibility. It's easy to search quickly by name or e-mail and assign one role to multiple members by one click. </p>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label>
+            <h3><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> <a href="@Url.Action("", "Fields")">Fields</a></h3>
+            <p>Do you need custom members' profile fields ? You have seven different types of fields for members and administration purposes.</p>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label>
+            <h3><span class="glyphicon glyphicon-th" aria-hidden="true"></span> <a href="@Url.Action("", "Domains")">Domains</a> <small class="muted">*</small></h3>
+            <p>You have a possibility to add domain items and assign specific profile fields to a specific domain items, so those fields will be visible for selected domains only.</p>
+          </label>
+          <p class="muted"><strong>*</strong> You can do the same for roles as well.</p>        
+        </div>
+      </div> <!-- /row -->
+      <div class="@RowFluid">
+        <div class="col-md-3">
+          <label>
+            <h3><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> <a href="@Url.Action("", "Audit")">Audit</a> <small class="muted">*</small></h3>
+            <p>Audit log gives you an ability to see what happens for application and application members. If you don't need that simply switched off.</p>
+          </label>
+          <p class="muted"><strong>*</strong> Should be switched on.</p>        
+        </div>
+        <div class="col-md-3">
+          <label>
+            <h3><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> <a href="@Url.Action("", "Tools")">Tools</a></h3>
+            <p>A set of simple tools, actually, at the moment, the application has only one item in this area but this item is very useful. </p>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label>
+            <h3><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <a href="@Url.Action("", "Settings")">Settings</a></h3>
+            <p>The application contains a lot setting parameters in order to define the application behavior according to your needs. </p>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label>
+            <h3><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> <a href="@Url.Action("", "API")">API</a></h3>
+            <p>Small set of methods which can be execute over HTTP connection by using any framework. It takes a possibility to use roles and members repository for different applications in the Internet.     </p>
+          </label>
+        </div>
+      </div> <!-- /row -->
+     <div class="@RowFluid">
+        <div class="col-md-3">
+          <label>
+            <h3><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <a href="@Url.Action("", "Help")">Help</a></h3>
+            <p>This area describes shortly the main concept and functions of the application. </p>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label>
+            <h3><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <a href="@Url.Action("", "Faq")">FAQ</a></h3>
+            <p>This are are listed questions and answers, all supposed to be commonly asked. Have a look at the list and find an answer to your question.</p>
+          </label>
+       </div>
+  </div> <!-- /row -->
+ 

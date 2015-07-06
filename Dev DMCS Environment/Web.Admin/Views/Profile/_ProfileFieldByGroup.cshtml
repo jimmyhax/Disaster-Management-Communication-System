@@ -1,0 +1,44 @@
+﻿@model ProfileFieldGroupModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    foreach (ProfileField field in ProfileFields.GetSignUpActiveNonAdminByDomainGroup(Model.FieldGroup.FieldGroupID,Model.DomainName,"Admins"))
+    {
+        if (field.FieldTypeID == ProfileFieldTypeEnum.CheckBox || field.FieldTypeID == ProfileFieldTypeEnum.Radio)
+        {
+            <b>@field.FieldName</b>
+            
+            if (field.IsMandatory == 1)
+            {
+                <span style="color:red;font-size:14px">&nbsp;<b>*</b></span>
+            }
+            
+            if (field.Encrypted == 1)
+            {
+                <img src="@Url.Content("~/content/images/key.png")" title="The field value will be encrypted in the database." />
+            }                            
+            
+            <span>&nbsp;&nbsp;</span>
+        }
+        else
+        {
+            <label class="member-label" for="profile-field-@field.FieldID"><b>@field.FieldName</b>
+
+            @if (field.IsMandatory == 1)
+            {
+                <span style="color:red;font-size:14px">&nbsp;<b>*</b></span>
+            }
+            @if (field.Encrypted == 1)
+            {
+                <img src="@Url.Content("~/content/images/key.png")" title="The field value will be encrypted in the database." />
+            }                            
+            
+            </label>
+        }
+        Html.RenderPartial(@"~/Views/Profile/_ProfileField.cshtml", new ProfileFieldModel(field, ProfileFieldMode.SignUp));
+    }
+}

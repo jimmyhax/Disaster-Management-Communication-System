@@ -1,0 +1,66 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+@using Web.Admin.Controllers
+
+@{
+
+    var registration_self_registration = AppSession.Parameters.RegistrationSelfRegistration;
+    var registration_self_activation = AppSession.Parameters.RegistrationSelfActivation;
+    var registration_reset_password = AppSession.Parameters.RegistrationResetPassword;
+    var registration_member_registration_to_roles = AppSession.Parameters.RegistrationMemberRegistrationToRoles;
+    var registration_member_activation_to_roles = AppSession.Parameters.RegistrationMemberActivationToRoles;
+    var registration_mail_domain_restriction = AppSession.Parameters.RegistrationMailDomainRestriction;
+    var registration_mail_domain_restriction_list = AppSession.Parameters.RegistrationMailDomainRestrictionList;
+}
+<div class="row">
+   <div class="col-md-4">
+        <div class="form-group">
+	        <label class="control-label" for="@registration_self_registration.Name">Self-Registration</label>
+		    <label class="checkbox muted">
+            <input type="checkbox" class="input-xlarge app-settings" id="@registration_self_registration.Name" name="@registration_self_registration.Name" @if (registration_self_registration.Value == "true"){ @Html.Raw("checked")} />
+		    Enables self-registration functionality.
+            </label>       
+        </div>
+
+        <div class="form-group">
+	        <label class="control-label" for="@registration_self_activation.Name">Self-Activation</label>
+		    <label class="checkbox muted">
+            <input type="checkbox" class="input-xlarge app-settings" id="@registration_self_activation.Name" name="@registration_self_activation.Name" @if (registration_self_activation.Value == "true"){ @Html.Raw("checked")} />
+		    Enables self-activation functionality.
+            </label>       
+        </div>
+
+        <div class="form-group">
+	        <label class="control-label" for="@registration_reset_password.Name">Reset Password</label>
+		    <label class="checkbox muted">
+            <input type="checkbox" class="input-xlarge app-settings" id="@registration_reset_password.Name" name="@registration_reset_password.Name" @if ( registration_reset_password.Value == "true"){ @Html.Raw("checked")} />
+		    Enables reset password functionality.
+            </label>       
+        </div>
+        <div class="form-group">
+	        <label class="control-label" for="@registration_member_registration_to_roles.Name">Self-Registration Roles</label>
+            <input type="text" class="input-xlarge app-settings form-control" " maxlength=" @registration_member_registration_to_roles.TypeSize " id=" @registration_member_registration_to_roles.Name " name=" @registration_member_registration_to_roles.Name " value=" @registration_member_registration_to_roles.Value " />
+		    <p class="muted">Add member to roles after self-registration</p>
+        </div>
+
+        <div class="form-group">
+	        <label class="control-label" for="@registration_member_activation_to_roles.Name">Self-Acivation Roles</label>
+		    <input type="text" class="input-xlarge app-settings form-control" maxlength="@registration_member_activation_to_roles.TypeSize" id="@registration_member_activation_to_roles.Name" name="@registration_member_activation_to_roles.Name" value="@registration_member_activation_to_roles.Value" />
+		    <p class="muted">Add member to roles after self-activation</p>
+        </div>       
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+	    <label class="control-label" for="@registration_mail_domain_restriction_list.Name">Mail Domains</label>
+            <textarea type="text" style="height:190px" class="input-xlarge app-settings form-control" " maxlength=" @registration_mail_domain_restriction_list.TypeSize " id=" @registration_mail_domain_restriction_list.Name " name=" @registration_mail_domain_restriction_list.Name ">@registration_mail_domain_restriction_list.Value</textarea>
+		<p class="muted">Restricted mail domain list.</br> Use "," - comma as separator</p>
+	    <input type="radio" class="input-xlarge app-settings" name="@registration_mail_domain_restriction.Name" @if(registration_mail_domain_restriction.Value == "1"){@Html.Raw("checked");} value="1"> Allow All (Excluding from the list)<br/>
+        <input type="radio" class="input-xlarge app-settings" name="@registration_mail_domain_restriction.Name" @if(registration_mail_domain_restriction.Value == "2"){@Html.Raw("checked");} value="2"> Deny All (Excluding from the list)
+        </div>
+    </div>
+</div>
+ 

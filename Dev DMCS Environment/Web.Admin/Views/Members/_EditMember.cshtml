@@ -1,0 +1,221 @@
+﻿@model MemberListModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+
+@{
+    var templateId = String.Format("dialog-view-{0}", DateTime.Now.Ticks.ToString());
+    var dialogId = templateId.Replace("-view-", "-");
+    var contentId = templateId.Replace("-view-", "-content-");
+    MemberSocialNetwork _memberNetwork = MemberSocialNetworks.GetByMemberID(Model.Members[0].MemberID);
+}
+<style>
+    #general .form-group {
+        margin-top:5px !important;
+        margin-bottom:10px !important;
+        width:97%
+    }
+</style>
+
+<template type="text/template" id="@templateId" data-dialog-tittle="Edit Member&nbsp;&nbsp;<div style='color:#888;display:inline-block;font-size:22px !important'>@Model.Members[0].Name</div>" data-dialog-spinner="spinner-@dialogId">
+    <br />
+    <div id="notify-message"></div>
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#general" data-toggle="tab">General</a>
+        </li>
+        <li><a href="#profile" data-toggle="tab">Profile</a></li>
+        <li><a href="#domains" data-toggle="tab">Domains</a></li>
+        <li><a href="#api" data-toggle="tab">API</a></li>
+        <li><a href="#attempts" data-toggle="tab">Attempts</a></li>
+        @if (_memberNetwork.MemberSocialNetworkID > 0 && _memberNetwork.SocialNetworkID == 1)
+        {
+            <li><a href="#facebookwall" data-toggle="tab">Facebook Wall</a></li>
+        }
+        @if (_memberNetwork.MemberSocialNetworkID > 0 && _memberNetwork.SocialNetworkID == 2)
+        {
+            <li><a href="#tweets" data-toggle="tab">Tweets</a></li>
+        }
+    </ul>
+    <br />
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="general">
+
+            <div class="form-group">
+                @{Html.RenderPartial(@"~/Views/Profile/_AvatarPanel.cshtml", new AvatarPanelModel() { MemberID = @Model.Members[0].MemberID });}
+             </div><p> <p/>
+             <div class="form-group">
+                 <label for="member-name">Name</label>
+                 <input type="text" class="input-xlarge form-control" id="member-name" style="color:black" maxlength="64" value="@Model.Members[0].Name" @if (Model.Members[0].IsBuiltIn) { @Html.Raw("readonly=\"readonly\" disabled=\"disabled\"")     ; } />
+             </div>
+             <div class="form-group">
+                 <label for="member-email form-control">Email</label>
+                 <input type="text" class="input-xlarge form-control" id="member-email" style="color:black" maxlength="64" value="@Model.Members[0].Email" />
+             </div>
+
+             <div class="form-group">
+                 <label for="member-time-zone">Time Zone</label>
+                 @{
+                     var TimeZones = TimeZoneInfo.GetSystemTimeZones();
+                     <select style="width:99%" id="member-time-zone" class="form-control">
+                         <option value="">Please, select member time zone</option>
+                         @foreach (TimeZoneInfo Info in TimeZones)
+                         {
+                             if (Model.Members[0].TimeZoneID == Info.Id)
+                             {
+                                 <option value="@Info.Id" selected="selected">@Info.DisplayName</option>
+                             }
+                             else
+                             {
+                                 <option value="@Info.Id">@Info.DisplayName</option>
+                             }
+                         }
+                     </select>
+                 }
+             </div>
+             <div class="form-group">
+                 <label class="member-pass" for="member-email">Password</label>
+                 <input type="password" class="input-xlarge form-control" id="member-pass" style="color:black" maxlength="64" value="" placeholder="••••••••••" />
+             </div>
+             
+             <div class="form-group">
+                 <label class="member-pass-again" for="member-pass-again">Password Confirmation</label>
+                 <input type="password" class="input-xlarge form-control" id="member-pass-confirmation" style="color:black" maxlength="64" value="" placeholder="••••••••••" />
+             </div>
+
+             <div class="btn btn-default btn-info generate-password btn-xs" data-loading-text="Generating..." data-complete-text="Done!" style="vertical-align:top !important" id="generate-send-password" data-member-email="@Model.Members[0].Email" data-spinner-id="spinner-@templateId">Generate & Send Password</div>
+          </div>
+        <div class="tab-pane fade in" id="profile" style="vertical-align:top;overflow-y:auto;width:100%">
+            <p class="well">This area contains extra fields which can be defined by you on Settings/Fields. Please pay attention what fields can be mandatory and filled in by a member during sign up process.</p>
+            @{Html.RenderPartial(@"~/Views/Profile/_MemberProfileFields.cshtml", new MemberProfileFieldModel(Model.Members[0]));}
+        </div>
+        <div class="tab-pane fade in" id="api">
+            <p>In order to access the API, you need two peices of information. The first is a member email which is a unique code that we use to identify your account. The other is an API Token which acts as a password when you connect to the API. You can get both of those here. You should click on the "Generate a new API Token" to display it. You'll need to remember both of those later when you start writing code.</p>
+            <div class=" member-token-tab" style="vertical-align:top">
+                @{Html.RenderPartial(@"~/Views/Members/_MemberToken.cshtml", Model);}
+            </div>
+        </div>
+        <div class="tab-pane fade in" id="attempts" style="vertical-align:top;overflow-y:auto">
+            @{Html.RenderPartial(@"~/Views/Members/_MemberAttempts.cshtml", Model);}
+        </div>
+        <div class="tab-pane fade in" id="domains" style="vertical-align:top;overflow-y:auto">
+            @{Html.RenderPartial(@"~/Views/Members/_MemberDomains.cshtml", Model);}
+        </div>
+        @if (_memberNetwork.MemberSocialNetworkID > 0 && _memberNetwork.SocialNetworkID == 1)
+        {
+            <div class="tab-pane fade in" id="facebookwall" style="vertical-align:top;overflow-y:auto">
+                @{Html.RenderPartial(@"~/Views/Members/_MemberFacebookWall.cshtml", Model);}
+            </div>
+        }
+        @if (_memberNetwork.MemberSocialNetworkID > 0 && _memberNetwork.SocialNetworkID == 2)
+        {
+            <div class="tab-pane fade in" id="tweets" style="vertical-align:top;overflow-y:auto">
+                @{Html.RenderPartial(@"~/Views/Members/_MemberTwitter.cshtml", Model);}
+            </div>
+        }
+    </div>
+</template>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        var dialog = App.DialogBootstrap("#@templateId",760,640, true,
+        {
+            Save: function () {
+
+                var profileFiedlInfo = new Array();
+
+                $(".profile-field").each(function (e) {
+
+                    if ($(this).attr("type") == "checkbox")
+                        profileField = { ID: $(this).attr("id").replace("profile-field-", ""), Value: $(this).is(":checked") };
+                    else
+                        profileField = { ID: $(this).attr("id").replace("profile-field-", ""), Value: $(this).val() != null ? $(this).val().toString() : ""};
+
+                    profileFiedlInfo.push(profileField)
+                })
+
+
+                $('div[id*="profile-radio-field-"]').each(function (e) {
+                    var fieldId = $(this).attr("id").replace("profile-radio-field-", "")
+
+                    var profileField = {
+                        ID: fieldId,
+                        Value: $(this).find('input:checked').val()
+                    }
+
+                    profileFiedlInfo.push(profileField);
+                });
+
+                var _checkedDomains = [];
+
+                $(".domain-select").each(function (e) {
+                    if ($(this).is(':checked') == true)
+                        _checkedDomains.push(parseInt($(this).attr("data-domain-id")));
+                });
+
+
+                var memberInfo = {
+                    MemberID:     @Model.Members[0].MemberID,
+                    Name:         $("#member-name").val(),
+                    Email:        $("#member-email").val(),
+                    Password :    $("#member-pass").val(),
+                    Confirmation: $("#member-pass-confirmation").val(),
+                    FieldInfo: profileFiedlInfo,
+                    TimeZoneID: $("#member-time-zone").val(),
+                    Domains : _checkedDomains
+                };
+
+                $("#spinner-@dialogId").addClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                // Removing file by AJAX request
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SaveMember", "Members")",
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(memberInfo),
+                    cache: false,
+                    success: function (data) {
+                        switch(data.NotifyType)
+                        {
+                            case 0: $("#general-message").html(data.Html);dialog.close();break
+                            case 1: {
+                                $("#@dialogId").find("#notify-message").html(data.Html);
+                                var target = $("#notify-message")
+                                var container = $("#@dialogId");
+                                container.stop().scrollTo( target, 800 );
+                                break;
+                            }
+                            case 2: $(data.Html).prependTo('body');dialog.close();break;
+                        };
+
+                        if(data.NotifyType == 1)
+                            $("#@dialogId").animate({ scrollTop: 0 }, 'slow');
+
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                        if(!data.Status){
+                            setTimeout(function(e){
+                                App.MembersManagement.ReloadMembers(null, null,false);}
+                             , 300);
+                        }
+                    },
+                    error: function(xhr, textStatus, errorThrown){
+                        App.DialogError(xhr,textStatus, errorThrown);
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                    }
+                });
+
+            }//,
+            //Cancel: function () {$(this).dialog("close");}
+        })
+    });
+
+</script>
+

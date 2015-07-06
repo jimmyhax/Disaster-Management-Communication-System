@@ -1,0 +1,29 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+@using Web.Admin.Controllers
+
+@{
+    var language_public_default = AppSession.Parameters.LanguagePublicDefault;
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="control-label" for="@language_public_default.Name">Public UI language</label>
+            @{Html.RenderPartial(@"~/Views/Settings/_LanguageList.cshtml", Model);}                 
+            <p class="muted">Default public UI language for Sign In, Sign Out forms</p>
+        </div>
+         <div class="form-group">
+	        <label class="control-label" for="">Reload label files</label>
+	        <div class="btn btn-default reload-labels btn-xs" data-url="@Url.Action("ReloadLabels","Settings")">Reload</div>
+	        <span class="muted">Click to reload all label files and load new files if exist</span>
+         </div>
+    </div>
+</div>
+ <script type="text/javascript">
+     $("#@language_public_default.Name").val("@language_public_default.Value")
+</script>

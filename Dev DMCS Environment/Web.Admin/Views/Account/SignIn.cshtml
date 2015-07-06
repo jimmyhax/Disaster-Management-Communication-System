@@ -1,0 +1,142 @@
+﻿@using Web.Admin.Controllers
+@using Web.Admin.Logic.Collections;
+
+@{
+    var social_twitter_enabled = AppSession.Parameters.SocialTwitterEnabled;
+    var social_twitter_consumer_key = AppSession.Parameters.SocialTwitterConsumerKey;
+    var social_twitter_consumer_secret = AppSession.Parameters.SocialTwitterConsumerSecret;
+    var social_facebook_enabled = AppSession.Parameters.SocialFacebookEnabled;
+    var social_facebook_app_id = AppSession.Parameters.SocialFacebookAppID;
+    var social_facebook_app_secret = AppSession.Parameters.SocialFacebookAppSecret;
+    var social_goole_enabled = AppSession.Parameters.SocialGooleEnabled;
+    var social_yahoo_enabled = AppSession.Parameters.SocialYahooEnabled; 
+    
+    var social_livejournal_enabled = AppSession.Parameters.SocialLiveJournalEnabled; 
+    var social_blogger_enabled = AppSession.Parameters.SocialBloggerEnabled; 
+    var social_openid_enabled = AppSession.Parameters.SocialOpenIDEnabled;
+    var social_myopenid_enabled = AppSession.Parameters.SocialMyOpenIDEnabled;     
+    
+    var RetutnUrl = "";
+    if (AppSession.NoAuthReturnUrl != null && !User.Identity.IsAuthenticated) 
+    {
+        RetutnUrl = AppSession.NoAuthReturnUrl;
+    }              
+    else if (AppSession.ReturnUrl != null) 
+    {
+        RetutnUrl = AppSession.ReturnUrl;
+    }
+
+    var SignInUpDomainName = Request.QueryString["domain"];
+
+    if (SignInUpDomainName == null){
+        SignInUpDomainName = Request.Url.DnsSafeHost;
+    }
+ }
+<style>
+    .zocial-link
+    {
+        margin:1px !important;
+        width:87px;
+    }
+</style>
+<div class="login-header-top row-flued">
+    <div class="container">
+            <h1>
+            @AppSession.GetLabel("Account.SignIn.HeaderBig")&nbsp;
+            <small>
+                @AppSession.GetLabel("Account.SignIn.HeaderSmall") 
+                @if (@RetutnUrl != "") { <a style="float:right" class="btn btn-default" href="@RetutnUrl">Back to Application</a>}
+            </small>
+            </h1>
+    </div>
+</div>
+
+<div class="login-box login-box-pos-top-relative">
+    <div class="login-form">
+        <div class="login-title">
+            @AppSession.GetLabel("Account.SignIn.Title")
+        </div>
+        <div class="login-form-inner">
+               <div id="notify-message">
+                    @{
+                        if (AppSession.SocialSignInIssueMessage != null && AppSession.SocialSignInIssueMessage.Trim().Length > 0)
+                        {                            
+                            Web.Admin.Models.RequestResultModel _model = new Web.Admin.Models.RequestResultModel();
+                            _model.Title = "Social SignIn";
+                            _model.Message = AppSession.SocialSignInIssueMessage;
+                            _model.InfoType = Web.Admin.Models.RequestResultInfoType.ErrorOrDanger;
+                            Html.RenderPartial("_RequestResultPageInLine", _model);
+                            AppSession.SocialSignInIssueMessage = "";
+                        }   
+                     }
+               </div>
+                <p><br /></p>
+                <div class="form-group">
+                    <input type="text" class="input-xlarge login-form-field form-control" id="member-email" style="width:97%;color:black" maxlength="64" placeholder="@AppSession.GetLabel("Account.SignIn.Email")" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="input-xlarge login-form-field form-control" id="member-pass" style="width:97%;color:black" maxlength="30" placeholder="@AppSession.GetLabel("Account.SignIn.Password")" />
+                </div>
+                <input type="checkbox" class="login-form-field" id="remember-me" /> @AppSession.GetLabel("Account.SignIn.RememberMe")
+         </div>
+        <div class="login-form-buttons">
+              <button class="btn btn-default btn-primary sing-in-btn login-form-button btn-sm">@AppSession.GetLabel("Account.SignIn.SignIn")</button>&nbsp;<div class="glyphicon glyphicon-refresh glyphicon-refresh-animate" id="login-spinner" style="vertical-align:middle;display:none"></div>
+              <div style="float:right;margin-top:5px">
+                
+                @{/*AppSession.Parameters.RefreshAppParameters();*/}                
+                @if (AppSession.Parameters.RegistrationSelfRegistration.Value == "true"){<a href="@Url.Content("SignUp")">@AppSession.GetLabel("Account.SignIn.NeedsAnAccount")</a><span>&nbsp;&nbsp;</span>}
+                @if (AppSession.Parameters.RegistrationResetPassword.Value == "true"){<a href="@Url.Content("ForgotPassword")">@AppSession.GetLabel("Account.SignIn.ForgotPassword")</a>}
+                
+             </div>
+         </div>
+    </div>
+    @if (social_twitter_enabled.Value == "true" || social_facebook_enabled.Value == "true" || social_goole_enabled.Value == "true" || social_yahoo_enabled.Value == "true")
+    {
+        <div style="padding-top:10px;padding-left:0px;padding-right:0px; text-align:center">
+              @AppSession.GetLabel("Account.SignIn.SocialNetMember"):
+        </div>
+    }
+    <div style="margin-top:5px;text-align:center;font-size:11px;padding:0px">
+    @if (social_twitter_enabled.Value == "true") { 
+        <a href="@Url.Content("~/SignInWith?provider=twitter&domain=")@SignInUpDomainName" class="zocial twitter  zocial-link social-redirect">Twitter</a>
+    }  
+    @if (social_facebook_enabled.Value == "true") { 
+        <a href="@Url.Content("~/SignInWith?provider=facebook&domain=")@SignInUpDomainName" class="zocial facebook  zocial-link social-redirect">Facebook</a>
+    } 
+    @if (social_goole_enabled.Value == "true") { 
+        <a href="@Url.Content("~/SignInWith?provider=google&domain=")@SignInUpDomainName" class="zocial google zocial-link social-redirect">Google</a>
+    } 
+    @if (social_yahoo_enabled.Value == "true") { 
+        <a href="@Url.Content("~/SignInWith?provider=yahoo&domain=")@SignInUpDomainName" class="zocial yahoo zocial-link social-redirect">Yahoo</a>
+    } 
+    </div>
+    
+    @{
+        if(social_livejournal_enabled.Value == "true" || social_blogger_enabled.Value == "true" ||  social_openid_enabled.Value == "true")
+        {
+            <div style="margin-top:10px;text-align:center">
+                <div style="padding-top:10px;padding-left:0px;padding-right:0px; text-align:center">
+                    @AppSession.GetLabel("Account.SignIn.HaveOpenID")
+                </div>
+                <div style="margin-top:5px;text-align:center;vertical-align:top">
+                    <div class="btn btn-group" data-toggle="buttons-radio" style="vertical-align:top;text-align:center;display:inline-block;vertical-align:top">
+                     @if (social_livejournal_enabled.Value == "true") {<a class="btn btn-default btn-xs btn-open-id" data-provider="livejournal" id="signin-livejournla" data-comment="@AppSession.GetLabel("Account.SignIn.EnterLJ")" title="Live Journal" href="#"><img src="@Url.Content("~/content/images/social/24x24/livejournal.png")" /></a>}
+                     @if (social_blogger_enabled.Value == "true") {<a class="btn btn-default btn-xs btn-open-id"  data-provider="blogger"  id="signin-blogger"  data-comment="@AppSession.GetLabel("Account.SignIn.EnterBlogger")"  title="Blogger"  href="#"><img src="@Url.Content("~/content/images/social/24x24/blogger.png")" /></a>}
+                     @if (social_openid_enabled.Value == "true"){<a class="btn btn-default btn-xs btn-open-id"  data-provider="openid" id="signin-openid"  data-comment="@AppSession.GetLabel("Account.SignIn.EnterOpenId")"  href="#"><img src="@Url.Content("~/content/images/social/24x24/openid.png")" /></a>}           
+                     @if (social_myopenid_enabled.Value == "true")
+                     {<a class="btn btn-default btn-xs btn-open-id btn-xs"  data-provider="myopenid" id="signin-myopenid"  data-comment="@AppSession.GetLabel("Account.SignIn.EnterMyOpenId")"  title="myOpenID"  href="#"><img src="@Url.Content("~/content/images/social/24x24/myopenid.png")" /></a>}           
+                    </div>
+                        <input type="hidden" id="provider" name="provider" />
+                        <input type="hidden" id="open-id-name" name="open-id-name" />
+                        <input type="text" class="input-xlarge login-form-field" id="sign-member-open-id-name" style="color:black;width:44%" maxlength="30"/>&nbsp;<div id="sign-member-open-id" style="vertical-align:top" class="btn btn-default btn-xs">Sing In</div>
+                        <div id="open-id-comment" style="text-align:center"></div>
+                </div>
+            </div>   
+        }
+     }
+    <div class="alert alert-success" style="margin-top:5px;display:none" id="redirect-message">
+        <a class="close" data-dismiss="alert">×</a>
+        <div class="glyphicon glyphicon-refresh glyphicon-refresh-animate" style="vertical-align:middle;display:inline-block"></div>&nbsp;<strong>
+        Redirecting to the <div id="provider-frendly-name" style="display:inline-block"></div></strong>
+     </div>
+</div>

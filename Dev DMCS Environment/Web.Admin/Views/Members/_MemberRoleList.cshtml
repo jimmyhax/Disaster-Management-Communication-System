@@ -1,0 +1,11 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+@model MemberListModel
+
+@foreach (Role role in Web.Admin.Logic.Collections.Roles.GetByMember(Model.Members[0].MemberID))
+{
+   <div class="label member-role-label" style="background-color:#@role.BackColor !important">@role.Name<div class="member-role-label-cross role-member-remove-cross" data-role-id="@role.RoleID" data-member-id="@Model.Members[0].MemberID" data-role-name="@role.Name" data-member-name="@Model.Members[0].Name" >&nbsp;|&nbsp;<b>x</b></div></div>
+}

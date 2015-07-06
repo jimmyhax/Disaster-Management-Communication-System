@@ -1,0 +1,55 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+@using Web.Admin.Controllers
+
+@{
+    var themes_app_current_name = AppSession.Parameters.ThemesCurrentName;
+    var ThemeName = AppSession.Parameters.ThemesCurrentName.Value;
+    var imageName = "thumbnail.png"; //ThemeName + ".png";
+    var ConetntPath = Url.Content("~/Content/themes/");
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="@themes_app_current_name.Name">Name</label>
+                <select class="input-xlarge app-settings form-control" id="@themes_app_current_name.Name" name="@themes_app_current_name.Name" >
+                  <option value="cerulean">Cerulean - A calm, blue sky</option>
+                  <option value="cosmo">Cosmo - An ode to Metro.</option>
+                  <option value="cyborg">Cyborg - Jet black and electric blue</option>
+                  <option value="darkly">Darkly - Jet black and electric blue</option>                  
+                  <option value="bootstrap">Bootstrap - classic Bootstrap</option>
+                  <option value="flatly">Flatly - Flat and modern </option>
+                  <option value="journal">Journal - Crisp like a new sheet of paper</option>
+                  <option value="lumen">Lumen - Ligth and shadow</option>
+                  <option value="paper">Paper - Material is the metaphor</option>                  
+                  <option value="readable">Readable - Optimized for legibility</option>
+                  <option value="sandstone">Sandstone - A touch of warmth</option>
+                  <option value="simplex">Simplex - Mini and minimalist</option>
+                  <option value="slate">Slate - Shades of gunmetal gray</option>
+                  <option value="spacelab">Spacelab - Silvery and sleek</option>
+                  <option value="superhero">Superhero - Batman meets... Aquaman</option>
+                  <option value="united">United - Ubuntu orange and unique font</option>
+                  <option value="yeti">Yeti - A friendly foundation</option>
+                </select>
+                <p class="muted">Let's colorize the world :)</p>
+        </div><br/>
+        <div class="form-group">
+            <label for="@themes_app_current_name.Name">Example</label>
+            <img id="theme-example" with="540px" height="280px" src="@ConetntPath@ThemeName/@imageName?v=@DateTime.Now.Ticks.ToString()" />
+            <br /><br />
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $("#@themes_app_current_name.Name").val("@themes_app_current_name.Value")
+    $("#@themes_app_current_name.Name").bind("change", function (e) {
+        $("#theme-example").attr("src", "@ConetntPath" + $(this).val() + "/thumbnail.png");
+    });
+</script>

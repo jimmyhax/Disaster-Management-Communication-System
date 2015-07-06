@@ -1,0 +1,1010 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Server_.API</name>
+    </assembly>
+    <members>
+        <member name="T:Server_.API.Collections.AuditEvents">
+            <summary>
+            Provides getting collection of the audit events using HTTP call to API web application.   
+            </summary>
+        </member>
+        <member name="T:Server_.API.Utilities.Collection`1">
+            <summary>
+            Provides methods to help deserialize object or object collection from JSON string.
+            </summary>
+            <typeparam name="T">Expected object type in JSON string.</typeparam>
+        </member>
+        <member name="M:Server_.API.Utilities.Collection`1.GetCollection(System.IO.StreamReader)">
+            <summary>
+            Gets the collection of objects from the response JSON string. 
+            </summary>
+            <param name="sr">Response stream.</param>
+            <returns>Collection of an objects for specified type.</returns>
+        </member>
+        <member name="M:Server_.API.Utilities.Collection`1.GetItem(System.IO.StreamReader)">
+            <summary>
+            Gets an objects from the response JSON string. 
+            </summary>
+            <param name="sr">Response stream.</param>
+            <returns>An object for specified type.</returns>
+        </member>
+        <member name="P:Server_.API.Utilities.Collection`1.Type">
+            <summary>
+            Gets the type of response collection.
+            </summary>
+        </member>
+        <member name="M:Server_.API.Collections.AuditEvents.GetEvents(Server_.API.Utilities.CollectionFilter)">
+            <summary>
+            Gets audit events collection where by audit event unique identifier.
+            </summary>
+            <param name="Filter">Filter condition object.</param>
+            <returns>Collection of AuditEvent objects.</returns>
+        </member>
+        <member name="P:Server_.API.Collections.AuditEvents.Connection">
+            <summary>
+            Keeps the connection infomation.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Collections.AuditEventDatails">
+            <summary>
+            Provides getting collection of the audit event details using HTTP call to API web application.   
+            </summary>
+        </member>
+        <member name="M:Server_.API.Collections.AuditEventDatails.GetEventDatails(System.Int64)">
+            <summary>
+            Gets audit event details collection where by audit event unique identifier.
+            </summary>
+            <param name="EventID"></param>
+            <returns>List of audit event details.</returns>        
+        </member>
+        <member name="P:Server_.API.Collections.AuditEventDatails.Connection">
+            <summary>
+            Keeps information abbout current connection.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Objects.ActionValidationResults">
+            <summary>
+            SingInAuthTickets
+            </summary>
+        </member>
+        <member name="M:Server_.API.Objects.ActionValidationResults.IsAuthTicketValid(System.String,System.String)">
+            <summary>
+            IsAuthTicketValid method
+            </summary>
+            <param name="Email"></param>
+            <param name="AuthToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Server_.API.Objects.SingInAuthTickets">
+            <summary>
+            SingInAuthTickets
+            </summary>
+        </member>
+        <member name="M:Server_.API.Objects.SingInAuthTickets.GetSignInTicket(System.String,System.String)">
+            <summary>
+            Returns SocialSignInAvailability structure. 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Server_.API.Collections.MemberSocialNetworks">
+            <summary>
+            Provides getting collection of the memners using HTTP call to API web application.   
+            </summary>
+        </member>
+        <member name="M:Server_.API.Collections.MemberSocialNetworks.GetMemberSocialNetworks(System.Int64)">
+            <summary>
+            Gets a member by member unique identifier.
+            </summary>
+            <param name="MemberID">Member unique identifier.</param>
+            <returns>Instance of the Member class. </returns>
+        </member>
+        <member name="M:Server_.API.Collections.MemberSocialNetworks.GetMemberSocialNetworksBySignInEmail(System.String)">
+            <summary>
+            Gets a member by member unique identifier.
+            </summary>
+            <param name="Email">Member Email.</param>
+            <returns>Instance of the Member class. </returns>
+        </member>
+        <member name="P:Server_.API.Collections.MemberSocialNetworks.Connection">
+            <summary>
+            Keeps information abbout current connection.
+            </summary>        
+        </member>
+        <member name="T:Server_.API.Collections.Members">
+            <summary>
+            Provides getting collection of the memners using HTTP call to API web application.   
+            </summary>
+        </member>
+        <member name="M:Server_.API.Collections.Members.GetMembers(Server_.API.Utilities.CollectionFilter)">
+            <summary>
+            Gets list of members by a condition filter.
+            </summary>
+            <param name="Filter">Filter condition.</param>
+            <returns>List of members.</returns>
+        </member>
+        <member name="M:Server_.API.Collections.Members.GetMember(System.Int64)">
+            <summary>
+            Gets a member by member unique identifier.
+            </summary>
+            <param name="MemberID">Member unique identifier.</param>
+            <returns>Instance of the Member class. </returns>
+        </member>
+        <member name="M:Server_.API.Collections.Members.GetMember(System.String)">
+            <summary>
+            Gets a member where the e-mail address for the member matches the specified e-mail address.
+            </summary>
+            <param name="Email">Member e-mail address.</param>
+            <returns>A Member object representing the member associated with the specified e-mail address.</returns>
+        </member>
+        <member name="M:Server_.API.Collections.Members.AssignRoles(System.Int64,System.Int64)">
+            <summary>
+            Assigns a member with the specified unique identifier to role with the specified unique identifier.
+            </summary>
+            <param name="MemberID">Member unique identifier.</param>
+            <param name="RoleID">Role unique identifier.</param>
+            <returns>A Member object representing the member associated with the specified unique identifier.</returns>
+        </member>
+        <member name="M:Server_.API.Collections.Members.AssignRoles(System.Int64,System.Int64[])">
+            <summary>
+            Assigns a member with the specified unique identifier to roles with the specified unique identifier.
+            </summary>
+            <param name="MemberID">Member unique identifier.</param>
+            <param name="RoleID">Array of role unique identifiers.</param>
+            <returns>A Member object representing the member associated with the specified unique identifier.</returns>
+        </member>
+        <member name="M:Server_.API.Collections.Members.AssignRoles(System.String,System.String)">
+            <summary>
+            Assigns a member with the specified e-mail to roles with the specified name.
+            </summary>
+            <param name="Email">Members e-mail address.</param>
+            <param name="RoleName">Role name.</param>
+            <returns>A Member object representing the member associated with the specified e-mail address.</returns>
+        </member>
+        <member name="M:Server_.API.Collections.Members.AssignRoles(System.String,System.String[])">
+            <summary>
+            Assigns a member with the specified e-mail to roles with the specified name.
+            </summary>
+            <param name="Email">Members e-mail address.</param>
+            <param name="RoleName">Role name.</param>
+            <returns>A Member object representing the member associated with the specified e-mail address.</returns>        
+        </member>
+        <member name="M:Server_.API.Collections.Members.UnAssignRoles(System.Int64,System.Int64)">
+            <summary>
+            Unassigns a member with the specified unique identifier to role with the specified unique identifier.
+            </summary>
+            <param name="MemberID">Member unique identifier.</param>
+            <param name="RoleID">Role unique identifier.</param>
+            <returns>A Member object representing the member associated with the specified unique identifier.</returns>
+        </member>
+        <member name="M:Server_.API.Collections.Members.UnAssignRoles(System.Int64,System.Int64[])">
+            <summary>
+            Unassign a member with the specified unique identifier to roles with the specified unique identifier.
+            </summary>
+            <param name="MemberID">Member unique identifier.</param>
+            <param name="RoleID">Array of role unique identifiers.</param>
+            <returns>A Member object representing the member associated with the specified unique identifier.</returns>
+        </member>
+        <member name="M:Server_.API.Collections.Members.UnAssignRoles(System.String,System.String)">
+            <summary>
+            Unassigns a member with the specified e-mail to roles with the specified name.
+            </summary>
+            <param name="Email">Members e-mail address</param>
+            <param name="RoleName">Role name</param>
+            <returns>A Member object representing the member associated with the specified e-mail address.</returns>
+        </member>
+        <member name="M:Server_.API.Collections.Members.UnAssignRoles(System.String,System.String[])">
+            <summary>
+            Unassigns a member with the specified e-mail to roles with the specified name.
+            </summary>
+            <param name="Email">Members e-mail address</param>
+            <param name="RoleName">Array of roles name</param>
+            <returns>A Member object representing the member associated with the specified email address.</returns>
+        </member>
+        <member name="M:Server_.API.Collections.Members.AuthenticateMember(System.String,System.String)">
+            <summary>
+            Authenticates a member with the specified e-mail adress and password.
+            </summary>
+            <param name="Email">Members e-mail address</param>
+            <param name="Password">Members password.</param>
+            <returns>A Member object representing the member associated with the specified e-mail address.</returns>
+        </member>
+        <member name="P:Server_.API.Collections.Members.Connection">
+            <summary>
+            Keeps information abbout current connection.
+            </summary>        
+        </member>
+        <member name="T:Server_.API.Collections.Roles">
+            <summary>
+            Provides getting collection of the roles using HTTP call to API web application.   
+            </summary>
+        </member>
+        <member name="M:Server_.API.Collections.Roles.GetRoles">
+            <summary>
+            Gets a collection of all the roles in the database.
+            </summary>
+            <returns>A List of Roles objects representing all the users in the database.</returns>
+        </member>
+        <member name="M:Server_.API.Collections.Roles.GetMemberRoles(System.Int64)">
+            <summary>
+            Gets a collection of the roles for the member matches the member specified unique identifier.
+            </summary>
+            <param name="MemberID"></param>
+            <returns>A List of Roles objects representing the roles for the member matches the member specified unique identifier.</returns>
+        </member>
+        <member name="M:Server_.API.Collections.Roles.GetMemberRoles(System.String)">
+            <summary>
+            ets a collection of the roles for the member matches the member specified unique identifier.
+            </summary>
+            <param name="Email">Member e-mail address.</param>
+            <returns>A List of Roles objectsfor the member matches the member specified unique identifier.</returns>
+        </member>
+        <member name="P:Server_.API.Collections.Roles.Connection">
+            <summary>
+            Keeps information abbout current connection.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Objects.SocialSignInAvailabilities">
+            <summary>
+            SocialSignInAvailabilities
+            </summary>
+        </member>
+        <member name="M:Server_.API.Objects.SocialSignInAvailabilities.GetSocialSignInAvailability">
+            <summary>
+            Returns SocialSignInAvailability structure. 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Server_.API.Objects.AuditEventType">
+            <summary>
+            Audit event type possible values:
+            Default - the type of action can't be defined;
+            Info - if something not realy important happened;
+            Success - if an acction finished succesfylly;
+            Warning - needs to pay attantion to an action;
+            Error - an error occurred during an action.
+            </summary>
+        </member>
+        <member name="F:Server_.API.Objects.AuditEventType.Default">
+            <summary>
+            General type of audit item.
+            </summary>
+        </member>
+        <member name="F:Server_.API.Objects.AuditEventType.Info">
+            <summary>
+            Information type of audit item.
+            </summary>
+        </member>
+        <member name="F:Server_.API.Objects.AuditEventType.Success">
+            <summary>
+            An ction was finished fine type.
+            </summary>
+        </member>
+        <member name="F:Server_.API.Objects.AuditEventType.Warning">
+            <summary>
+            An action was finished with warnings.
+            </summary>
+        </member>
+        <member name="F:Server_.API.Objects.AuditEventType.Error">
+            <summary>
+            An action was failed.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Objects.AuditEventSource">
+            <summary>
+            App - an action is connected with application activity;
+            System - an action is connected with system activity;
+            API - an action is connected with API call;
+            </summary>
+        </member>
+        <member name="F:Server_.API.Objects.AuditEventSource.App">
+            <summary>
+            The event source is admin application
+            </summary>
+        </member>
+        <member name="F:Server_.API.Objects.AuditEventSource.System">
+            <summary>
+            The source is process in a library
+            </summary>
+        </member>
+        <member name="F:Server_.API.Objects.AuditEventSource.API">
+            <summary>
+            The source is application API
+            </summary>
+        </member>
+        <member name="T:Server_.API.Objects.AuditEvent">
+            <summary>
+            Provides a wrapper on single row in the AuditEvents database table. The properties of this class mapped on appropriate database fields and methods provide saving and loading into/from database.
+            An instance of this class can be created by new word or loaded from the database using AuditEvents class which returns collection of AuditEvent objects by different condition.   
+            The object of this class contains information about single action which happens during application activity. There are the types of event: system, application, API.
+            </summary> 
+        </member>
+        <member name="P:Server_.API.Objects.AuditEvent.EventID">
+            <summary>
+            Unique item identifier in the database.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.AuditEvent.EventType">
+            <summary>
+            Event type, can be:
+            Default - the type of action can't be defined;
+            Info - if something not realy important happened;
+            Success - if an acction finished succesfylly;
+            Warning - needs to pay attantion to an action;
+            Error - an error occurred during an action.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.AuditEvent.MemberEmail">
+            <summary>
+            E-mail address of executor.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.AuditEvent.IPAddress">
+            <summary>
+            IP address of the executor.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.AuditEvent.Details">
+            <summary>
+            An acction short description.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.AuditEvent.Description">
+            <summary>
+            An action long description.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Objects.AuditEventDetail">
+            <summary>
+            Provides a wrapper on single row in the AuditEventDetails database table. The properties of this class mapped on appropriate database fields and methods provide saving and loading into/from database.
+            An instance of this class can be created by new word or loaded from the database using AuditEventDetails class which returns collection of AuditEventDetail objects by different condition.   
+            The object of this class contains information about single action in details which happens during application activity.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.AuditEventDetail.Title">
+            <summary>
+            An action short description.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.AuditEventDetail.Description">
+            <summary>
+            An action long description.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Objects.SingInAuthTicket">
+            <summary>
+            API sign in tikect.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.SingInAuthTicket.MemberID">
+            <summary>
+            Member unique item identifier.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.SingInAuthTicket.MemberName">
+            <summary>
+            Member name.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.SingInAuthTicket.MemberEmail">
+            <summary>
+            Member email.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.SingInAuthTicket.EncrytedTicket">
+            <summary>
+            Encryted ticket string.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.SingInAuthTicket.IsPersistant">
+            <summary>
+            Cookie persistant flag.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Objects.SocialSignInAvailability">
+            <summary>
+            Social SignIn Availability structure for API using.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.SocialSignInAvailability.Twitter">
+            <summary>
+            Is Twitter singin switched on
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.SocialSignInAvailability.Facebook">
+            <summary>
+            Is Facebook singin switched on
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.SocialSignInAvailability.Google">
+            <summary>
+            Is Google singin switched on
+            </summary>        
+        </member>
+        <member name="P:Server_.API.Objects.SocialSignInAvailability.Yahoo">
+            <summary>
+            Is Yahoo singin switched on
+            </summary>        
+        </member>
+        <member name="P:Server_.API.Objects.SocialSignInAvailability.LiveJournal">
+            <summary>
+            Is LiveJournal singin switched on
+            </summary>        
+        </member>
+        <member name="P:Server_.API.Objects.SocialSignInAvailability.Blogger">
+            <summary>
+            Is Blogger singin switched on
+            </summary>        
+        </member>
+        <member name="P:Server_.API.Objects.SocialSignInAvailability.OpenID">
+            <summary>
+            Is OpenID singin switched on
+            </summary>        
+        </member>
+        <member name="P:Server_.API.Objects.SocialSignInAvailability.myOpenID">
+            <summary>
+            Is myOpenID singin switched on
+            </summary>        
+        </member>
+        <member name="T:Server_.API.Objects.Member">
+            <summary>
+            Provides a wrapper on single row in the Members database table. The properties of this class mapped on appropriate database fields and methods provide saving and loading into/from database.
+            An instance of this class can be created by new word or loaded from the database using Members class which returns collection of Member objects by different condition.   
+            The object of this class contains information about single member.
+            </summary>
+        </member>
+        <member name="M:Server_.API.Objects.Member.GetFieldValueByID(System.Int32)">
+            <summary>
+            Gets member profile field value by ID.
+            </summary>
+            <param name="ProfileFieldID">Member profile field ID.</param>
+            <returns>Member profile field object.</returns>
+        </member>
+        <member name="M:Server_.API.Objects.Member.GetFieldValueByName(System.String)">
+            <summary>
+            Gets member profile field value by name.
+            </summary>
+            <param name="ProfileFieldName">Member profile field name.</param>
+            <returns>Member profile field object.</returns>
+        </member>
+        <member name="M:Server_.API.Objects.Member.IsInRoleInCookie(System.String)">
+            <summary>
+            Returns true if the member is in a role defined by name. It expects list of roles in cookies.
+            </summary>
+            <param name="Name">Role name.</param>
+            <returns>True if the member is in a role defined by name.</returns>
+        </member>
+        <member name="M:Server_.API.Objects.Member.IsInRoleInAPI(System.String)">
+            <summary>
+            Return true if the member is in a role defined by name. It receives list of roles by API call.
+            </summary>
+            <param name="Name">Role name.</param>
+            <returns>True  if the member is in a role defined by name</returns>
+        </member>
+        <member name="M:Server_.API.Objects.Member.TokenFromJson(System.String)">
+            <summary>
+            Creates auth ticket member session object instance.
+            </summary>
+            <param name="input">JSON representation of object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Server_.API.Objects.Member.NameInCoookie">
+            <summary>
+            Returns member's name from the authorization cookie.
+            </summary>
+            <returns>Member name.</returns>
+        </member>
+        <member name="M:Server_.API.Objects.Member.GetMember(System.String)">
+            <summary>
+            Return a member properties.
+            </summary>
+            <param name="Name">Members' email.</param>
+            <returns>Member object instance or null.</returns>
+        </member>
+        <member name="P:Server_.API.Objects.Member.MemberID">
+            <summary>
+            Unique item identifier in the database.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Member.Name">
+            <summary>
+            Unique name of member. Can be last/first name or another thing.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Member.Email">
+            <summary>
+            Email address of a member
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Member.TimeZoneID">
+            <summary>
+            Member time zone
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Member.IsBuiltIn">
+            <summary>
+             Built-in flag.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Member.LastLogin">
+            <summary>
+            Date of the last login.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Member.Avatar">
+            <summary>
+            Member avatar unique identifier.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Member.Created">
+            <summary>
+            Date of creation.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Member.Modified">
+            <summary>
+            Date of modification.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Member.ProfileFields">
+            <summary>
+            Member profiles field collection.
+            </summary>                  
+        </member>
+        <member name="T:Server_.API.Objects.MemberProfileField">
+            <summary>
+            Provides a wrapper on single row in the MemberProfileField  database table. The properties of this class mapped on appropriate database fields and methods provide saving and loading into/from database.
+            An instance of this class can be created by new word or loaded from the database using MemberProfileFields class which returns collection of MemberProfileField objects by different condition.   
+            The object of this class contains information about single member.
+            </summary>
+        </member>
+        <member name="M:Server_.API.Objects.MemberProfileField.#ctor">
+            <summary>
+            The class constructor.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.MemberProfileField.ProfileFieldID">
+            <summary>
+            Unique item identifier in the database.
+            </summary>        
+        </member>
+        <member name="P:Server_.API.Objects.MemberProfileField.MemberID">
+            <summary>
+            Member unique identifier in the database.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.MemberProfileField.FieldID">
+            <summary>
+            Field unique identifier in the database.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.MemberProfileField.FieldName">
+            <summary>
+            Field name.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.MemberProfileField.FieldValue">
+            <summary>
+            Member field value.
+            </summary>        
+        </member>
+        <member name="P:Server_.API.Objects.MemberProfileField.Created">
+            <summary>
+            Date of creation.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.MemberProfileField.Modified">
+            <summary>
+            Date of modification.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Objects.MemberSocialNetwork">
+            <summary>
+            Provides a wrapper on single row in the MemberSocialNetworks database table. The properties of this class mapped on appropriate database fields and methods provide saving and loading into/from database.
+            An instance of this class can be created by new word or loaded from the database using MemberSocialNetworks class which returns collection of MemberSocialNetwork objects by different condition.
+            </summary>    
+        </member>
+        <member name="M:Server_.API.Objects.MemberSocialNetwork.#ctor">
+            <summary>
+            The class constructor.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.MemberSocialNetwork.MemberSocialNetworkID">
+            <summary>
+            Unique item identifier in the database.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.MemberSocialNetwork.MemberID">
+            <summary>
+            Member unique identifier in the database.
+            </summary>        
+        </member>
+        <member name="P:Server_.API.Objects.MemberSocialNetwork.SocialNetworkID">
+            <summary>
+            Social network unique identifier. 1 - Facebook, 2 - Twitter 
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.MemberSocialNetwork.SocialNetworkUserID">
+            <summary>
+            Unique user identifier in the a social network.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.MemberSocialNetwork.SocialNetworkUserEmail">
+            <summary>
+            User email for the a social network login.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.MemberSocialNetwork.SocialNetworkUserName">
+            <summary>
+            User name for the a social network login.
+            </summary>        
+        </member>
+        <member name="P:Server_.API.Objects.MemberSocialNetwork.AccessToken">
+            <summary>
+            User access token  for the a social network login.
+            </summary>        
+        </member>
+        <member name="T:Server_.API.Objects.Role">
+            <summary>
+            Provides a wrapper on single row in the Roles database table. The properties of this class mapped on appropriate database fields and methods provide saving and loading into/from database.
+            An instance of this class can be created by new word or loaded from the database using Roles class which returns collection of Role objects by different condition.   
+            The object of this class contains information about single role.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Role.RoleID">
+            <summary>
+            Unique item identifier in the database.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Role.BackColor">
+            <summary>
+            Role label back color.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Role.ForeColor">
+            <summary>
+            Role label text color.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Role.Name">
+            <summary>
+            Role name.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Role.Settings">
+            <summary>
+            Role description/settings.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Role.IsBuiltIn">
+            <summary>
+            Built-In flag.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Role.Created">
+            <summary>
+            Date of creation.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Role.Modified">
+            <summary>
+            Date of modification.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Objects.Role.MemberCount">
+            <summary>
+            Count of role's members.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Utilities.Connection">
+            <summary>
+            Keeps information about API source location and connection credentials.
+            </summary>
+        </member>
+        <member name="M:Server_.API.Utilities.Connection.#ctor(System.String,System.String,System.String)">
+            <summary>
+            The class constructor
+            </summary>
+            <param name="Url">URL of the API web entry point.</param>
+            <param name="Email">E-mail address.</param>
+            <param name="Token">Security token.</param>
+        </member>
+        <member name="P:Server_.API.Utilities.Connection.Credentials">
+            <summary>
+            Connection credentials: member name and token.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.Connection.Location">
+            <summary>
+            URL of API source location.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Utilities.Location">
+            <summary>
+            URL of API source location.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.Location.URL">
+            <summary>
+            URL of API entry point. 
+            </summary>
+        </member>
+        <member name="T:Server_.API.Utilities.MemberAuthorizeAttribute">
+            <summary>
+            Provides the implementation of custome security attribute based on the MemberRoleAdmin's application roles roles.
+            </summary>
+        </member>
+        <member name="M:Server_.API.Utilities.MemberAuthorizeAttribute.AuthorizeCore(System.Web.HttpContextBase)">
+            <summary>
+            Checks the authorization of logged member according to the member's roles.
+            </summary>
+            <param name="httpContext">HTTP context of current member.</param>
+            <returns>True if the member is authorized in current context.</returns>
+        </member>
+        <member name="M:Server_.API.Utilities.MemberAuthorizeAttribute.HandleUnauthorizedRequest(System.Web.Mvc.AuthorizationContext)">
+            <summary>
+            Catches unauthorized request and returns the response appropriate to request type.
+            </summary>
+            <param name="filterContext">Filter of authorization context.</param>
+        </member>
+        <member name="T:Server_.API.Utilities.Credentials">
+            <summary>
+            Keeps information about connection credentials.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.Credentials.Email">
+            <summary>
+            E-mail address.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.Credentials.Token">
+            <summary>
+            Security token string.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Utilities.Exception">
+            <summary>
+            API exception class.
+            </summary>
+        </member>
+        <member name="M:Server_.API.Utilities.Exception.#ctor(System.String)">
+            <summary>
+            The class contructor based on parent exception.
+            </summary>
+            <param name="Message">Parrent exception message.</param>
+        </member>
+        <member name="T:Server_.API.Utilities.Response`1">
+            <summary>
+            Keeps information about a response.  
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Server_.API.Utilities.Response`1.Message">
+            <summary>
+            Response message if something wron happend.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.Response`1.StackTrace">
+            <summary>
+            StackTrace string if something wron happend.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.Response`1.Data">
+            <summary>
+            The execution result. It can be an object or the collection of an object's.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Utilities.SingleSignOnRedirectTo">
+            <summary>
+            Type of the child site redirection.
+            </summary>
+        </member>
+        <member name="F:Server_.API.Utilities.SingleSignOnRedirectTo.SignIn">
+            <summary>
+            A member is going to sing in.
+            </summary>
+        </member>
+        <member name="F:Server_.API.Utilities.SingleSignOnRedirectTo.SignUp">
+            <summary>
+            A member is going to sing up.
+            </summary>
+        </member>
+        <member name="F:Server_.API.Utilities.SingleSignOnRedirectTo.SignOut">
+            <summary>
+            A member is going to sing out.
+            </summary>
+        </member>
+        <member name="F:Server_.API.Utilities.SingleSignOnRedirectTo.ForgotPassword">
+            <summary>
+            A member is going to change password.
+            </summary>
+        </member>
+        <member name="F:Server_.API.Utilities.SingleSignOnRedirectTo.Profile">
+            <summary>
+            A member is going to change profile
+            </summary>
+        </member>
+        <member name="F:Server_.API.Utilities.SingleSignOnRedirectTo.Avatar">
+            <summary>
+            A member avatar url.
+            </summary>
+        </member>
+        <member name="F:Server_.API.Utilities.SingleSignOnRedirectTo.SignInWith">
+            <summary>
+            A member is going to social sing in.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Utilities.Tools">
+            <summary>
+            Helps to make request, serialize and deserialize received objects during API call.
+            </summary>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.Ping">
+            <summary>
+            The simple pings methods.
+            </summary>
+            <returns>Response of string type.</returns>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.Encrypt(System.String)">
+            <summary>
+            Encrypt string by machine key.
+            </summary>
+            <param name="plaintextValue">The string for encryption.</param>
+            <returns>Encrypted string.</returns>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.Decrypt(System.String)">
+            <summary>
+            Decrypt string by machine key.
+            </summary>
+            <param name="encryptedValue">The string for decryption.</param>
+            <returns>Decrypted string.</returns>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.StreamGet(System.String,Server_.API.Utilities.Connection)">
+            <summary>
+            Gets response stream associated with the specified API method name and connection.
+            </summary>
+            <param name="Method">Method name.</param>
+            <param name="Connection">Connection infomation.</param>
+            <returns>Response stream.</returns>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.StreamPost(System.String,Server_.API.Utilities.Connection,System.Object)">
+            <summary>
+            Gets request stream associated with the specified API method name, connection and parameters.
+            </summary>
+            <param name="Method"></param>
+            <param name="Connection"></param>
+            <param name="Params"></param>
+            <returns>Request stream.</returns>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.FromJson``1(System.String)">
+            <summary>
+            Deserializes the JSON string to specified object type.
+            </summary>
+            <typeparam name="T">Expected object type.</typeparam>
+            <param name="input">JSON string.</param>
+            <returns>The object with specified type.</returns>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.ToJson(System.Object)">
+            <summary>
+            Serializes an object to JSON string.
+            </summary>
+            <param name="input">The object's instance.</param>
+            <returns>Object JSON string representation.</returns>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.IsAccountBlocked">
+            <summary>
+            Checks if a member account is blocked.
+            </summary>
+            <returns>True if a member account is blocked.</returns>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.DoCrossDomainSingleSingOn(System.Web.HttpContext)">
+            <summary>
+            Perform crossdomain single sing in.
+            </summary>
+            <param name="hc">HttpContext object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.DoCrossDomainSingleSingOut(System.Web.HttpContext)">
+            <summary>
+            Perform crossdomain single sing out.
+            </summary>
+            <param name="hc">HttpContext object.</param>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.IsAuthTicketValid">
+            <summary>
+            Checks if authr ticket valid.
+            </summary>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.SingleSignOnRedirectUrl(Server_.API.Utilities.SingleSignOnRedirectTo,System.String)">
+            <summary>
+            Gest rediration URL to sso application.
+            </summary>
+            <param name="RedirectTo">Child site RedirectTo URL.</param>
+            <param name="returnUrl">Child site return URL.</param>
+            <returns>Redirection URL.</returns>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.RandomString(System.Int32)">
+            <summary>
+            Return random string by specific length.
+            </summary>
+            <param name="length">String length</param>
+            <returns>String with specified length.</returns>
+        </member>
+        <member name="M:Server_.API.Utilities.Tools.GetAvatarURL">
+            <summary>
+            Returns current member full avatar URL.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Server_.API.Utilities.Tools.Connection">
+            <summary>
+            Keeps information about current connection.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Utilities.CollectionFilter">
+            <summary>
+            Provides filter condition properies
+            </summary>
+        </member>
+        <member name="M:Server_.API.Utilities.CollectionFilter.#ctor">
+            <summary>
+            The class constructor.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.CollectionFilter.ItemsPerPage">
+            <summary>
+            Item number oer page.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.CollectionFilter.CurrentPage">
+            <summary>
+            Current page number.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Utilities.AuthMemberToken">
+            <summary>
+             Provides security token information.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.AuthMemberToken.MemberID">
+            <summary>
+            Member unique item identifier.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.AuthMemberToken.MemberName">
+            <summary>
+            Member name.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.AuthMemberToken.MemberEmail">
+            <summary>
+            Member e-mail
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.AuthMemberToken.Token">
+            <summary>
+            Session unique item identifier.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.AuthMemberToken.Domain">
+            <summary>
+            Application domain.
+            </summary>
+        </member>
+        <member name="T:Server_.API.Utilities.ActionValidationResult">
+            <summary>
+            Validation result class.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.ActionValidationResult.IsValid">
+            <summary>
+            Validation result flag.
+            </summary>
+        </member>
+        <member name="P:Server_.API.Utilities.ActionValidationResult.Expiration">
+            <summary>
+            Expiration Date.
+            </summary>
+        </member>
+    </members>
+</doc>

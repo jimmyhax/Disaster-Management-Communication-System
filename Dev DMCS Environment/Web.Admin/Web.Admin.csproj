@@ -1,0 +1,739 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{30E34CB1-3872-4054-A073-3579B70C93E2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Web.Admin</RootNamespace>
+    <AssemblyName>Web.Admin</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <NuGetPackageImportStamp>50b5a7ff</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Mvc5, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.Mvc5.4.3.4.13329\lib\net45-full\DotNetOpenAuth.Mvc5.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Common, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Common.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.ServiceProvider, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.ServiceProvider.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth.ServiceProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth2, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth2.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth2.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth2.Client, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth2.Client.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth2.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth2.ClientAuthorization, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth2.ClientAuthorization.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth2.ClientAuthorization.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.Provider, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Provider.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OpenId.Provider.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenIdOAuth, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OpenIdOAuth.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OpenIdOAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="Validation, Version=2.0.0.0, Culture=neutral, PublicKeyToken=2fc06f0d701809a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Validation.2.0.2.13022\lib\portable-windows8+net40+sl5+windowsphone8\Validation.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\APIController.cs" />
+    <Compile Include="Controllers\AuditController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DomainsController.cs" />
+    <Compile Include="Controllers\ErrorsController.cs" />
+    <Compile Include="Controllers\FAQController.cs" />
+    <Compile Include="Controllers\FieldsController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\ToolsController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Models\AuditEventListModel.cs" />
+    <Compile Include="Models\AuditEventModel.cs" />
+    <Compile Include="Models\AvatarPanelModel.cs" />
+    <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\DomainListModel.cs" />
+    <Compile Include="Models\MemberListModel.cs" />
+    <Compile Include="Models\MemberProfileFieldModel.cs" />
+    <Compile Include="Models\MemberRoleListInlineModel.cs" />
+    <Compile Include="Models\ParametersModel.cs" />
+    <Compile Include="Models\ProfileFieldDomainRoleModel.cs" />
+    <Compile Include="Models\ProfileFieldGroupFieldModel.cs" />
+    <Compile Include="Models\ProfileFieldGroupModel.cs" />
+    <Compile Include="Models\ProfileFieldModel.cs" />
+    <Compile Include="Models\RequestResultModel.cs" />
+    <Compile Include="Models\ResizeAvatarImageModel.cs" />
+    <Compile Include="Filters\LogActionFilter .cs" />
+    <Compile Include="Models\RoleListModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Avatar\no-photo.png" />
+    <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\api.png" />
+    <Content Include="Content\images\audit.png" />
+    <Content Include="Content\images\avatar-blank.jpg" />
+    <Content Include="Content\images\bg-footer.png" />
+    <Content Include="Content\images\checkbox-big.png" />
+    <Content Include="Content\images\checkbox.png" />
+    <Content Include="Content\images\combo-box-big.png" />
+    <Content Include="Content\images\combo-box.png" />
+    <Content Include="Content\images\domains.png" />
+    <Content Include="Content\images\exclamation-octagon.png" />
+    <Content Include="Content\images\exclamation-red.png" />
+    <Content Include="Content\images\exclamation.png" />
+    <Content Include="Content\images\exit.png" />
+    <Content Include="Content\images\faq.png" />
+    <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\fields.png" />
+    <Content Include="Content\images\help.png" />
+    <Content Include="Content\images\information-white.png" />
+    <Content Include="Content\images\information.png" />
+    <Content Include="Content\images\key.png" />
+    <Content Include="Content\images\list-big.png" />
+    <Content Include="Content\images\list-multi-big.png" />
+    <Content Include="Content\images\list-multi.png" />
+    <Content Include="Content\images\list.png" />
+    <Content Include="Content\images\lock.png" />
+    <Content Include="Content\images\members.png" />
+    <Content Include="Content\images\no-photo.png" />
+    <Content Include="Content\images\radiobutton-group-big.png" />
+    <Content Include="Content\images\radiobutton-group.png" />
+    <Content Include="Content\images\roles.png" />
+    <Content Include="Content\images\settings.png" />
+    <Content Include="Content\images\social\16x16\blogger.png" />
+    <Content Include="Content\images\social\16x16\delicious.png" />
+    <Content Include="Content\images\social\16x16\digg.png" />
+    <Content Include="Content\images\social\16x16\facebook.png" />
+    <Content Include="Content\images\social\16x16\feed.png" />
+    <Content Include="Content\images\social\16x16\flickr.png" />
+    <Content Include="Content\images\social\16x16\friendfeed.png" />
+    <Content Include="Content\images\social\16x16\friendster.png" />
+    <Content Include="Content\images\social\16x16\furl.png" />
+    <Content Include="Content\images\social\16x16\google.png" />
+    <Content Include="Content\images\social\16x16\lastfm.png" />
+    <Content Include="Content\images\social\16x16\linkedin.png" />
+    <Content Include="Content\images\social\16x16\livejournal.png" />
+    <Content Include="Content\images\social\16x16\magnolia.png" />
+    <Content Include="Content\images\social\16x16\mixx.png" />
+    <Content Include="Content\images\social\16x16\myopenid.png" />
+    <Content Include="Content\images\social\16x16\myspace.png" />
+    <Content Include="Content\images\social\16x16\netvibes.png" />
+    <Content Include="Content\images\social\16x16\newsvine.png" />
+    <Content Include="Content\images\social\16x16\openid.png" />
+    <Content Include="Content\images\social\16x16\picasa.png" />
+    <Content Include="Content\images\social\16x16\pownce.png" />
+    <Content Include="Content\images\social\16x16\reddit.png" />
+    <Content Include="Content\images\social\16x16\stumbleupon.png" />
+    <Content Include="Content\images\social\16x16\technorati.png" />
+    <Content Include="Content\images\social\16x16\twitter.png" />
+    <Content Include="Content\images\social\16x16\vimeo.png" />
+    <Content Include="Content\images\social\16x16\webshots.png" />
+    <Content Include="Content\images\social\16x16\wordpress.png" />
+    <Content Include="Content\images\social\16x16\yahoo.png" />
+    <Content Include="Content\images\social\16x16\yelp.png" />
+    <Content Include="Content\images\social\16x16\youtube.png" />
+    <Content Include="Content\images\social\24x24\blogger.png" />
+    <Content Include="Content\images\social\24x24\delicious.png" />
+    <Content Include="Content\images\social\24x24\digg.png" />
+    <Content Include="Content\images\social\24x24\facebook.png" />
+    <Content Include="Content\images\social\24x24\feed.png" />
+    <Content Include="Content\images\social\24x24\flickr.png" />
+    <Content Include="Content\images\social\24x24\friendfeed.png" />
+    <Content Include="Content\images\social\24x24\friendster.png" />
+    <Content Include="Content\images\social\24x24\furl.png" />
+    <Content Include="Content\images\social\24x24\google.png" />
+    <Content Include="Content\images\social\24x24\lastfm.png" />
+    <Content Include="Content\images\social\24x24\linkedin.png" />
+    <Content Include="Content\images\social\24x24\livejournal.png" />
+    <Content Include="Content\images\social\24x24\magnolia.png" />
+    <Content Include="Content\images\social\24x24\mixx.png" />
+    <Content Include="Content\images\social\24x24\myopenid.png" />
+    <Content Include="Content\images\social\24x24\myspace.png" />
+    <Content Include="Content\images\social\24x24\netvibes.png" />
+    <Content Include="Content\images\social\24x24\newsvine.png" />
+    <Content Include="Content\images\social\24x24\openid.png" />
+    <Content Include="Content\images\social\24x24\picasa.png" />
+    <Content Include="Content\images\social\24x24\pownce.png" />
+    <Content Include="Content\images\social\24x24\reddit.png" />
+    <Content Include="Content\images\social\24x24\stumbleupon.png" />
+    <Content Include="Content\images\social\24x24\technorati.png" />
+    <Content Include="Content\images\social\24x24\twitter.png" />
+    <Content Include="Content\images\social\24x24\vimeo.png" />
+    <Content Include="Content\images\social\24x24\webshots.png" />
+    <Content Include="Content\images\social\24x24\wordpress.png" />
+    <Content Include="Content\images\social\24x24\yahoo.png" />
+    <Content Include="Content\images\social\24x24\yelp.png" />
+    <Content Include="Content\images\social\24x24\youtube.png" />
+    <Content Include="Content\images\status-error.png" />
+    <Content Include="Content\images\status-info.png" />
+    <Content Include="Content\images\status-success.png" />
+    <Content Include="Content\images\status-warning.png" />
+    <Content Include="Content\images\textfield-big.png" />
+    <Content Include="Content\images\textfield-multi-line-big.png" />
+    <Content Include="Content\images\textfield-multi-line.png" />
+    <Content Include="Content\images\textfield-numeric-big.png" />
+    <Content Include="Content\images\textfield-numeric.png" />
+    <Content Include="Content\images\textfield.png" />
+    <Content Include="Content\images\tick-circle.png" />
+    <Content Include="Content\images\tick.png" />
+    <Content Include="Content\images\tools.png" />
+    <Content Include="Content\images\ui-icons_256x240.png" />
+    <Content Include="Content\images\wheel_32.png" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\style.public.css" />
+    <Content Include="Content\themes\amelia\amelia.png" />
+    <Content Include="Content\themes\amelia\bootstrap.css" />
+    <Content Include="Content\themes\amelia\bootstrap.min.css" />
+    <Content Include="Content\themes\bootstrap\bootstrap-theme.css" />
+    <Content Include="Content\themes\bootstrap\bootstrap-theme.min.css" />
+    <Content Include="Content\themes\bootstrap\bootstrap.css" />
+    <Content Include="Content\themes\bootstrap\bootstrap.min.css" />
+    <Content Include="Content\themes\bootstrap\thumbnail.png" />
+    <Content Include="Content\themes\cerulean\bootstrap.css" />
+    <Content Include="Content\themes\cerulean\bootstrap.min.css" />
+    <Content Include="Content\themes\cerulean\cerulean.png" />
+    <Content Include="Content\themes\cerulean\index.html" />
+    <Content Include="Content\themes\cerulean\thumbnail.png" />
+    <Content Include="Content\themes\cosmo\bootstrap.css" />
+    <Content Include="Content\themes\cosmo\bootstrap.min.css" />
+    <Content Include="Content\themes\cosmo\index.html" />
+    <Content Include="Content\themes\cosmo\thumbnail.png" />
+    <Content Include="Content\themes\cyborg\bootstrap.css" />
+    <Content Include="Content\themes\cyborg\bootstrap.min.css" />
+    <Content Include="Content\themes\cyborg\cyborg.png" />
+    <Content Include="Content\themes\cyborg\index.html" />
+    <Content Include="Content\themes\cyborg\thumbnail.png" />
+    <Content Include="Content\themes\darkly\bootstrap.css" />
+    <Content Include="Content\themes\darkly\bootstrap.min.css" />
+    <Content Include="Content\themes\darkly\index.html" />
+    <Content Include="Content\themes\darkly\thumbnail.png" />
+    <Content Include="Content\themes\flatly\bootstrap.css" />
+    <Content Include="Content\themes\flatly\bootstrap.min.css" />
+    <Content Include="Content\themes\flatly\index.html" />
+    <Content Include="Content\themes\flatly\thumbnail.png" />
+    <Content Include="Content\themes\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\themes\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\themes\img\glyphicons-halflings.png" />
+    <Content Include="Content\themes\journal\bootstrap.css" />
+    <Content Include="Content\themes\journal\bootstrap.min.css" />
+    <Content Include="Content\themes\journal\index.html" />
+    <Content Include="Content\themes\journal\journal.png" />
+    <Content Include="Content\themes\journal\thumbnail.png" />
+    <Content Include="Content\themes\lumen\bootstrap.css" />
+    <Content Include="Content\themes\lumen\bootstrap.min.css" />
+    <Content Include="Content\themes\lumen\index.html" />
+    <Content Include="Content\themes\lumen\thumbnail.png" />
+    <Content Include="Content\themes\paper\bootstrap.css" />
+    <Content Include="Content\themes\paper\bootstrap.min.css" />
+    <Content Include="Content\themes\paper\index.html" />
+    <Content Include="Content\themes\paper\thumbnail.png" />
+    <Content Include="Content\themes\readable\bootstrap.css" />
+    <Content Include="Content\themes\readable\bootstrap.min.css" />
+    <Content Include="Content\themes\readable\index.html" />
+    <Content Include="Content\themes\readable\readable.png" />
+    <Content Include="Content\themes\readable\thumbnail.png" />
+    <Content Include="Content\themes\sandstone\bootstrap.css" />
+    <Content Include="Content\themes\sandstone\bootstrap.min.css" />
+    <Content Include="Content\themes\sandstone\index.html" />
+    <Content Include="Content\themes\sandstone\thumbnail.png" />
+    <Content Include="Content\themes\simplex\bootstrap.css" />
+    <Content Include="Content\themes\simplex\bootstrap.min.css" />
+    <Content Include="Content\themes\simplex\index.html" />
+    <Content Include="Content\themes\simplex\simplex.png" />
+    <Content Include="Content\themes\simplex\thumbnail.png" />
+    <Content Include="Content\themes\slate\bootstrap.css" />
+    <Content Include="Content\themes\slate\bootstrap.min.css" />
+    <Content Include="Content\themes\slate\index.html" />
+    <Content Include="Content\themes\slate\slate.png" />
+    <Content Include="Content\themes\slate\thumbnail.png" />
+    <Content Include="Content\themes\spacelab\bootstrap.css" />
+    <Content Include="Content\themes\spacelab\bootstrap.min.css" />
+    <Content Include="Content\themes\spacelab\index.html" />
+    <Content Include="Content\themes\spacelab\spacelab.png" />
+    <Content Include="Content\themes\spacelab\thumbnail.png" />
+    <Content Include="Content\themes\spruce\bootstrap.css" />
+    <Content Include="Content\themes\spruce\bootstrap.min.css" />
+    <Content Include="Content\themes\spruce\spruce.png" />
+    <Content Include="Content\themes\superhero\bootstrap.css" />
+    <Content Include="Content\themes\superhero\bootstrap.min.css" />
+    <Content Include="Content\themes\superhero\index.html" />
+    <Content Include="Content\themes\superhero\superhero.png" />
+    <Content Include="Content\themes\superhero\thumbnail.png" />
+    <Content Include="Content\themes\united\bootstrap.css" />
+    <Content Include="Content\themes\united\bootstrap.min.css" />
+    <Content Include="Content\themes\united\index.html" />
+    <Content Include="Content\themes\united\thumbnail.png" />
+    <Content Include="Content\themes\united\united.png" />
+    <Content Include="Content\themes\yeti\bootstrap.css" />
+    <Content Include="Content\themes\yeti\bootstrap.min.css" />
+    <Content Include="Content\themes\yeti\index.html" />
+    <Content Include="Content\themes\yeti\thumbnail.png" />
+    <Content Include="Content\zocial\zocial-regular-webfont.svg" />
+    <Content Include="Content\zocial\zocial.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Labels\labels-eng.txt" />
+    <Content Include="Labels\labels-rus.txt" />
+    <Content Include="Scripts\admin\simple.tools.admin.core.js" />
+    <Content Include="Scripts\admin\simple.tools.audit.js" />
+    <Content Include="Scripts\admin\simple.tools.domains.js" />
+    <Content Include="Scripts\admin\simple.tools.fields.js" />
+    <Content Include="Scripts\admin\simple.tools.members.js" />
+    <Content Include="Scripts\admin\simple.tools.roles.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\plugins\ajax-upload\ajaxupload.js" />
+    <Content Include="Scripts\plugins\block-ui\jquery.blockUI.js" />
+    <Content Include="Scripts\plugins\bootstrap.3.3.2\bootstrap.js" />
+    <Content Include="Scripts\plugins\bootstrap.3.3.2\bootstrap.min.js" />
+    <Content Include="Scripts\plugins\bootstrap.3.3.2\npm.js" />
+    <Content Include="Scripts\plugins\bootstrap3-dialog\css\bootstrap-dialog.css" />
+    <Content Include="Scripts\plugins\bootstrap3-dialog\css\bootstrap-dialog.min.css" />
+    <Content Include="Scripts\plugins\bootstrap3-dialog\js\bootstrap-dialog.js" />
+    <Content Include="Scripts\plugins\bootstrap3-dialog\js\bootstrap-dialog.min.js" />
+    <Content Include="Scripts\plugins\date-format\date.format.js" />
+    <Content Include="Scripts\plugins\facebookwall\avatar-alternative.jpg" />
+    <Content Include="Scripts\plugins\facebookwall\avatar-external.jpg" />
+    <Content Include="Scripts\plugins\facebookwall\jquery.neosmart.fb.wall.css" />
+    <Content Include="Scripts\plugins\facebookwall\jquery.neosmart.fb.wall.js" />
+    <Content Include="Scripts\plugins\facebookwall\like.gif" />
+    <Content Include="Scripts\plugins\facebookwall\loader-small.gif" />
+    <Content Include="Scripts\plugins\farbtastic\farbtastic.css" />
+    <Content Include="Scripts\plugins\farbtastic\farbtastic.js" />
+    <Content Include="Scripts\plugins\farbtastic\gradient.color.picker.min.js" />
+    <Content Include="Scripts\plugins\farbtastic\gradient.css" />
+    <Content Include="Scripts\plugins\farbtastic\marker.png" />
+    <Content Include="Scripts\plugins\farbtastic\mask.png" />
+    <Content Include="Scripts\plugins\farbtastic\wheel.png" />
+    <Content Include="Scripts\plugins\jcrop\Jcrop.gif" />
+    <Content Include="Scripts\plugins\jcrop\jquery.Jcrop.css" />
+    <Content Include="Scripts\plugins\jcrop\jquery.Jcrop.min.js" />
+    <Content Include="Scripts\plugins\jquery\jquery-1.11.1.js" />
+    <Content Include="Scripts\plugins\jquery\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\plugins\jquery\jquery-1.7.2.js" />
+    <Content Include="Scripts\plugins\jquery\jquery-1.7.2.min.js" />
+    <Content Include="Scripts\plugins\jquery\jquery-ui-1.8.16.custom.min.js" />
+    <Content Include="Scripts\plugins\jquery\jquery-ui.1.11.2.custom.min.js" />
+    <Content Include="Scripts\plugins\json2\json2.min.js" />
+    <Content Include="Scripts\plugins\pagination\jquery.pagination.js" />
+    <Content Include="Scripts\plugins\pagination\pagination.css" />
+    <Content Include="Scripts\plugins\scroll-to\jquery.scrollTo.js" />
+    <Content Include="Scripts\plugins\scroll-to\jquery.scrollTo.min.js" />
+    <Content Include="Scripts\plugins\slickswitch\css\slickswitch.css" />
+    <Content Include="Scripts\plugins\slickswitch\images\switch.png" />
+    <Content Include="Scripts\plugins\slickswitch\js\jquery.slickswitch.js" />
+    <Content Include="Scripts\plugins\text-exapnder\jquery.expander.min.js" />
+    <Content Include="Scripts\plugins\time-ago\jquery.timeago.js" />
+    <Content Include="Scripts\plugins\tmpl\jquery.tmpl.js" />
+    <Content Include="Scripts\plugins\tmpl\jquery.tmpl.min.js" />
+    <Content Include="Scripts\plugins\tmpl\jquery.tmplPlus.js" />
+    <Content Include="Scripts\plugins\tmpl\jquery.tmplPlus.min.js" />
+    <Content Include="Scripts\plugins\twitterwall\index.css" />
+    <Content Include="Scripts\plugins\twitterwall\jquery.tweet.css" />
+    <Content Include="Scripts\plugins\twitterwall\jquery.tweet.js" />
+    <Content Include="Scripts\public\simple.tools.core.js" />
+    <Content Include="Scripts\public\simple.tools.core.min.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="Content\themes\amelia\bootswatch.less" />
+    <Content Include="Content\themes\amelia\variables.less" />
+    <Content Include="Content\themes\cerulean\bootswatch.less" />
+    <Content Include="Content\themes\cerulean\variables.less" />
+    <Content Include="Content\themes\cosmo\bootswatch.less" />
+    <Content Include="Content\themes\cosmo\variables.less" />
+    <Content Include="Content\themes\cyborg\bootswatch.less" />
+    <Content Include="Content\themes\cyborg\variables.less" />
+    <Content Include="Content\themes\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\themes\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\themes\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\themes\journal\bootswatch.less" />
+    <Content Include="Content\themes\journal\variables.less" />
+    <Content Include="Content\themes\readable\bootswatch.less" />
+    <Content Include="Content\themes\readable\variables.less" />
+    <Content Include="Content\themes\simplex\bootswatch.less" />
+    <Content Include="Content\themes\simplex\variables.less" />
+    <Content Include="Content\themes\slate\bootswatch.less" />
+    <Content Include="Content\themes\slate\variables.less" />
+    <Content Include="Content\themes\spacelab\bootswatch.less" />
+    <Content Include="Content\themes\spacelab\variables.less" />
+    <Content Include="Content\themes\spruce\bootswatch.less" />
+    <Content Include="Content\themes\spruce\variables.less" />
+    <Content Include="Content\themes\superhero\bootswatch.less" />
+    <Content Include="Content\themes\superhero\variables.less" />
+    <Content Include="Content\themes\united\bootswatch.less" />
+    <Content Include="Content\themes\united\variables.less" />
+    <Content Include="Content\zocial\zocial-regular-webfont.eot" />
+    <Content Include="Content\zocial\zocial-regular-webfont.ttf" />
+    <Content Include="Content\zocial\zocial-regular-webfont.woff" />
+    <Content Include="Content\themes\bootstrap\bootstrap-theme.css.map" />
+    <Content Include="Content\themes\bootstrap\bootstrap.css.map" />
+    <Content Include="Content\themes\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\themes\darkly\bootswatch.less" />
+    <Content Include="Content\themes\darkly\variables.less" />
+    <Content Include="Content\themes\darkly\_bootswatch.scss" />
+    <Content Include="Content\themes\darkly\_variables.scss" />
+    <Content Include="Content\themes\flatly\bootswatch.less" />
+    <Content Include="Content\themes\flatly\variables.less" />
+    <Content Include="Content\themes\flatly\_bootswatch.scss" />
+    <Content Include="Content\themes\flatly\_variables.scss" />
+    <Content Include="Content\themes\lumen\bootswatch.less" />
+    <Content Include="Content\themes\lumen\variables.less" />
+    <Content Include="Content\themes\lumen\_bootswatch.scss" />
+    <Content Include="Content\themes\lumen\_variables.scss" />
+    <Content Include="Content\themes\paper\bootswatch.less" />
+    <Content Include="Content\themes\paper\variables.less" />
+    <Content Include="Content\themes\paper\_bootswatch.scss" />
+    <Content Include="Content\themes\paper\_variables.scss" />
+    <Content Include="Content\themes\sandstone\bootswatch.less" />
+    <Content Include="Content\themes\sandstone\variables.less" />
+    <Content Include="Content\themes\sandstone\_bootswatch.scss" />
+    <Content Include="Content\themes\sandstone\_variables.scss" />
+    <Content Include="Content\themes\yeti\bootswatch.less" />
+    <Content Include="Content\themes\yeti\variables.less" />
+    <Content Include="Content\themes\yeti\_bootswatch.scss" />
+    <Content Include="Content\themes\yeti\_variables.scss" />
+    <Content Include="Content\themes\cyborg\_bootswatch.scss" />
+    <Content Include="Content\themes\cyborg\_variables.scss" />
+    <Content Include="Content\themes\cerulean\_bootswatch.scss" />
+    <Content Include="Content\themes\cerulean\_variables.scss" />
+    <Content Include="Content\themes\cosmo\_bootswatch.scss" />
+    <Content Include="Content\themes\cosmo\_variables.scss" />
+    <Content Include="Content\themes\journal\_bootswatch.scss" />
+    <Content Include="Content\themes\journal\_variables.scss" />
+    <Content Include="Content\themes\readable\_bootswatch.scss" />
+    <Content Include="Content\themes\readable\_variables.scss" />
+    <Content Include="Content\themes\simplex\_bootswatch.scss" />
+    <Content Include="Content\themes\simplex\_variables.scss" />
+    <Content Include="Content\themes\slate\_bootswatch.scss" />
+    <Content Include="Content\themes\slate\_variables.scss" />
+    <Content Include="Content\themes\spacelab\_bootswatch.scss" />
+    <Content Include="Content\themes\spacelab\_variables.scss" />
+    <Content Include="Content\themes\superhero\_bootswatch.scss" />
+    <Content Include="Content\themes\superhero\_variables.scss" />
+    <Content Include="Content\themes\united\_bootswatch.scss" />
+    <Content Include="Content\themes\united\_variables.scss" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Views\Account\AccessDeniedAjax.cshtml" />
+    <Content Include="Views\Account\AccessDeniedHtml.cshtml" />
+    <Content Include="Views\Account\AccessDeniedJavaScript.cshtml" />
+    <Content Include="Views\Account\ActivateAccount.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\CreateAccount.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\SignIn.cshtml" />
+    <Content Include="Views\Account\SignOut.cshtml" />
+    <Content Include="Views\API\Index.cshtml" />
+    <Content Include="Views\Audit\Index.cshtml" />
+    <Content Include="Views\Audit\_AuditEventDetails.cshtml" />
+    <Content Include="Views\Audit\_AuditEventList.cshtml" />
+    <Content Include="Views\Domains\Index.cshtml" />
+    <Content Include="Views\Domains\_AddDomain.cshtml" />
+    <Content Include="Views\Domains\_DomainList.cshtml" />
+    <Content Include="Views\Domains\_Domains.cshtml" />
+    <Content Include="Views\Domains\_EditDomain.cshtml" />
+    <Content Include="Views\Domains\_RemoveDomains.cshtml" />
+    <Content Include="Views\Domains\_RemoveDomainsResult.cshtml" />
+    <Content Include="Views\Errors\_Forbidden403.cshtml" />
+    <Content Include="Views\Errors\_GeneralException500.cshtml" />
+    <Content Include="Views\Errors\_PageNotFound404.cshtml" />
+    <Content Include="Views\FAQ\Index.cshtml" />
+    <Content Include="Views\Fields\Index.cshtml" />
+    <Content Include="Views\Fields\MemberFields.cshtml" />
+    <Content Include="Views\Fields\MemberFieldsByDomainRole.cshtml" />
+    <Content Include="Views\Fields\_AddField.cshtml" />
+    <Content Include="Views\Fields\_AddFieldGroup.cshtml" />
+    <Content Include="Views\Fields\_EditField.cshtml" />
+    <Content Include="Views\Fields\_EditFieldGroup.cshtml" />
+    <Content Include="Views\Fields\_FieldDomains.cshtml" />
+    <Content Include="Views\Fields\_FieldRoles.cshtml" />
+    <Content Include="Views\Help\Index.cshtml" />
+    <Content Include="Views\Home\HomeAdmin.cshtml" />
+    <Content Include="Views\Home\HomeMaintenance.cshtml" />
+    <Content Include="Views\Home\HomeMember.cshtml" />
+    <Content Include="Views\Home\HomePublic.cshtml" />
+    <Content Include="Views\Members\Members.cshtml" />
+    <Content Include="Views\Members\_AddMember.cshtml" />
+    <Content Include="Views\Members\_AlphabetPanel.cshtml" />
+    <Content Include="Views\Members\_AssignRoleMembers.cshtml" />
+    <Content Include="Views\Members\_EditMember.cshtml" />
+    <Content Include="Views\Members\_ImportMembersResult.cshtml" />
+    <Content Include="Views\Members\_MemberAddRoleInline.cshtml" />
+    <Content Include="Views\Members\_MemberAttempts.cshtml" />
+    <Content Include="Views\Members\_MemberDomains.cshtml" />
+    <Content Include="Views\Members\_MemberFacebookWall.cshtml" />
+    <Content Include="Views\Members\_MemberList.cshtml" />
+    <Content Include="Views\Members\_MemberRoleList.cshtml" />
+    <Content Include="Views\Members\_MemberToken.cshtml" />
+    <Content Include="Views\Members\_MemberTwitter.cshtml" />
+    <Content Include="Views\Members\_RemoveMembers.cshtml" />
+    <Content Include="Views\Members\_RemoveMembersResult.cshtml" />
+    <Content Include="Views\Members\_RolesDropDownAssign.cshtml" />
+    <Content Include="Views\Members\_RolesDropDownReset.cshtml" />
+    <Content Include="Views\Members\_RolesPanelList.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\_AvatarPanel.cshtml" />
+    <Content Include="Views\Profile\_MemberProfileFields.cshtml" />
+    <Content Include="Views\Profile\_ProfileDetails.cshtml" />
+    <Content Include="Views\Profile\_ProfileField.cshtml" />
+    <Content Include="Views\Profile\_ProfileFieldByGroup.cshtml" />
+    <Content Include="Views\Profile\_ProfileGeneral.cshtml" />
+    <Content Include="Views\Profile\_ResizeAvatarImage.cshtml" />
+    <Content Include="Views\Roles\Roles.cshtml" />
+    <Content Include="Views\Roles\_AddRole.cshtml" />
+    <Content Include="Views\Roles\_EditRole.cshtml" />
+    <Content Include="Views\Roles\_ImportRolesResult.cshtml" />
+    <Content Include="Views\Roles\_RemoveRoles.cshtml" />
+    <Content Include="Views\Roles\_RemoveRolesResult.cshtml" />
+    <Content Include="Views\Roles\_RoleList.cshtml" />
+    <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\Settings\_APISettings.cshtml" />
+    <Content Include="Views\Settings\_GeneralSettings.cshtml" />
+    <Content Include="Views\Settings\_IPRestrictionList.cshtml" />
+    <Content Include="Views\Settings\_IPRestrictions.cshtml" />
+    <Content Include="Views\Settings\_LanguageList.cshtml" />
+    <Content Include="Views\Settings\_LanguageSettings.cshtml" />
+    <Content Include="Views\Settings\_LDAPActiveDirectory.cshtml" />
+    <Content Include="Views\Settings\_RegistrationSettings.cshtml" />
+    <Content Include="Views\Settings\_RulesSettings.cshtml" />
+    <Content Include="Views\Settings\_SmtpSettings.cshtml" />
+    <Content Include="Views\Settings\_SocialNetworks.cshtml" />
+    <Content Include="Views\Settings\_ThemesSettings.cshtml" />
+    <Content Include="Views\Settings\_UISettings.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Templates\Mails\_ActivationConfirmation.cshtml" />
+    <Content Include="Views\Shared\Templates\Mails\_ActivationRequest.cshtml" />
+    <Content Include="Views\Shared\Templates\Mails\_ChangePasswordConfirmation.cshtml" />
+    <Content Include="Views\Shared\Templates\Mails\_ChangePasswordRequest.cshtml" />
+    <Content Include="Views\Shared\Templates\Mails\_GeneratePasswordConfirmation.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Shared\_LayoutError.cshtml" />
+    <Content Include="Views\Shared\_LayoutMember.cshtml" />
+    <Content Include="Views\Shared\_LayoutPublic.cshtml" />
+    <Content Include="Views\Shared\_MenuLeftPanel.cshtml" />
+    <Content Include="Views\Shared\_RequestResultDialog.cshtml" />
+    <Content Include="Views\Shared\_RequestResultDialogInLine.cshtml" />
+    <Content Include="Views\Shared\_RequestResultPageInLine.cshtml" />
+    <Content Include="Views\Shared\_RequestResultPageInLineTop.cshtml" />
+    <Content Include="Views\Tools\Index.cshtml" />
+    <Content Include="Views\Tools\_MachineKeyGenerator.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Scripts\plugins\jquery\jquery-1.11.1.min.map" />
+    <Content Include="Scripts\plugins\bootstrap3-dialog\less\bootstrap-dialog.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\Server_.ApplicationBlock\Server_.ApplicationBlock.csproj">
+      <Project>{aa78d112-d889-414b-a7d4-467b34c7b663}</Project>
+      <Name>Server_.ApplicationBlock</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Server_.API\Server_.API.csproj">
+      <Project>{bf782e1b-9472-45bc-ac34-3296309bd8d0}</Project>
+      <Name>Server_.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Server_.Logic\Server_.Logic.csproj">
+      <Project>{0f06085c-e564-4276-bb66-b54f3c87b203}</Project>
+      <Name>Server_.Logic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49182</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:50000/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

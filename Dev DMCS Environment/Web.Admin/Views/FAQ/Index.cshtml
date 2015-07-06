@@ -1,0 +1,437 @@
+﻿
+<style>
+    #faq p{ margin-bottom:25px;margin-top:10px;} 
+    .q{color:#aaaaaa;font-size:20px !important;padding:5px; background-color:#eeeeee;} 
+    .qp{padding-top:41px;}
+</style>
+
+<h2>FAQ</h2>
+<div id="faq">
+
+<ol>
+<li><a href="#q1">Can I protect more than one web site in the same domain by this tool?</a></li>
+<li><a href="#q2">Can I protect ASP.NET web form application by this tool?</a></li>
+<li><a href="#q3">Can I protect more than one web site in different domains by this tool?</a></li>
+<li><a href="#q4">Can I restrict registration for free e-mail domains?</a></li>
+<li><a href="#q5">How to secure admin UI interface?</a></li>
+<li><a href="#q6">How to set available domain list?</a></li>
+<li><a href="#q7">Hot to protect API method execution?</a></li>
+<li><a href="#q8">Can I change notification-mail templates?</a></li>
+<li><a href="#q9">Can I change Sign In, Sign Up, and Change Password and other public page design?</a></li>
+<li><a href="#q10">How to change skin to the admin UI?</a></li>
+<li><a href="#q11">How to add new skins to the admin UI?</a></li>
+<li><a href="#q12">How to add new skins to the Sign In and Sign page?</a></li>
+<li><a href="#q13">How to use maintenance mode?</a></li>
+<li><a href="#q14">Can I redirect a member after sign in / sign out?</a></li>
+<li><a href="#q15">Can I receive all members' email notifications?</a></li>
+<li><a href="#q16">How registration/activation process looks like?</a></li>
+<li><a href="#q17">Can I change grid items per page value?</a></li>
+<li><a href="#q18">Can I change admin application name and logo?</a></li>
+<li><a href="#q19">How to use Machine Key Generator?</a></li>
+<li><a href="#q20">Can I Export/Import roles and members?</a></li>
+<li><a href="#q21">How to provide multilingual support?</a></li>
+<li><a href="#q22">Can I restrict member/API request by IP address</a></li>
+<li><a href="#q23">Can I protect ASP .NET classic web forms application by this tool?</a></li>
+<li><a href="#q23">Does it support MySQL 5.x ?</a></li>
+<li><a href="#q25">How can I upgrade this project to MVC 4 ?</a></li>
+<li><a href="#q26">Can members sign in by Twitter, Facebook, Google, Yahoo and other OpenID providers ?</a></li>
+<li><a href="#q27">Can I use LDAP directory to authenticate members ?</a></li>
+<li><a href="#q28">Can I restrict profile fields visibility by member domain or role ?</a></li>
+<li><a href="#q29">Can I use Facebook/Twitter API which needs the members access token?</a></li>
+<li><a href="#q30">How to set a member domain?</a></li>
+</ol>
+
+<a class="qp" id="q1"></a>
+<h3><span class="q">Q</span>&nbsp; Can I protect more than one web site in the same domain by this tool?</h3>
+<p>
+Yes, you should do the following step:
+<ol>
+    <li>Generate machine key on tools page;</li>
+    <li>Generate API member (should be different members for defferent sites);</li>
+    <li>Generate API member token;</li>
+    <li>Define authentication cookie and domain name (it's name and domain attribute in a forms tag); </li>
+    <li>Modify each web.config file as show below:<p/>
+
+     <pre class="prettyprint linenums">
+ &lt;configuration&gt; 
+   ... 
+   &lt;appSettings&gt; 
+         &lt;add key="ssoUrlSignInWith" value="http://localhost:50000/SignInWith"/&gt;
+         &lt;add key="ssoUrlSignIn" value="http://security.domain.com/SignIn"/&gt; 
+         &lt;add key="ssoUrlSignOut" value="http://security.domain.com/SignOut"/&gt; 
+         &lt;add key="ssoUrlSignUp" value="http://security.domain.com/SignUp"/>
+         &lt;add key="ssoUrlForgotPassword" value="http://security.domain.com/ForgotPassword"/&gt; 
+         &lt;add key="ssoUrlAvatar" value="http://security.domain.com/Profile"/&gt; 
+         &lt;add key="ssoUrlProfile" value="http://security.domain.com/Avatar"/&gt; 
+         &lt;add key="ssoAPIUrl" value="http://security.domain.com/Admin/API"/&gt; 
+         &lt;add key="ssoAPIMemberName" value="example@demo.com"/&gt; 
+         &lt;add key="ssoAPIMemberToken" value="HYXMvDsQWhGhbShE7yS1"/&gt; 
+   &lt;/appSettings&gt;         
+   ...
+   &lt;system.web&gt; 
+     ... 
+     &lt;forms loginUrl="~/Account/SignIn" 
+         protection="All" 
+         timeout="180" 
+         domain="WebSiteDomainName" 
+         name="WebSiteCookieName" 
+         path="/" 
+         requireSSL="false" 
+         slidingExpiration="true" 
+         enableCrossAppRedirects="true" 
+         defaultUrl="~/"/&gt; 
+     
+     &lt;/authentication&gt; 
+     ... 
+    &lt;machineKey
+      validationKey="56C0B464984F8F1BE57A6D2A6A16D1D7A13FA6E8BEE90058A91CCAAD78B959A0AC4FDAA62099046CE1B81BB0AEAE9D399899361ECE9AB27C068A169E309EDCC0"
+      decryptionKey="44BA9F99FD483C2250F5CD0E4958E06879B82AA6DB8670FCBC293E010CEBB0DE"
+      validation="SHA1" decryption="AES"/&gt; 
+     ... 
+   &lt;/system.web&gt; 
+   ... 
+ &lt;/configuration&gt;
+     </pre>    
+    </li>
+    <li>Add the following C# code to your account controller:<p/>
+     <pre class="prettyprint linenums">
+using System;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Collections.Generic;
+using Server_.API;
+
+namespace Web.App.MVC.Controllers
+{
+    public class AccountController : Controller
+    {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public RedirectResult SignIn(string returnUrl)
+        {
+            return new RedirectResult(Tools.SignlSignOnRedirectUrl(SingleSignOnRedirectTo.SignIn, returnUrl));
+        }
+
+        public RedirectResult SignUp(string returnUrl)
+        {
+            return new RedirectResult(Tools.SignlSignOnRedirectUrl(SingleSignOnRedirectTo.SignUp, returnUrl));
+        }
+
+        public RedirectResult SignOut(string returnUrl)
+        {
+            return new RedirectResult(Tools.SignlSignOnRedirectUrl(SingleSignOnRedirectTo.SignOut, returnUrl));
+        }
+
+        public RedirectResult ForgotPassword(string returnUrl)
+        {
+            return new RedirectResult(Tools.SignlSignOnRedirectUrl(SingleSignOnRedirectTo.ForgotPassword, returnUrl));
+        }
+
+        public RedirectResult Profile(string returnUrl)
+        {
+            return new RedirectResult(Tools.SignlSignOnRedirectUrl(SingleSignOnRedirectTo.Profile, returnUrl));
+        }
+    }
+}         
+</pre>
+    </li>
+    <li>An now you can protect your methods by MemberAuthorize attribute as shown below:<p/>
+    <pre  class="prettyprint linenums">
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using Server_.API;
+
+    namespace Web.App.MVC.Controllers
+    {
+        public class ManagementController : Controller
+        {
+            public ActionResult Index()
+            {
+                return View();
+            }
+
+            [MemberAuthorize(Roles = "Viewer")]
+            public ActionResult Viewer()
+            {
+
+                return View();
+            }
+
+            [MemberAuthorize(Roles = "Editor")]
+            public ActionResult Editor()
+            {
+
+                return View();
+            }
+        }
+    }
+    </pre>
+    </li>
+    </ol>
+</p>
+
+<a class="qp" id="q2"></a>
+<h3><span class="q">Q</span>&nbsp;Can I protect ASP.NET web form application by this tool?</h3>
+<p>Yes no problem, see the example in Web.App folder!</p>
+
+<a class="qp" id="q3"></a>
+<h3><span class="q">Q</span>&nbsp;Can I protect more than one web site in different domains by this tool?</h3>
+
+<p>The tool helps to implement that indirectly. In this case you should to use API which have Authenticate method and implement Sign In (and other) forms by yourself. You can see the example in the package. You can use it or wait for next release which will allow full cross domain authentication support.</p>
+
+<a class="qp" id="q4"></a>
+<h3><span class="q">Q</span>&nbsp;Can I restrict registration for free e-mail domains?</h3>
+
+<p>Yes, it is on Settings\Registration tab. You can define which email domains are allowed or disallowed.</p>
+
+<a class="qp" id="q5"></a>
+<h3><span class="q">Q</span>&nbsp;How to secure admin UI interface?</h3>
+<p>It is on Setting/General/Secret Admin URL tab. By default this value is Admin. If you want to secure the location of admin UI you can change this value to Admin/ 700dd75b-fcb7-488d-8239-9298dc73fb2c for instance or Admin/Secret/Url.</p>
+
+<a class="qp" id="q6"></a>
+<h3><span class="q">Q</span>&nbsp;How to set available domain list?</h3>
+<p>It is on Setting/Registration/Mail Domains. This property has the following options:
+<ul>
+<li>Allow All (Excluding from the list)</li>
+<li>Deny All (Excluding from the list)</li>
+</ul>
+If member tries to use restricted email domain, application will show a message that selected domain is not allowed.
+</p>
+
+<a class="qp" id="q7"></a>
+<h3><span class="q">Q</span>&nbsp;Hot to protect API method execution?</h3>
+<p>It is on Setting/API/Secret URL tab. By default this value is API. If you want to secure the location of API entry point you can change this value to API/ bdbb85d9-b256-4834-9b3e-3b5811cbcbdc or Admin/Secret/API. If you don't want to use API, you can switch it off at all.</p>
+
+<a class="qp" id="q8"></a>
+<h3><span class="q">Q</span>&nbsp;Can I change notification-mail templates?</h3>
+<p>Yes, of cause! Please open the following folder Views/Shared/ Templates/ Mails and use any text editor to change template files:
+<ul>
+<li>_ActivationConfirmation.cshtml</li>
+<li>_ActivationRequest.cshtml</li>
+<li>_ChangePasswordConfirmation.cshtml</li>
+<li>_ChangePasswordRequest.cshtml</li>
+<li>_GeneratePasswordConfirmation.cshtml</li>
+</ul>
+Please, be careful, because those files are C# html files or ask me to help you with new templates.
+</p>
+
+<a class="qp" id="q9"></a>
+<h3><span class="q">Q</span>&nbsp;Can I change Sign In, Sign Up, and Change Password and other public page design?</h3>
+
+<p>
+Yes, Please open the following folder Views/Account and use any text editor to change template files:
+    <ul>
+        <li>ActivateAccount.cshtml</li>
+        <li>ChangePassword.cshtml</li>
+        <li>CreateAccount.cshtml</li>
+        <li>ForgotPassword.cshtml</li>
+        <li>SignIn.cshtml</li>
+        <li>SignOut.cshtml</li>
+        <li>Public style is in Content\ style.public.css file.</li>
+    </ul>
+    <br/>
+    Public layout is in Views/Shared/<br/><br/>
+    <ul>
+        <li>_LayoutPublic.cshtml file.</li>
+    </ul>
+</p>
+
+<a class="qp" id="q10"></a>
+<h3><span class="q">Q</span>&nbsp;How to change skin to the admin UI?</h3>
+
+<p>Yes, please check Settings/Themes tab. Admin UI and public UI use different CSS files, so if you change admin UI theme it is not influence on public UI pages.</p>
+
+<a class="qp" id="q11"></a>
+<h3><span class="q">Q</span>&nbsp;How to add new skins to the admin UI?</h3>
+<p>The tool uses twitter bootstrap CSS files, so you can create your style and apply that style to tool. Here is step by step instruction:
+<ul>
+    <li>Create new folder under Content/ Themes folder</li>
+    <li>Add bootstrap.css, bootstrap.min.css and skinname.png file to created folder</li>
+    <li>Open Views/Settings/ _ThemesSettings.cshtml file</li>
+    <li>Add the following html code:<br/><br/><pre class="prettyprint linenums" style="width:500px">&lt;option value="skinname"&gt;Skinname - small comment&lt;/option&gt;</pre>
+    </li>
+</ul>
+</p>
+
+
+<a class="qp" id="q12"></a>
+<h3><span class="q">Q</span>&nbsp;How to add new skins to the Sign In and Sign page?</h3>
+
+<p>Yes, you can create new bootstrap style or buy it in the Internet and set path to botstratp.css file in Views/Shared/ _LayoutPublic.cshtml file.</p>
+
+<a class="qp" id="q13"></a>
+<h3><span class="q">Q</span>&nbsp;How to use maintenance mode?</h3>
+
+<p>Please have a look at Settings/General/Maintenance Time setting. You can redirect members to Offline local page or user any external URL. </p>
+
+<a class="qp" id="q14"></a>
+<h3><span class="q">Q</span>&nbsp;Can I redirect a member after sign in / sign out?</h3>
+<p>Yes, no problem Settings/Registration/ Redirect After Sign In and Redirect After Sign Out</p>
+
+<a class="qp" id="q15"></a>
+<h3><span class="q">Q</span>&nbsp;Can I receive all members' email notifications?</h3>
+<p>Yep, no problem Settings/Registration/ Blind Carbon Copy (Bcc). You can use email list where ;  is separator.</p>
+
+<a class="qp" id="q16"></a>
+<h3><span class="q">Q</span>&nbsp;How registration/activation process looks like?</h3>
+<p>
+You can create a member by yourself or new member can use public UI to create account. In this case new member will be added to Self Registered and Not Activated biult in role. An activation e-mail will be sent.  After activation a new member will be in the following roles: Self Registered; Self Activated.
+You can add your roles to the Self-Activation Role parameter in order to add all new members to particular role after registration or activation process. For instance it can be "Waiting for Approval"
+</p>
+
+<a class="qp" id="q17"></a>
+<h3><span class="q">Q</span>&nbsp;Can I change grid items per page value?</h3>
+<p>Yes, Settings/ User Interface/ Default Paging Size</p>
+
+<a class="qp" id="q18"></a>
+<h3><span class="q">Q</span>&nbsp;Can I change admin application name and logo?</h3>
+<p>Yes, but you can have HTML coding experience and check Views\Shared\_LayoutAdmin.cshtml file.  Please, be careful, because those files are C# html files or ask me to help you with that.</p>
+
+<a class="qp" id="q19"></a>
+<h3><span class="q">Q</span>&nbsp;How to use Machine Key Generator?</h3>
+
+<p>Machine Key Generator makes the text part which you can insert directly to a web.config file for each application.
+A default configuration for forms authentication is defined as follows:
+<pre class="prettyprint linenums">
+&lt;configuration&gt; 
+  ... 
+&lt;system.web&gt; 
+    ... 
+    &lt;authentication mode="Forms"&gt; 
+    &lt;forms name=".cookiename" 
+             loginUrl="~/Login.aspx"
+             timeout="30" 
+             path="/" /&gt; 
+    &lt;/authentication&gt; 
+    ... 
+  &lt;/system.web&gt; 
+  ... 
+&lt;/configuration&gt;
+</pre>
+
+<p>where .cookiename, by default, is .ASPXFORMSAUTH.</p>
+<p>In order for authentication data to be recognized across multiple applications, each application must be configured to use the same values for cookie name, protection and path attributes. But this isn't enough - in fact, they must also have the same machine key values (see the side box for more info about the machineKey element). These information are used to encrypt the forms authentication cookie, as mentioned in the "Forms Authentication" side box.</p>
+<p>Below a sample web.config excerpt which must be added to each application we want single sign on enabled. In this sample, the validationKey and encryptionKey attributes must be replaced with unique values you have to generate for your applications pool.</p>
+
+<pre class="prettyprint linenums">
+&lt;configuration&gt; 
+  ... 
+  &lt;system.web&gt; 
+    ... 
+    &lt;authentication mode="Forms"&gt; 
+      &lt;forms name=".cookiename" 
+             loginUrl="~/SignIn" 
+             timeout="30" 
+             path="/" 
+      /&gt; 
+    &lt;/authentication&gt; 
+    ... 
+    &lt;machineKey 
+        validationKey="F9D1A2D3E1D3E2F7B3D9F90FF3965ABDAC304902" 
+        encryptionKey="F9D1A2D3E1D3E2F7B3D9F90FF3965ABDAC304902F8D923AC" 
+        validation="SHA1" 
+    /&gt; 
+    ... 
+  &lt;/system.web&gt; 
+  ... 
+&lt;/configuration&gt;
+</pre>
+Please read this arrticle: <a href="http://www.developer-corner.com/2006/09/single-sign-on-across-multiple-aspnet.html">Single Sign On across multiple ASP.NET applications</a>
+</p>
+
+<a class="qp" id="q20"></a>
+<h3><span class="q">Q</span>&nbsp;Can I Export/Import roles and members?</h3>
+<p>Yes, you can find it on Roles and Members page. You can upload files and see export/import file formats.</p>
+
+<a class="qp" id="q21"></a>
+<h3><span class="q">Q</span>&nbsp;How to provide multilingual support?</h3>
+
+<p>By default the language of public interface is English. But you can add more Lange files. Please see check Languages\labels-eng.txt file. It is simple to understand how to add text in another language. After you have language file just give it name labels_[language id].txt and system will read all label files then application is loaded.
+Use Settings/General/Public UI language. 
+</p>
+
+<a class="qp" id="q22"></a>
+<h3><span class="q">Q</span>&nbsp;Can I restrict member/API request by IP address?</h3>
+<p>Yes, please read this article: <a href="http://www.stokia.com/support/misc/web-config-ip-address-restriction.aspx">Using IP Address Restrictions</a></p>
+
+
+<a class="qp" id="q23"></a>
+<h3><span class="q">Q</span>&nbsp;Can I protect ASP .NET classic web forms application by this tool?</h3>
+<p>Please have a look at the example in Web.App folder. it’s very basic example but you can improve it for sure to have all logic in one place.</p>
+
+<a class="qp" id="q24"></a>
+<h3><span class="q">Q</span>&nbsp;Does it support MySQL 5.x ?</h3>
+<p>
+Yep, it does!
+ MySQL Example: 
+ <pre class="prettyprint linenums">
+    &lt;add key="SimpleTools.Flippy.Connetion.String" 
+          value="Server=localhost;Database=flippy;Uid=flippyuser;Pwd=flippy1234;Allow User Variables=true"/&gt
+    &lt;add key="SimpleTools.Flippy.Database.Provider" 
+          value="MySQL"/&gt
+ </pre>
+ The installation script was included.
+ </p>
+
+<a class="qp" id="q25"></a>
+<h3><span class="q">Q</span>How can I upgrade this project to MVC 4 ?</h3>
+<p>
+ <a hrfe="http://www.asp.net/whitepapers/mvc4-release-notes">http://www.asp.net/whitepapers/mvc4-release-notes</a><br/>
+ Find this section: Upgrading an ASP .NET MVC 3 Project to ASP .NET MVC 4
+</p>
+
+<a class="qp" id="q26"></a>
+<h3><span class="q">Q</span>Can members sign in by Twitter, Facebook, Google, Yahoo and other OpenID providers ?</h3>
+<p>
+ Yep! It works for this soulution. (See Social Networks tab on the settings page)<br/>
+ 
+ <h4>Twitter</h4>
+ You need to register your application with Twitter. That means you should have your production URL ready before you think to start your development. When you finished with registration, you will receive consumer key and consumer secret. These unique credentials will help your app to interact with Twitter. No big deal. You can visit your all registered applications on <a href="http://twitter.com/oauth">http://twitter.com/oauth.</a> And to register for new app you need to visit <a href="http://twitter.com/apps/new">http://twitter.com/apps/new</a>.<br/><br/>
+ <h4>Facebook</h4>
+ It is recommended that users be able to authenticate with Facebook when using Socialize so as to maximize the exposure and promotion of your app. First step for Facebook is retrieve the App ID and App Secret (it is based on oAuth 2.0), so register you application on <a href="https://developers.facebook.com/apps">https://developers.facebook.com/apps</a>.<br/><br/>
+ <h4> Google, Yahoo and other OpenID providers</h4>
+ You don't need any key for those providers.
+</p>
+
+<a class="qp" id="q27"></a>
+<h3><span class="q">Q</span>Can I use LDAP directory to authenticate members ?</h3>
+<p>
+ Yes, you can do it, and even more to authenticate members via LDAP and admin tool database in the same time. It works via API as well.<br/><br/>
+ When connecting to AD you can use "serverless" binding or you can specify a serverbound<br/>to use everytime (server bound).
+ Here's an example of using both:
+ <table class="table table-striped table-bordered table-condensed" style="width:55% !important">
+     <tr><td><b>Type</b></td><td><b>URL Example</b></td></tr>
+     <tr><td>Serverless</td><td>LDAP://dc=domainname,dc=com</td></tr>
+     <tr><td>Serverbound</td><td>LDAP://domainControllerName/dc=domainName,dc=com </td></tr>
+ </table>
+</p>
+
+<a class="qp" id="q28"></a>
+<h3><span class="q">Q</span>Can I restrict profile fields visibility by member domain or role ?</h3>
+<p>
+ Yes you can do it starting from version 1.6. If you created a profile fields it will be visible for all domains by default. To change that click on the field name on the Fields page and click on "Restricted By Domains" or "Restricted By Roles" tab and check domains or roles which you need.
+ You can select a member domain on the member edit dialog or it will be assigned during sign up process.
+   
+ 
+</p>
+
+<a class="qp" id="q29"></a>
+<h3><span class="q">Q</span>Can I use Facebook/Twitter API which needs the members access token?</h3>
+<p>
+Yes, for now API token are saved in the database (and updated after expiration date), so you can use that to have an access to Facebook/Twitter API.
+</p>
+
+<a class="qp" id="q30"></a>
+<h3><span class="q">Q</span>How to set a member domain?</h3>
+<p>
+The domain name will be set for a member during signup process or you can find the member on the Members page, click on the member name and set the memeber domain on the Domains tab.
+</p>
+
+</div>

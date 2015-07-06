@@ -1,0 +1,122 @@
+﻿@model MemberListModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+@using System.Web;
+
+@{
+    var _itemsCount = Model.Members.Count;
+    var _itemsStarting = (((Model.Filter.CurrentPage - 1) * Model.Filter.ItemsPerPage) + 1);
+    var _itemsEnding = (((Model.Filter.CurrentPage - 1) * Model.Filter.ItemsPerPage) + Model.Filter.ItemsPerPage);
+
+    if (_itemsCount < (_itemsEnding - _itemsStarting)){
+        _itemsEnding = _itemsStarting + _itemsCount - 1;
+    }
+}
+
+<div class="div-table-info">
+    <div class="div-table-info-fl">Showing <b>@_itemsStarting</b> to <b>@_itemsEnding</b> of <b>@Model.TotalItems</b> entries</div>
+
+    @if (@Model.TotalItems > Model.Filter.ItemsPerPage)
+    {
+        <div class="pagination-custom div-table-info-fr"  id="table-members-pagination-top-@Model.HolderName" name="table-members-pagination-top-@Model.HolderName"></div>
+    }
+</div>
+
+<table id="@Model.HolderName"  width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-striped table-bordered table-condensed" data-items-per-page="@Model.Filter.ItemsPerPage"  data-current-page="@Model.Filter.CurrentPage"  data-total-items="@Model.TotalItems"  data-sort-column="@Model.Filter.SortColumn" data-sort-order-asc="@Model.Filter.SortOrderAsc.ToString().ToLower()" data-alpha-filter="@MemberListModel.ListToString(Model.Filter.AlphabetFilter)" data-role-filter="@MemberListModel.ListToString(Model.Filter.RolesFilter)" data-roles-filter-condition="@Model.Filter.RoleFilterCondition.ToString().ToLower()" data-filter-member-search="@Model.Filter.Search">
+    <thead>
+        <tr>
+            <th style="text-align:center"><input type="checkbox" class="member-select-all-chb"/></th>
+            <th class="role-sort-column " style="width:5%">ID<span class="css_right ui-icon @Model.SortImageClass(1)"></span></th>
+            <th class="role-sort-column" style="width:25%">Name<span class="css_right ui-icon @Model.SortImageClass(2)"/></th>
+            <th style="width:35%">Role</th>
+            <th class="role-sort-column">Email<span class="css_right ui-icon @Model.SortImageClass(4)"/></th>
+            <th class="role-sort-column table-date-td-width">Last Login<span class="css_right ui-icon @Model.SortImageClass(5)"/></th>
+            <th class="role-sort-column table-date-td-width">Created<span class="css_right ui-icon @Model.SortImageClass(6)"/></th>
+        </tr>
+    </thead>
+    <tbody>
+         @foreach (Member member in Model.Members)
+         {
+             var avatar = "";
+             var rel = "";
+             
+             if (member.Avatar != null && member.Avatar.Length > 0)
+             {
+                 avatar = Url.Content("~/avatar/") + member.Avatar + ".jpg";
+                 rel = "popover";
+             }
+             else
+             {
+                MemberSocialNetwork _memberNetwork = MemberSocialNetworks.GetByMemberID(member.MemberID);
+                if (_memberNetwork.MemberSocialNetworkID > 0 && _memberNetwork.SocialNetworkID == 1)
+                {
+                    avatar = "https://graph.facebook.com/"+_memberNetwork.SocialNetworkUserID+"/picture?type=large";
+                }
+                else if (_memberNetwork.MemberSocialNetworkID > 0 && _memberNetwork.SocialNetworkID == 2)
+                {
+                    avatar = "http://api.twitter.com/1/users/profile_image?screen_name=" + _memberNetwork.SocialNetworkUserName + "&size=bigger";
+                }
+                else
+                {
+                    avatar = Url.Content("~/content/images/no-photo.png");
+                    rel = "";
+                }
+             }
+             var poover = "<img class='img-circle' width=\"55px\" height=\"55px\" src=\"" + avatar + "\"/>&nbsp;&nbsp;<b>E-mail:</b>&nbsp;<a>" + member.Email + "</a>";
+             
+          <tr>
+              <td style="text-align:center" class="table-first-column"><input  id="member-select-@member.MemberID" class="member-select" data-member-id="@member.MemberID" type="checkbox" /></td>
+              <td style="text-align:right">@member.MemberID</td>
+
+              @if (Model.Filter.Search != null && Model.Filter.Search.Length > 0) 
+              { 
+                 <td style="vertical-align:middle">                    
+                    <a rel="@rel" data-content="@poover" data-original-title="@member.Name"><img class="img-circle"  width="22px" height="22px" src="@avatar" style="width:22px;height:22px" /></a>&nbsp;
+                    <a href="#" class="member-edit" style="white-space:nowrap !important;"  data-member-id="@member.MemberID">@Html.Raw(HttpUtility.HtmlEncode(member.Name).Replace(Model.Filter.Search, "<span style='background-color:yellow'>" + Model.Filter.Search + "</span>"))</a>
+                    <div class="member-add-role-inline"><a class="member-add-role-inline-link  btn-xs btn" data-member-id="@member.MemberID" data-member-name="@member.Name" href="#">Add Roles</a></div>
+                 </td>        
+              }
+              else
+              {
+                <td style="vertical-align:middle">
+                    <a rel="@rel" data-content="@poover" data-original-title="@member.Name"><img class="img-circle" width="22px" height="22px" src="@avatar" style="width:22px;height:22px" /></a>&nbsp;
+                    <a href="#" class="member-edit" style="white-space:nowrap !important;" data-member-id="@member.MemberID">@member.Name</a>
+                    <div class="member-add-role-inline"><a class="member-add-role-inline-link btn-xs btn btn-default" data-member-id="@member.MemberID" data-member-name="@member.Name" href="#">Add Roles</a></div>
+                </td>
+              }                 
+              <td id="member-roles-all-@member.MemberID"> 
+                @foreach (Role role in Web.Admin.Logic.Collections.Roles.GetByMember(member.MemberID))
+                {
+                   <div class="label member-role-label" style="background-color:#@role.BackColor !important">@role.Name<div class="member-role-label-cross role-member-remove-cross" data-role-id="@role.RoleID" data-member-id="@member.MemberID" data-role-name="@role.Name" data-member-name="@member.Name" >&nbsp;|&nbsp;<b>x</b></div></div>
+                }                
+              </td>
+              @if (Model.Filter.Search != null && @Model.Filter.Search.Length > 0)
+              { 
+                    <td>@Html.Raw(member.Email.Replace(Model.Filter.Search, "<span style='background-color:yellow'>" + Model.Filter.Search + "</span>"))</td>
+              }
+              else
+              {
+                    <td>@member.Email</td>
+              }                 
+              <td style="white-space:nowrap"><div class="table-date-full">@if (@member.LastLogin != DateTime.MinValue){@AppSession.ToLocalTime(member.LastLogin).ToString("dd MMM yyyy HH:mm:ss")}</div><div class="muted table-date-relative">@if (@member.LastLogin != DateTime.MinValue){@AppSession.ToLocalTime(member.LastLogin).ToRelativeTime()}</div></td>
+              <td style="white-space:nowrap"><div class="table-date-full">@if (@member.Created != DateTime.MinValue){@AppSession.ToLocalTime(member.Created).ToString("dd MMM yyyy HH:mm:ss")}</div><div class="muted table-date-relative">@if (@member.Created != DateTime.MinValue){@AppSession.ToLocalTime(member.Created).ToRelativeTime()}</div></td>
+          </tr>
+         }  
+    </tbody>
+</table>    
+
+<div class="div-table-info">    
+    <div class="div-table-info-fl">Showing <b>@_itemsStarting</b> to <b>@_itemsEnding</b> of <b>@Model.TotalItems</b> entries</div>
+    @if (@Model.TotalItems > Model.Filter.ItemsPerPage)
+    {
+        <div class="pagination-custom div-table-info-fr" id="table-members-pagination-bottom-@Model.HolderName" name="table-members-pagination-bottom-@Model.HolderName"></div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () { $('a[rel=popover]').popover(); })
+</script>
+

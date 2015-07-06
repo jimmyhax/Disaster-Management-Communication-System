@@ -1,0 +1,115 @@
+﻿@model ProfileFieldGroupModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    var templateId = String.Format("dialog-view-{0}", DateTime.Now.Ticks.ToString());
+    var dialogId = templateId.Replace("-view-", "-");
+    var contentId = templateId.Replace("-view-", "-content-");
+}
+<template type="text/template" id="@templateId" data-dialog-tittle="Edit Field Group &nbsp;&nbsp;<div style='color:#888;display:inline-block'>@Model.FieldGroup.FieldGroupName</div>" data-dialog-spinner="spinner-@dialogId">
+    <div id="notify-message"></div><br />
+
+    <label for="field-group-name"><b>Name</b></label>
+    <input type="text" class="input-xlarge form-control" id="field-group-name" style="width:97%;color:black" maxlength="64" value="@Model.FieldGroup.FieldGroupName" />
+
+    <label for="field-group-desc"><b>Description</b></label>
+    <textarea class="input-xlarge form-control" id="field-group-desc" style="width:97%; height:130px; color:black">@Model.FieldGroup.FieldGroupDescription</textarea>
+
+    <br />
+    <br />
+    <label for="field-group-is-active"><input style="vertical-align: middle; margin: 0px;padding-right:4px" type="checkbox" id="profile-field-is-active" @if (Model.FieldGroup.IsActive == 1) { @Html.Raw("checked")  } />&nbsp;<span style="vertical-align: middle;margin: 0px"><b>Is Active</b> (The members don't see this group on the profile page if it is not active.)</span></label>
+    <label for="field-group-admin-use-only"><input style="vertical-align: middle; margin: 0px;padding-right:4px" type="checkbox" id="field-group-admin-use-only" @if (Model.FieldGroup.AdminUseOnly == 1) { @Html.Raw("checked")  } />&nbsp;<span style="vertical-align: middle;margin: 0px"><b>Admin Use Only</b> (The admin members will see this group only.)</span></label>
+    <br />
+
+    <label for="field-group-order"><b>Group Order</b></label>
+    <div style="padding:5px">To change the group order just drag & drop appropriate item in the group table below to place you need:</div>
+    <table class="table table-striped table-bordered table-condensed canSortGroup" style="width:100%">
+        <thead>
+            <tr>
+                <td style="width:7%;text-align:center"><b>Order</b></td>
+                <td style="width:93%"><b>Name</b></td>
+                <td style="width:1%"><b>Order</b></td>
+            </tr>
+        </thead>
+        <tbody>
+            @{var profileFieldGroups = ProfileFieldGroups.GetAll();
+            foreach (ProfileFieldGroup group in profileFieldGroups)
+            {
+                <tr id="row-@group.FieldGroupID">
+                    <td style="text-align:center">@group.OrderID</td>
+                    <td>@group.FieldGroupName</td>
+                    <td style="text-align:center"><i class="glyphicon glyphicon-resize-vertical handle" style="cursor:pointer"></i></td>
+                </tr>
+            }
+            }
+        </tbody>
+    </table>
+    <input type="hidden" id="grouporder" value="" />
+</template>
+    
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        var dialog = App.DialogBootstrap("#@templateId",790,680, true,
+        {
+            Save: function () {
+
+                var _this = this;
+
+                var Values = {
+                    GroupID : @Model.FieldGroup.FieldGroupID,
+                    Name:    $("#field-group-name").val(),
+                    Description: $("#field-group-desc").val(),
+                    Order: $("#grouporder").val(),
+                    IsActive: $("#profile-field-is-active").is(":checked"),
+                    AdminUseOnly: $("#field-group-admin-use-only").is(":checked")
+                }
+
+                $("#spinner-@dialogId").addClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SaveFieldGroup", "Fields")",
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(Values),
+                    cache: false,
+                    success: function (data) {
+
+                        switch(data.NotifyType)
+                        {
+                            case 0: $("#general-message").html(data.Html);dialog.close();break
+                            case 1: $("#@dialogId").find("#notify-message").html(data.Html);break;
+                            case 2: $(data.Html).prependTo('body');dialog.close();break;
+                        };
+
+                        if(data.NotifyType == 1)
+                            $("#@dialogId").animate({ scrollTop: 0 }, 'slow');
+
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+
+                        if(data.Html == "")
+                        {
+                            setTimeout(function(){
+                                $("#member-profile-fields").load("@Url.Action("GetMemberFields", "Fields")",function() {App.FieldsManagement.InitDragAndDrop()})
+                            },10);
+                        };
+                      
+                    },
+                    error: function(xhr, textStatus, errorThrown){
+                        $("#spinner-@dialogId").removeClass("glyphicon glyphicon-refresh glyphicon-refresh-animate");
+                        dialog.close();
+                    }
+                });
+
+            }//,
+            //Cancel: function () {$(this).dialog("close");}
+        }, true,BindSortGroups);
+    });
+
+</script>
+

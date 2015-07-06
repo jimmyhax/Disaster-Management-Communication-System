@@ -1,0 +1,87 @@
+﻿@model ProfileFieldDomainRoleModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    List<ProfileFieldGroup> profileFieldGroups = null;
+    
+    if(Model.Mode == ProfileFieldDomainRoleMode.Domain){
+        profileFieldGroups = ProfileFieldGroups.GetAllByDomain(Model.Name);
+    }
+    else if(Model.Mode == ProfileFieldDomainRoleMode.Role){
+        profileFieldGroups = profileFieldGroups = ProfileFieldGroups.GetAllByRole(Model.Name);
+    }
+
+   foreach (ProfileFieldGroup group in profileFieldGroups)
+   {
+      <div id="tab-group-@group.FieldGroupID">
+            <h3>@group.FieldGroupName 
+                @if(group.IsActive == 0){;<span class="label" style="margin-right:2px;vertical-align:top;font-size:11px">Not Active</span>}else{;<span class="label label-success" style="margin-right:7px;;vertical-align:top;font-size:11px">Active</span>}
+                @if(group.AdminUseOnly == 1){;<span class="label label-important" style="vertical-align:top;font-size:11px">Admin Use Only</span>}
+            </h3>
+        
+           <div style="margin-top:10px;">
+           <table class="table table-striped table-bordered table-condensed canSort" style="width:100%" id="table-@group.FieldGroupID" data-group-id="@group.FieldGroupID">
+           <thead>
+           <tr>
+                <td style="width:2%;text-align:center"><b>Type</b></td>
+                <td style="width:15%"><b>Name</b></td>
+                <td style="width:2%;text-align:center"><b>Active</b></td>
+                <td style="width:2%;text-align:center"><b>SignUp</b></td>
+                <td style="width:2%;text-align:center"><b>Admin</b></td>
+            </tr>
+            </thead>
+            <tbody>
+            @{
+                List<ProfileField> _ProfileFields = null;
+                 if(Model.Mode == ProfileFieldDomainRoleMode.Domain){
+                     _ProfileFields = ProfileFields.GetByDomainGroupID(Model.Name, group.FieldGroupID);
+                 }
+                 else if(Model.Mode == ProfileFieldDomainRoleMode.Role){
+                     _ProfileFields = ProfileFields.GetByRoleGroupID(Model.Name, group.FieldGroupID);
+                 }                                
+            }
+
+            @foreach (ProfileField field in _ProfileFields)
+            {
+            <tr id="row-@field.FieldID">
+                 <td style="text-align:center">                        
+                    @{
+                        var imagetitle = ProfileFieldTypes.Get((int)field.FieldTypeID).FieldTypeName;
+                        var imagename = "";
+                        switch (field.FieldTypeID)
+                        {
+                            case ProfileFieldTypeEnum.String: imagename = "textfield.png"; break;
+                            case ProfileFieldTypeEnum.StringMultiline: imagename = "textfield-multi-line.png"; break;
+                            case ProfileFieldTypeEnum.Number: imagename = "textfield-numeric.png"; break;
+                            case ProfileFieldTypeEnum.ListSingleSelect: imagename = "list.png"; break;
+                            case ProfileFieldTypeEnum.ComboBox: imagename = "combo-box.png"; break;
+                            case ProfileFieldTypeEnum.ListMultiSelect: imagename = "list-multi.png"; break;
+                            case ProfileFieldTypeEnum.CheckBox: imagename = "checkbox.png"; break;
+                            case ProfileFieldTypeEnum.Radio: imagename = "radiobutton-group.png"; break;
+                        }
+                    }
+                     <img src="@Url.Content("~/Content/Images")/@imagename" title="@imagetitle" />
+                     @if (field.Encrypted == 1)
+                     {<img src="@Url.Content("~/content/images/key.png")" title="The field value will be encrypted in the database." />}
+                 </td>
+                 <td>@field.FieldName
+                 @if (field.IsMandatory == 1)
+                 {<span style="color:red;font-size:14px">&nbsp;<b>*</b></span>}
+                 </td>                 
+                 <td style="text-align:center">@if (field.IsActive == 1){<img src='@Url.Content("~/Content/Images")/tick.png' title='Yes'/>}</td>
+                 <td style="text-align:center">@if (field.ShowInSignUp == 1){<img src='@Url.Content("~/Content/Images")/tick.png' title='Yes'/>}</td>
+                 <td style="text-align:center">@if (field.AdminUseOnly == 1){<img src='@Url.Content("~/Content/Images")/tick.png' title='Yes'/>}</td>
+             </tr>
+            }
+            <tr class="hidden"><td colspan="7"></td></tr>
+            </tbody>
+           </table><br/>
+           </div>
+     </div>
+  }
+}
+

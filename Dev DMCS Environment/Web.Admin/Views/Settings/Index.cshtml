@@ -1,0 +1,160 @@
+﻿@model ParametersModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+
+<h2>Settings</h2>
+<p>
+    <br/>This area provides a set of options which help to adjust the application to your needs. All available options are described on the <a href="@Url.Action("Index","Help")">Help</a> page. You can find some useful stuff on <a href="@Url.Action("Index","FAQ")">FAQ</a> page as well.
+</p><br/>
+<div id="general-message"></div>
+<div class="tabbable">
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a href="#1" data-toggle="tab">General</a>
+    </li>
+    <li><a href="#2" data-toggle="tab">User Interface</a></li>
+    <li><a href="#3" data-toggle="tab">Outgoing Mail Server</a></li>
+    <li><a href="#4" data-toggle="tab">Registration</a></li>
+    <li><a href="#5" data-toggle="tab">API</a></li>
+    <li><a href="#6" data-toggle="tab">Themes</a></li>
+    <li><a href="#7" data-toggle="tab">Languages</a></li>
+    <li><a href="#8" data-toggle="tab">Rules</a></li>
+    <li><a href="#9" data-toggle="tab">Social Networks</a></li>
+    <li><a href="#10" data-toggle="tab">LDAP</a></li>
+</ul>
+	<form class="form-horizontal" method="post" id="settings-form" style="width:100%">
+		<div class="tab-content">
+			<div class="tab-pane fade active in" id="1">
+				<legend>General</legend>
+                @{Html.RenderPartial(@"~/Views/Settings/_GeneralSettings.cshtml", Model);}                 
+			</div>
+            <div class="tab-pane fade" id="2">
+				<legend>User Interface</legend>
+                @{Html.RenderPartial(@"~/Views/Settings/_UISettings.cshtml", Model);}				        
+			</div>
+            <div class="tab-pane fade" id="3">
+				<legend>Outgoing Mail Server</legend>
+                @{Html.RenderPartial(@"~/Views/Settings/_SmtpSettings.cshtml", Model);}
+			</div>				
+            <div class="tab-pane fade" id="4">
+				<legend>Registration</legend>
+                @{Html.RenderPartial(@"~/Views/Settings/_RegistrationSettings.cshtml", Model);}
+			</div>               
+            <div class="tab-pane fade" id="5">
+				<legend>API</legend>
+                @{Html.RenderPartial(@"~/Views/Settings/_APISettings.cshtml", Model);}
+			</div>
+            <div class="tab-pane fade" id="6">
+				<legend>Themes</legend>
+                @{Html.RenderPartial(@"~/Views/Settings/_ThemesSettings.cshtml", Model);}
+			</div>
+            <div class="tab-pane fade" id="7">
+				<legend>Languages</legend>
+                @{Html.RenderPartial(@"~/Views/Settings/_LanguageSettings.cshtml", Model);}
+			</div>
+            <div class="tab-pane fade" id="8">
+				<legend>Rules</legend>
+                @{Html.RenderPartial(@"~/Views/Settings/_RulesSettings.cshtml", Model);}
+			</div>
+            <div class="tab-pane fade" id="9">
+				<legend>Social Networks</legend>
+                @{Html.RenderPartial(@"~/Views/Settings/_SocialNetworks.cshtml", Model);}
+			</div>
+            <div class="tab-pane fade" id="10">
+				<legend>LDAP</legend>
+                @{Html.RenderPartial(@"~/Views/Settings/_LDAPActiveDirectory.cshtml", Model);}
+			</div>
+		</div>
+        <div class="form-actions" style="padding-top:15px;padding-bottom:15px">
+            <button data-loading-text="Saving..." data-complete-text="Changes saved" name="save-settings" class="btn btn-default btn-primary save-settings btn-small">Save changes</button>
+        </div>
+    </form>    
+</div>
+
+
+<script>
+    $(".save-settings").bind("click", function (e) {
+        e.preventDefault();
+
+        $(".save-settings").button('loading')
+
+        var setting = [];
+        $(".app-settings").each(function (e) {
+            var Param = {
+                Name: $(this).attr("id"),
+                Value: $(this).val()
+            };
+
+            if ($(this).attr("type") == "checkbox") {
+                Param.Value = $(this).is(':checked')
+            } else if ($(this).attr("type") == "radio") {
+                if ($(this).is(':checked')) {
+                    Param.Value = $(this).val();
+                    Param.Name = $(this).attr("Name");
+                }
+                else
+                    Param = null;
+            }
+
+            if (Param != null)
+                setting.push(Param);
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SaveSettings","Settings")",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(setting),
+            cache: false,
+            success: function (data) {
+                  $(".save-settings").button('reset')
+
+
+                  if (data.NotifyType == 1) {
+                      $("#general-message").html(data.Html)
+                      $("body").animate({ scrollTop: 0 }, 'slow');
+                  }
+
+                  if (data.Settings != null && data.Settings.length > 0)
+                  {
+                        for(var i=0; i < data.Settings.length;i++)
+                        {
+                            var element = data.Settings[i];
+                            if(element.Type == "Bool")
+                            {
+                               if(element.Value == "true")
+                                    $("#"+element.Name).attr('checked', true);
+                               else
+                                    $("#"+element.Name).attr('checked', false);
+                            }else  if(element.Type == "RadioInteger")
+                            {
+                                $('[name='+element.Name+']').prop('checked',false);
+                                $('[name="'+element.Name+'"][value=\"'+element.Value+'\"]').prop('checked',true);
+                            }
+                            else
+                            {
+                               $("#"+element.Name).val(element.Value);
+                            }
+                        }
+                  }
+
+                  if(data.Message != null && data.Message.length > 0)
+                  {
+                      $("#general-message").html(data.Message);
+                      $("body").animate({ scrollTop: 0 }, 'slow');
+                  }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                App.DialogError(xhr, textStatus, errorThrown);
+                $(".save-settings").button('reset')
+            }
+        });
+
+        return false;
+    })
+</script>

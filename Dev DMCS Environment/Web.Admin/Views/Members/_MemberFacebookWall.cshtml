@@ -1,0 +1,25 @@
+﻿@model MemberListModel
+@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+    MemberSocialNetwork _memberNetwork = MemberSocialNetworks.GetByMemberID(Model.Members[0].MemberID);
+}
+
+<div id="member-facebook-wall"></div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#member-facebook-wall').fbWall({
+            id: '@_memberNetwork.SocialNetworkUserID',
+            accessToken: '@_memberNetwork.AccessToken', 
+            showGuestEntries:true,
+            showComments:true,
+            max:5,
+            timeConversion:24            
+       });
+    });
+</script>

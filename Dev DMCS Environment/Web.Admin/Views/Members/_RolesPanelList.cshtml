@@ -1,0 +1,23 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+
+<a href="#" data-role-id="-1" class="filter-by-role panel-roles-place" id="filter-role-id-none">Show All Roles</a>
+<div class="btn-group" data-toggle="buttons-radio" style="vertical-align:top;margin-right:10px">
+    <a class="btn btn-default btn-xs" href="#" id="filter-role-condition-or">OR</a>
+    <a class="btn btn-default btn-xs" href="#" id="filter-role-condition-and">AND</a>
+</div>
+@{    
+    foreach (Role role in Web.Admin.Logic.Collections.Roles.Get())
+    {
+        var Count = Web.Admin.Logic.Collections.Roles.GetMemberCount(@role.RoleID);
+        <a href="#" data-role-id="@role.RoleID" id="filter-role-id-@role.RoleID" class="filter-by-role panel-roles-place ">@role.Name</a>
+        if (Count > 0){
+            <span class="label-role-info">(@Count)</span>
+        }
+    }
+ }
+

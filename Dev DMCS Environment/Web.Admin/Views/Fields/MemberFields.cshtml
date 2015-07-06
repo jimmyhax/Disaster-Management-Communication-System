@@ -1,0 +1,215 @@
+﻿@using Web.Admin.Logic.Collections
+@using Web.Admin.Logic.Objects
+@using Web.Admin.Logic.Utilities
+@using Web.Admin.Helpers
+@using Web.Admin.Models
+
+@{
+   var profileFieldGroups = ProfileFieldGroups.GetAll();
+
+   if (profileFieldGroups.Count > 0)
+   {
+       foreach (ProfileFieldGroup group in profileFieldGroups)
+       {
+          <div id="tab-group-@group.FieldGroupID">
+                <h3>@group.FieldGroupName 
+                    @if(group.IsActive == 0){;<span class="label" style="margin-right:2px;vertical-align:top;font-size:12px">Not Active</span>}else{;<span class="label label-success" style="margin-right:7px;vertical-align:top;font-size:12px">Active</span>}
+                    @if(group.AdminUseOnly == 1){;<span class="label label-important" style="vertical-align:top;font-size:12px">Admin Use Only</span>}
+                </h3>
+                <div class="btn btn-default group-remove btn-xs" data-group-id="@group.FieldGroupID" data-group-name="@group.FieldGroupName"><i class="glyphicon glyphicon-minus"></i>&nbsp;Remove Group</div>  
+                <div class="btn btn-default group-properties btn-xs" data-group-id="@group.FieldGroupID"><i class="glyphicon glyphicon-zoom-in"></i>&nbsp;Edit Group</div>
+                <div class="btn btn-default group-add btn-xs"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add Group</div>
+
+                <div style="float:right">
+                    <div class="btn btn-default btn-danger btn-xs remove-field" data-group-id="@group.FieldGroupID"><i class="glyphicon glyphicon-minus icon-white"></i>Remove Field(s)</div>
+                    <div class="btn btn-default btn-success btn-xs add-field" data-group-id="@group.FieldGroupID"><i class="glyphicon glyphicon-plus  icon-white"></i>Add Field</div>
+                </div> 
+            
+               <div style="margin-top:10px;">
+               <table class="table table-striped table-bordered table-condensed canSort" style="width:100%" id="table-@group.FieldGroupID" data-group-id="@group.FieldGroupID">
+               <thead>
+               <tr>
+                    <td style="width:2%;text-align:center"><input type="checkbox" class="field-group-select-all-fields field-group-select" id="field-group-select-all-fields-@group.FieldGroupID" data-table-id="@group.FieldGroupID"/></td>
+                    <td style="width:2%;text-align:center"><b>Type</b></td>
+                    <td style="width:15%"><b>Name</b></td>
+                    <td style="width:2%;text-align:center"><b>Active</b></td>
+                    <td style="width:2%;text-align:center"><b>SignUp</b></td>
+                    <td style="width:2%;text-align:center"><b>Admin</b></td>
+                    <td style="width:20%"><b>Comment</b></td>
+                    <td style="width:15%"><b>Select Text</b></td>
+                    <td style="width:1%"><b>Order</b></td>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (ProfileField field in ProfileFields.GetByGroupID(group.FieldGroupID))
+                {
+
+                    List<Domain> _Domains = Domains.GetFieldID(field.FieldID);
+                    List<Role> _Roles = Web.Admin.Logic.Collections.Roles.GetFieldID(field.FieldID);
+                
+                   <tr id="row-@field.FieldID">
+                     <td style="text-align:center"><input  id="field-select-@field.FieldID" class="field-group-select-@group.FieldGroupID field-group-item" data-field-id="@field.FieldID" type="checkbox" title="@field.FieldID" /></td>
+                     <td style="text-align:center">                        
+                        @{
+                            var imagetitle = ProfileFieldTypes.Get((int)field.FieldTypeID).FieldTypeName;
+                            var imagename = "";
+                            switch (field.FieldTypeID)
+                            {
+                                case ProfileFieldTypeEnum.String: imagename = "textfield.png"; break;
+                                case ProfileFieldTypeEnum.StringMultiline: imagename = "textfield-multi-line.png"; break;
+                                case ProfileFieldTypeEnum.Number: imagename = "textfield-numeric.png"; break;
+                                case ProfileFieldTypeEnum.ListSingleSelect: imagename = "list.png"; break;
+                                case ProfileFieldTypeEnum.ComboBox: imagename = "combo-box.png"; break;
+                                case ProfileFieldTypeEnum.ListMultiSelect: imagename = "list-multi.png"; break;
+                                case ProfileFieldTypeEnum.CheckBox: imagename = "checkbox.png"; break;
+                                case ProfileFieldTypeEnum.Radio: imagename = "radiobutton-group.png"; break;
+                            }
+                        }
+                         <img src="@Url.Content("~/Content/Images")/@imagename" title="@imagetitle" />
+                         @if (field.Encrypted == 1)
+                         {<img src="@Url.Content("~/content/images/key.png")" title="The field value will be encrypted in the database." />}
+                     </td>
+                     <td><a href="#" class="edit-field" data-field-id="@field.FieldID" data-group-id="@group.FieldGroupID" data-tab-index="1">@field.FieldName</a>
+                     @if (field.IsMandatory == 1)
+                     {<span style="color:red;font-size:14px">&nbsp;<b>*</b></span>}
+                     @if (_Roles.Count> 0){
+                        <div class="btn-group restiction-label">
+                             <a class="btn btn-default btn-xs dropdown-toggle restiction-label" data-toggle="dropdown" href="#">R
+                                 <span class="caret"></span>
+                             </a>
+                             <ul class="dropdown-menu dropdown-menu-scroll" style="min-width:200px">
+                                 <li>
+                                     <div style="padding-left:10px;padding-right:10px">
+                                         <h5>Restricted by roles <div class="btn btn-default btn-xs edit-field" data-field-id="@field.FieldID" data-group-id="@group.FieldGroupID" data-tab-index="3">Edit</div></h5>
+                                         <p>
+                                            @foreach(Role _Role in _Roles){
+                                                <span class="label" style="vertical-align:baseline !important;background-color:#@_Role.BackColor !important; color:@_Role.ForeColor !important">@_Role.Name</span><br/>
+                                            }
+                                         </p>
+                                     </div>
+                                 </li>
+                             </ul>
+                        </div>
+                     }
+                     @if (_Domains.Count > 0)
+                     {
+                        <div class="btn-group restiction-label">
+                             <a class="btn btn-default btn-xs dropdown-toggle restiction-label" data-toggle="dropdown" href="#">D
+                                 <span class="caret"></span>
+                             </a>
+                              <ul class="dropdown-menu dropdown-menu-scroll" style="min-width:200px">
+                                 <li>
+                                     <div  style="padding-left:10px;padding-right:10px">
+                                         <h5>Restricted by domains&nbsp;<div class="btn btn-default btn-xs edit-field" data-field-id="@field.FieldID" data-group-id="@group.FieldGroupID" data-tab-index="2">Edit</div></h5>
+                                         <p>
+                                            @foreach(Domain _Domain in _Domains){
+                                                <span>@_Domain.Name</span><br/>
+                                            }
+                                         </p>
+                                     </div>
+                                 </li>
+                             </ul>
+                        </div>
+                     }                                          
+                     </td>                 
+                     <td style="text-align:center"><input style="margin-top:-3px" type="checkbox" data-field-id="@field.FieldID" class="set-field-isactive switch" @if (field.IsActive == 1)
+                                                                                                                                                                   {@Html.Raw("checked='checked'") } /></td>
+                     <td style="text-align:center"><input style="margin-top:-3px" type="checkbox" data-field-id="@field.FieldID" class="set-field-for-signup switch" @if (field.ShowInSignUp == 1)
+                                                                                                                                                                     {@Html.Raw("checked='checked'")}/></td>
+                     <td style="text-align:center"><input style="margin-top:-3px" type="checkbox" data-field-id="@field.FieldID" class="set-field-for-adminuse switch" @if (field.AdminUseOnly == 1)
+                                                                                                                                                                       {@Html.Raw("checked='checked'")}/></td>
+                     <td><div class="expander" style="display:inline-block">@field.Comment</div></td>
+                     <td><div class="expander" style="display:inline-block">@field.TextSelectValue</div></td>
+                     <td style="text-align:center"><i class="glyphicon glyphicon-resize-vertical handle" style="cursor:pointer"></i></td>
+                 </tr>
+                }
+                <tr class="hidden"><td colspan="7"></td></tr>
+                </tbody>
+               </table><br/>
+               </div>
+         </div>
+       }
+   }
+   else
+   {
+     <div class="well">The list of profile field groups is empty for now. Please click on  <div class="btn btn-default group-add btn-xs">Add Group</div>  button to create new group.</div>    
+   }
+}
+
+
+<script type="text/javascript">
+    
+    $('.switch').slickswitch();
+
+    $("input.set-field-isactive").on("change", function (e) {
+        var id = $(this).attr("data-field-id");
+        var isChecked = $(this).is(":checked");
+   
+        var _this = $(this);
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SetIsActive", "Fields")",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ Flag: isChecked, FieldID: id}),
+            cache: false,
+            success: function (data) {
+                
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                
+                App.DialogError(xhr, textStatus, errorThrown);
+            }
+        });
+
+    });
+
+    $("input.set-field-for-signup").on("change", function (e) {
+        var id = $(this).attr("data-field-id");
+        var isChecked = $(this).is(":checked");
+
+        var _this = $(this);
+        
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SetShowInSignUp", "Fields")",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ Flag: isChecked, FieldID: id }),
+            cache: false,
+            success: function (data) {
+               
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                
+                App.DialogError(xhr, textStatus, errorThrown);
+            }
+        });
+        
+    });
+
+    $("input.set-field-for-adminuse").on("change", function (e) {
+        var id = $(this).attr("data-field-id");
+        var isChecked = $(this).is(":checked");
+
+        var _this = $(this);
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SetAdminUseOnly","Fields")",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ Flag: isChecked, FieldID: id }),
+            cache: false,
+            success: function (data) {
+                 
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                
+                App.DialogError(xhr, textStatus, errorThrown);
+            }
+        });
+    }); 
+
+</script>
