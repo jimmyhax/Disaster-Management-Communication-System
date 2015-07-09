@@ -1,7 +1,10 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Web.App.SiteMaster" %>
 
 <%@ Register Src="~/Controls/LayoutSignInControl.ascx" TagPrefix="uc1" TagName="LayoutSignInControl" %>
-
+<%--///////////////////////////CSS///////////////////////////////--%>
+<link href="Content/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="Content/Site.css" rel="stylesheet" type="text/css">
+<%--/////////////////////////////////////////////////////////////--%>
 
 <!DOCTYPE html>
 
@@ -81,3 +84,33 @@
     </form>
 </body>
 </html>
+<%--////////////////////////////Java Script///////////////////////--%>
+<%--Framework Scripts Start--%>
+<script src="Scripts/jquery-1.10.2.js"></script>
+<script src="Scripts/bootstrap.js"></script>
+<script src="Scripts/angular.js"></script>
+<script src="Scripts/angular-resource.min.js"></script>
+<script src="Scripts/angular-ui-router.js"></script>
+<script src="Scripts/angular-animate.js"></script>
+<script src="Scripts/angular-google-maps.js"></script>
+<script src="Scripts/angular-google-maps-street-view.js"></script>
+<script src="Scripts/angular-route.js"></script>
+<script src="Scripts/toaster.js"></script>
+<script src="Scripts/respond.js"></script>
+<%--Framework Scripts End--%>
+<%--/////////////////////////////////////////////////////////////--%>
+<%--Controller Scripts Start--%>
+<script src="Angular_Scripts/app/app.js"></script>
+<script src="Angular_Scripts/app/controllers/homeCtrl.js"></script>
+<%--Controller Scripts End--%>
+<%--/////////////////////////////////////////////////////////////--%>
+<%--Service Scripts Start--%>
+<script src="Angular_Scripts/app/services/homeFactory.js"></script>
+
+<%--Service Scripts End--%>
+<%--/////////////////////////////////////////////////////////////--%>
+<%--Directive Scripts Start--%>
+<script src="Angular_Scripts/app/directives/homeDirective.js"></script>
+
+<%--Directive Scripts End--%>
+<%--/////////////////////////////////////////////////////////////--%>

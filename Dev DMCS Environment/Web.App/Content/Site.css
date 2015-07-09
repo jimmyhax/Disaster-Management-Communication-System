@@ -17,6 +17,26 @@ input[type="password"],
 input[type="email"] {
     max-width: 280px;
 }
+/*////////////////////////////////ADD CLASSES HERE/////////////////////////////////////*/
+.sg-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 50px;
+}
+
+.form-content {
+    height:auto;
+}
+.gridview-container {
+    padding: 50px;
+    width: 100%;
+    text-align: -webkit-center;
+}
+
+
+/*/////////////////////////////////////////////////////////////////////////////////////*/
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
