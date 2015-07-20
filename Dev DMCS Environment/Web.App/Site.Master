@@ -2,8 +2,11 @@
 
 <%@ Register Src="~/Controls/LayoutSignInControl.ascx" TagPrefix="uc1" TagName="LayoutSignInControl" %>
 <%--///////////////////////////CSS///////////////////////////////--%>
-<link href="Content/bootstrap.css" rel="stylesheet" type="text/css">
-<link href="Content/Site.css" rel="stylesheet" type="text/css">
+<link href="Content/bootstrap.css" rel="stylesheet" />
+<link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
+<link href="Content/ng-table.css" rel="stylesheet" />
+<link href="Content/app.scss" rel="stylesheet" />
+
 <%--/////////////////////////////////////////////////////////////--%>
 
 <!DOCTYPE html>
@@ -14,6 +17,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - My ASP.NET Application</title>
 
+</head>
+<body>
      <%
         Server_.API.Utilities.Tools.IsAuthTicketValid();
      %>
@@ -25,8 +30,6 @@
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-</head>
-<body>
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
@@ -73,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <div class="container body-content">
+        <div class="container body-content" ng-app="app">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />
@@ -88,21 +91,23 @@
 <%--Framework Scripts Start--%>
 <script src="Scripts/jquery-1.10.2.js"></script>
 <script src="Scripts/bootstrap.js"></script>
+<script src="Scripts/respond.js"></script>
+
 <script src="Scripts/angular.js"></script>
 <script src="Scripts/angular-resource.min.js"></script>
-<script src="Scripts/angular-ui-router.js"></script>
 <script src="Scripts/angular-animate.js"></script>
 <script src="Scripts/angular-google-maps.js"></script>
 <script src="Scripts/angular-google-maps-street-view.js"></script>
 <script src="Scripts/angular-route.js"></script>
+<script src="Scripts/angular-ui-router.js"></script>
+<script src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+<script src="Scripts/angular-ui/ui-utils-ieshiv.min.js"></script>
+<script src="Scripts/ngStorage.min.js"></script>
+<script src="Scripts/ng-table.js"></script>
 <script src="Scripts/toaster.js"></script>
-<script src="Scripts/respond.js"></script>
-<%--Framework Scripts End--%>
-<%--/////////////////////////////////////////////////////////////--%>
-<%--Controller Scripts Start--%>
 <script src="Angular_Scripts/app/app.js"></script>
-<script src="Angular_Scripts/app/controllers/homeCtrl.js"></script>
-<%--Controller Scripts End--%>
+
+<%--Framework Scripts End--%>
 <%--/////////////////////////////////////////////////////////////--%>
 <%--Service Scripts Start--%>
 <script src="Angular_Scripts/app/services/homeFactory.js"></script>
@@ -113,4 +118,11 @@
 <script src="Angular_Scripts/app/directives/homeDirective.js"></script>
 
 <%--Directive Scripts End--%>
+<%--/////////////////////////////////////////////////////////////--%>
+<%--Controller Scripts Start--%>
+<script src="Angular_Scripts/app/controllers/homeCtrl.js"></script>
+<script src="Angular_Scripts/app/controllers/gridCtrl.js"></script>
+<script src="Angular_Scripts/app/controllers/modalCtrl.js"></script>
+<script src="Angular_Scripts/app/controllers/ScriptGeneratorTemplateCtrl.js"></script>
+<%--Controller Scripts End--%>
 <%--/////////////////////////////////////////////////////////////--%>

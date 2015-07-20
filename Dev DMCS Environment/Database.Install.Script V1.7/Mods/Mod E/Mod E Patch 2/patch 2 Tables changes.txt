@@ -1,0 +1,10 @@
+modified tables:
+
+client
+	+ location_id (fk)
+missing
+	+ reporting_client_id
+	- last_Known_location_id
+deceased
+	+ reporting_client_id
+

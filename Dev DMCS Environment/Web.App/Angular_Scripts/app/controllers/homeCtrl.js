@@ -16,9 +16,9 @@
       ['homeFactory', homeCtrl]);
 
     function homeCtrl(homeFactory) {
-        vm.pass = "Passed string from server rendered HTML";
         // 'Controller As' syntax
         var vm = this;
+        vm.pass = "Passed string from server rendered HTML";
         someFunction();
         /**
          * @ngdoc method
