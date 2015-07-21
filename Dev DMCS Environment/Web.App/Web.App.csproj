@@ -52,6 +52,9 @@
     <Reference Include="BundleTransformer.SassAndScss">
       <HintPath>..\packages\BundleTransformer.SassAndScss.1.9.68\lib\net40\BundleTransformer.SassAndScss.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip.Reduced">
+      <HintPath>..\..\..\..\..\Desktop\Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
     <Reference Include="IronRuby">
       <HintPath>..\packages\BundleTransformer.SassAndScss.1.9.68\lib\net40\IronRuby.dll</HintPath>
     </Reference>
@@ -1368,6 +1371,10 @@
   <ItemGroup>
     <Folder Include="Angular_Scripts\app\common\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Generated_Files\Angular_Controller\" />
+    <Folder Include="Generated_Files\App_Code\" />
+    <Folder Include="Generated_Files\Screens\" />
+    <Folder Include="Generated_Files\SQL\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

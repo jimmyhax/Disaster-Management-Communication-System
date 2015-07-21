@@ -100,3 +100,4 @@ C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-Sys
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Web.App\obj\Debug\Web.App.csprojResolveAssemblyReference.cache
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Web.App\obj\Debug\Web.App.dll
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Web.App\obj\Debug\Web.App.pdb
+C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Web.App\bin\Ionic.Zip.Reduced.dll

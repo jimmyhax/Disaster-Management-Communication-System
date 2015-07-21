@@ -18,7 +18,7 @@ namespace Web.App
         String[] DB_Type_Array;
         String[] Null_Array;
         List<string> table_names;
-        String Database_Script_Output_StringText;
+        String constructor;
         String Object_Output_StringText;
         String Select_Screen_Output_StringText;
         String Select_Screen_C_Output_StringText;
@@ -112,7 +112,7 @@ namespace Web.App
             GENERATE_SCREEN_Insert_Update_Delete();
             GENERATE_SCREEN_C_Insert_Update_Delete();
             //show code on form
-            Database_Script_Output.Text = Database_Script_Output_StringText;
+            Database_Script_Output.Text = constructor;
             Object_Output.Text = Object_Output_StringText;
             //Select_Screen_Output.Text = Select_Screen_Output_StringText;
             //Select_Screen_C_Output.Text = Select_Screen_C_Output_StringText;
@@ -151,16 +151,16 @@ namespace Web.App
                 Table_Name = Manual_Table_Name.Text;
             }
 
-            Database_Script_Output_StringText += "/****** Object:  Table [dbo].[" + Table_Name + "]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET ANSI_NULLS ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET ANSI_PADDING ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "CREATE TABLE [dbo].[" + Table_Name + "](" + Environment.NewLine;
+            constructor += "/****** Object:  Table [dbo].[" + Table_Name + "]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
+            constructor += "SET ANSI_NULLS ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET ANSI_PADDING ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "CREATE TABLE [dbo].[" + Table_Name + "](" + Environment.NewLine;
 
-            Database_Script_Output_StringText += "  [" + DB_Array[0] + "] " + DB_Type_Array[0] + " IDENTITY(1,1) " + Null_Array[0] + "," + Environment.NewLine;
+            constructor += "  [" + DB_Array[0] + "] " + DB_Type_Array[0] + " IDENTITY(1,1) " + Null_Array[0] + "," + Environment.NewLine;
 
             for (int i = 1; i < DB_Array.Length - 1; i++)
             {
@@ -169,39 +169,39 @@ namespace Web.App
                 //check for percisionable value
                 if (script_generator.result == 0)
                 {
-                    Database_Script_Output_StringText += "  [" + DB_Array[i] + "] " + DB_Type_Array[i] + " " + Null_Array[i] + "," + Environment.NewLine;
+                    constructor += "  [" + DB_Array[i] + "] " + DB_Type_Array[i] + " " + Null_Array[i] + "," + Environment.NewLine;
                 }
                 //check for MAX
                 else if (script_generator.result == -1)
                 {
-                    Database_Script_Output_StringText += "  [" + DB_Array[i] + "] " + DB_Type_Array[i] + "(MAX) " + Null_Array[i] + "," + Environment.NewLine;
+                    constructor += "  [" + DB_Array[i] + "] " + DB_Type_Array[i] + "(MAX) " + Null_Array[i] + "," + Environment.NewLine;
                 }
                 //All others
                 else
                 {
-                    Database_Script_Output_StringText += "  [" + DB_Array[i] + "] " + DB_Type_Array[i] + "(" + script_generator.result + ") " + Null_Array[i] + "," + Environment.NewLine;
+                    constructor += "  [" + DB_Array[i] + "] " + DB_Type_Array[i] + "(" + script_generator.result + ") " + Null_Array[i] + "," + Environment.NewLine;
 
                 }
 
             }
 
 
-            Database_Script_Output_StringText += " CONSTRAINT [" + Table_Name + "_" + DB_Array[0] + "_pk] PRIMARY KEY CLUSTERED " + Environment.NewLine;
-            Database_Script_Output_StringText += "(" + Environment.NewLine;
-            Database_Script_Output_StringText += "	[" + DB_Array[0] + "] ASC" + Environment.NewLine;
-            Database_Script_Output_StringText += ")WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]" + Environment.NewLine;
-            Database_Script_Output_StringText += ") ON [PRIMARY] " + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET ANSI_PADDING OFF" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/****** FK TEMPLATE - NEEDS ACCURATE DATA - ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/**********    ALTER TABLE [dbo].[THIS_TABLE_NAME]  WITH CHECK ADD  CONSTRAINT [NAME_OF_CONSTRAINT] FOREIGN KEY([FK_ON_THIS_TABLE])    **********/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/**********    REFERENCES [dbo].[OTHER_TABLE_NAME] ([OTHER_TABLE_FK])    **********/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/**********    GO    **********/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/**********    ALTER TABLE [dbo].[THIS_TABLE_NAME] CHECK CONSTRAINT [NAME_OF_CONSTRAINT]    **********/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/**********    GO    **********/" + Environment.NewLine;
+            constructor += " CONSTRAINT [" + Table_Name + "_" + DB_Array[0] + "_pk] PRIMARY KEY CLUSTERED " + Environment.NewLine;
+            constructor += "(" + Environment.NewLine;
+            constructor += "	[" + DB_Array[0] + "] ASC" + Environment.NewLine;
+            constructor += ")WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]" + Environment.NewLine;
+            constructor += ") ON [PRIMARY] " + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET ANSI_PADDING OFF" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/****** FK TEMPLATE - NEEDS ACCURATE DATA - ******/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/**********    ALTER TABLE [dbo].[THIS_TABLE_NAME]  WITH CHECK ADD  CONSTRAINT [NAME_OF_CONSTRAINT] FOREIGN KEY([FK_ON_THIS_TABLE])    **********/" + Environment.NewLine;
+            constructor += "/**********    REFERENCES [dbo].[OTHER_TABLE_NAME] ([OTHER_TABLE_FK])    **********/" + Environment.NewLine;
+            constructor += "/**********    GO    **********/" + Environment.NewLine;
+            constructor += "/**********    ALTER TABLE [dbo].[THIS_TABLE_NAME] CHECK CONSTRAINT [NAME_OF_CONSTRAINT]    **********/" + Environment.NewLine;
+            constructor += "/**********    GO    **********/" + Environment.NewLine;
 
 
 
@@ -217,37 +217,37 @@ namespace Web.App
                 Table_Name = Manual_Table_Name.Text;
             }
 
-            Database_Script_Output_StringText += "/***********************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/****** - SELECT STORED PROCEDURE -  ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/****** - SELECT STORED PROCEDURE -  ******/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
             //SELECT
-            Database_Script_Output_StringText += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "]') AND type in (N'P', N'PC'))" + Environment.NewLine;
-            Database_Script_Output_StringText += "DROP PROCEDURE [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET ANSI_NULLS ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "CREATE PROCEDURE [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
-            Database_Script_Output_StringText += "           @" + DB_Array[0] + " as " + DB_Type_Array[0] + Environment.NewLine;
-            Database_Script_Output_StringText += "AS" + Environment.NewLine;
-            Database_Script_Output_StringText += "BEGIN" + Environment.NewLine;
-            Database_Script_Output_StringText += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
-            Database_Script_Output_StringText += "	-- interfering with SELECT statements." + Environment.NewLine;
-            Database_Script_Output_StringText += "	SET NOCOUNT ON;" + Environment.NewLine;
-            Database_Script_Output_StringText += "SELECT [" + DB_Array[0] + "]" + Environment.NewLine;
+            constructor += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
+            constructor += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "]') AND type in (N'P', N'PC'))" + Environment.NewLine;
+            constructor += "DROP PROCEDURE [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET ANSI_NULLS ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "CREATE PROCEDURE [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
+            constructor += "           @" + DB_Array[0] + " as " + DB_Type_Array[0] + Environment.NewLine;
+            constructor += "AS" + Environment.NewLine;
+            constructor += "BEGIN" + Environment.NewLine;
+            constructor += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
+            constructor += "	-- interfering with SELECT statements." + Environment.NewLine;
+            constructor += "	SET NOCOUNT ON;" + Environment.NewLine;
+            constructor += "SELECT [" + DB_Array[0] + "]" + Environment.NewLine;
 
             for (int i = 1; i < DB_Array.Length - 1; i++)
             {
-                Database_Script_Output_StringText += "      ,[" + DB_Array[i] + "]" + Environment.NewLine;
+                constructor += "      ,[" + DB_Array[i] + "]" + Environment.NewLine;
             }
-            Database_Script_Output_StringText += "  FROM [dbo].[" + Table_Name + "]" + Environment.NewLine;
-            Database_Script_Output_StringText += " WHERE " + DB_Array[0] + " = @" + DB_Array[0] + Environment.NewLine;
-            Database_Script_Output_StringText += "End" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
+            constructor += "  FROM [dbo].[" + Table_Name + "]" + Environment.NewLine;
+            constructor += " WHERE " + DB_Array[0] + " = @" + DB_Array[0] + Environment.NewLine;
+            constructor += "End" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
 
         }
         public void GENERATE_DB_SCRIPT_Insert()
@@ -262,21 +262,21 @@ namespace Web.App
             }
 
 
-            Database_Script_Output_StringText += "/***********************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/****** - INSERT STORED PROCEDURE -  ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/****** - INSERT STORED PROCEDURE -  ******/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
             //INSERT
-            Database_Script_Output_StringText += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_INSERT_" + Table_Name.ToUpper() + "]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_INSERT_" + Table_Name.ToUpper() + "]') AND type in (N'P', N'PC'))" + Environment.NewLine;
-            Database_Script_Output_StringText += "DROP PROCEDURE [dbo].[SP_DMCS_INSERT_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET ANSI_NULLS ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "CREATE PROCEDURE [dbo].[SP_DMCS_INSERT_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
+            constructor += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_INSERT_" + Table_Name.ToUpper() + "]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
+            constructor += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_INSERT_" + Table_Name.ToUpper() + "]') AND type in (N'P', N'PC'))" + Environment.NewLine;
+            constructor += "DROP PROCEDURE [dbo].[SP_DMCS_INSERT_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET ANSI_NULLS ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "CREATE PROCEDURE [dbo].[SP_DMCS_INSERT_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
             //check to see if tables PK is sequential
             script_generator = script_generator.Check_Identity(Table_Name);
             //if not..
@@ -291,11 +291,11 @@ namespace Web.App
                     {
                         if (i == DB_Array.Length - 2)
                         {
-                            Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + Environment.NewLine;
+                            constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + Environment.NewLine;
                         }
                         else
                         {
-                            Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "," + Environment.NewLine;
+                            constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "," + Environment.NewLine;
                         }
                     }
                     //check for MAX
@@ -303,11 +303,11 @@ namespace Web.App
                     {
                         if (i == DB_Array.Length - 2)
                         {
-                            Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)" + Environment.NewLine;
+                            constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)" + Environment.NewLine;
                         }
                         else
                         {
-                            Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)," + Environment.NewLine;
+                            constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)," + Environment.NewLine;
                         }
                     }
                     //All others
@@ -315,11 +315,11 @@ namespace Web.App
                     {
                         if (i == DB_Array.Length - 2)
                         {
-                            Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")" + Environment.NewLine;
+                            constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")" + Environment.NewLine;
                         }
                         else
                         {
-                            Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")," + Environment.NewLine;
+                            constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")," + Environment.NewLine;
                         }
                     }
                 }
@@ -334,11 +334,11 @@ namespace Web.App
                     {
                         if (i == DB_Array.Length - 2)
                         {
-                            Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + Environment.NewLine;
+                            constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + Environment.NewLine;
                         }
                         else
                         {
-                            Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "," + Environment.NewLine;
+                            constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "," + Environment.NewLine;
                         }
                     }
                     //check for MAX
@@ -346,11 +346,11 @@ namespace Web.App
                     {
                         if (i == DB_Array.Length - 2)
                         {
-                            Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)" + Environment.NewLine;
+                            constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)" + Environment.NewLine;
                         }
                         else
                         {
-                            Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)," + Environment.NewLine;
+                            constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)," + Environment.NewLine;
                         }
                     }
                     //All others
@@ -358,50 +358,50 @@ namespace Web.App
                     {
                         if (i == DB_Array.Length - 2)
                         {
-                            Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")" + Environment.NewLine;
+                            constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")" + Environment.NewLine;
                         }
                         else
                         {
-                            Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")," + Environment.NewLine;
+                            constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")," + Environment.NewLine;
                         }
                     }
                 }
             }
 
-            Database_Script_Output_StringText += "AS" + Environment.NewLine;
-            Database_Script_Output_StringText += "BEGIN" + Environment.NewLine;
-            Database_Script_Output_StringText += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
-            Database_Script_Output_StringText += "	-- interfering with SELECT statements." + Environment.NewLine;
-            Database_Script_Output_StringText += "	SET NOCOUNT ON;" + Environment.NewLine;
+            constructor += "AS" + Environment.NewLine;
+            constructor += "BEGIN" + Environment.NewLine;
+            constructor += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
+            constructor += "	-- interfering with SELECT statements." + Environment.NewLine;
+            constructor += "	SET NOCOUNT ON;" + Environment.NewLine;
             for (int i = 1; i < DB_Array.Length - 1; i++)
             {
                 if (DB_Type_Array[i] == "varchar" || DB_Type_Array[i] == "char")
                 {
-                    Database_Script_Output_StringText += "	  IF @" + DB_Array[i] + " = ''" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    BEGIN" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    END" + Environment.NewLine;
+                    constructor += "	  IF @" + DB_Array[i] + " = ''" + Environment.NewLine;
+                    constructor += "    BEGIN" + Environment.NewLine;
+                    constructor += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
+                    constructor += "    END" + Environment.NewLine;
                 }
                 else if (DB_Type_Array[i] == "datetime")
                 {
-                    Database_Script_Output_StringText += "	  IF @" + DB_Array[i] + " = '9/9/1900 12:00:00 AM'" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    BEGIN" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    END" + Environment.NewLine;
+                    constructor += "	  IF @" + DB_Array[i] + " = '9/9/1900 12:00:00 AM'" + Environment.NewLine;
+                    constructor += "    BEGIN" + Environment.NewLine;
+                    constructor += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
+                    constructor += "    END" + Environment.NewLine;
                 }
                 else if (DB_Type_Array[i] == "text" || DB_Type_Array[i] == "geography" || DB_Type_Array[i] == "image")
                 {
                 }
                 else
                 {
-                    Database_Script_Output_StringText += "	  IF @" + DB_Array[i] + " = 0" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    BEGIN" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    END" + Environment.NewLine;
+                    constructor += "	  IF @" + DB_Array[i] + " = 0" + Environment.NewLine;
+                    constructor += "    BEGIN" + Environment.NewLine;
+                    constructor += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
+                    constructor += "    END" + Environment.NewLine;
                 }
             }
-            Database_Script_Output_StringText += "	Insert INTO [dbo].[" + Table_Name + "]" + Environment.NewLine;
-            Database_Script_Output_StringText += "           (" + Environment.NewLine;
+            constructor += "	Insert INTO [dbo].[" + Table_Name + "]" + Environment.NewLine;
+            constructor += "           (" + Environment.NewLine;
             //check to see if tables PK is sequential
             script_generator = script_generator.Check_Identity(Table_Name);
             //if not..
@@ -411,25 +411,25 @@ namespace Web.App
                 {
                     if (i == 0)
                     {
-                        Database_Script_Output_StringText += "            [" + DB_Array[i] + "]" + Environment.NewLine;
+                        constructor += "            [" + DB_Array[i] + "]" + Environment.NewLine;
                     }
                     else
                     {
-                        Database_Script_Output_StringText += "           ,[" + DB_Array[i] + "]" + Environment.NewLine;
+                        constructor += "           ,[" + DB_Array[i] + "]" + Environment.NewLine;
                     }
                 }
-                Database_Script_Output_StringText += "            )" + Environment.NewLine;
-                Database_Script_Output_StringText += "     VALUES (" + Environment.NewLine;
+                constructor += "            )" + Environment.NewLine;
+                constructor += "     VALUES (" + Environment.NewLine;
 
                 for (int i = 0; i < DB_Array.Length - 1; i++)
                 {
                     if (i == 0)
                     {
-                        Database_Script_Output_StringText += "            @" + DB_Array[i] + Environment.NewLine;
+                        constructor += "            @" + DB_Array[i] + Environment.NewLine;
                     }
                     else
                     {
-                        Database_Script_Output_StringText += "           ,@" + DB_Array[i] + Environment.NewLine;
+                        constructor += "           ,@" + DB_Array[i] + Environment.NewLine;
                     }
                 }
             }
@@ -439,31 +439,31 @@ namespace Web.App
                 {
                     if (i == 1)
                     {
-                        Database_Script_Output_StringText += "            [" + DB_Array[i] + "]" + Environment.NewLine;
+                        constructor += "            [" + DB_Array[i] + "]" + Environment.NewLine;
                     }
                     else
                     {
-                        Database_Script_Output_StringText += "           ,[" + DB_Array[i] + "]" + Environment.NewLine;
+                        constructor += "           ,[" + DB_Array[i] + "]" + Environment.NewLine;
                     }
                 }
-                Database_Script_Output_StringText += "            )" + Environment.NewLine;
-                Database_Script_Output_StringText += "     VALUES (" + Environment.NewLine;
+                constructor += "            )" + Environment.NewLine;
+                constructor += "     VALUES (" + Environment.NewLine;
 
                 for (int i = 1; i < DB_Array.Length - 1; i++)
                 {
                     if (i == 1)
                     {
-                        Database_Script_Output_StringText += "            @" + DB_Array[i] + Environment.NewLine;
+                        constructor += "            @" + DB_Array[i] + Environment.NewLine;
                     }
                     else
                     {
-                        Database_Script_Output_StringText += "           ,@" + DB_Array[i] + Environment.NewLine;
+                        constructor += "           ,@" + DB_Array[i] + Environment.NewLine;
                     }
                 }
             }
-            Database_Script_Output_StringText += "            )" + Environment.NewLine;
-            Database_Script_Output_StringText += "END" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
+            constructor += "            )" + Environment.NewLine;
+            constructor += "END" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
 
         }
         public void GENERATE_DB_SCRIPT_Update()
@@ -478,22 +478,22 @@ namespace Web.App
             }
 
 
-            Database_Script_Output_StringText += "/***********************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/****** - UPDATE STORED PROCEDURE -  ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/****** - UPDATE STORED PROCEDURE -  ******/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
             //UPDATE
 
-            Database_Script_Output_StringText += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_UPDATE_" + Table_Name.ToUpper() + "]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_UPDATE_" + Table_Name.ToUpper() + "]') AND type in (N'P', N'PC'))" + Environment.NewLine;
-            Database_Script_Output_StringText += "DROP PROCEDURE [dbo].[SP_DMCS_UPDATE_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET ANSI_NULLS ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "CREATE PROCEDURE [dbo].[SP_DMCS_UPDATE_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
+            constructor += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_UPDATE_" + Table_Name.ToUpper() + "]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
+            constructor += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_UPDATE_" + Table_Name.ToUpper() + "]') AND type in (N'P', N'PC'))" + Environment.NewLine;
+            constructor += "DROP PROCEDURE [dbo].[SP_DMCS_UPDATE_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET ANSI_NULLS ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "CREATE PROCEDURE [dbo].[SP_DMCS_UPDATE_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
 
             for (int i = 0; i < DB_Array.Length - 1; i++)
             {
@@ -504,11 +504,11 @@ namespace Web.App
                 {
                     if (i == DB_Array.Length - 2)
                     {
-                        Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + Environment.NewLine;
+                        constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + Environment.NewLine;
                     }
                     else
                     {
-                        Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "," + Environment.NewLine;
+                        constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "," + Environment.NewLine;
                     }
                 }
                 //check for MAX
@@ -516,11 +516,11 @@ namespace Web.App
                 {
                     if (i == DB_Array.Length - 2)
                     {
-                        Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)" + Environment.NewLine;
+                        constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)" + Environment.NewLine;
                     }
                     else
                     {
-                        Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)," + Environment.NewLine;
+                        constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)," + Environment.NewLine;
                     }
                 }
                 //All others
@@ -528,66 +528,66 @@ namespace Web.App
                 {
                     if (i == DB_Array.Length - 2)
                     {
-                        Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")" + Environment.NewLine;
+                        constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")" + Environment.NewLine;
                     }
                     else
                     {
-                        Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")," + Environment.NewLine;
+                        constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")," + Environment.NewLine;
                     }
                 }
             }
 
-            Database_Script_Output_StringText += "AS" + Environment.NewLine;
-            Database_Script_Output_StringText += "BEGIN" + Environment.NewLine;
-            Database_Script_Output_StringText += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
-            Database_Script_Output_StringText += "	-- interfering with SELECT statements." + Environment.NewLine;
-            Database_Script_Output_StringText += "	SET NOCOUNT ON;" + Environment.NewLine;
+            constructor += "AS" + Environment.NewLine;
+            constructor += "BEGIN" + Environment.NewLine;
+            constructor += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
+            constructor += "	-- interfering with SELECT statements." + Environment.NewLine;
+            constructor += "	SET NOCOUNT ON;" + Environment.NewLine;
             for (int i = 1; i < DB_Array.Length - 1; i++)
             {
                 if (DB_Type_Array[i] == "varchar" || DB_Type_Array[i] == "char")
                 {
-                    Database_Script_Output_StringText += "	  IF @" + DB_Array[i] + " = ''" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    BEGIN" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    END" + Environment.NewLine;
+                    constructor += "	  IF @" + DB_Array[i] + " = ''" + Environment.NewLine;
+                    constructor += "    BEGIN" + Environment.NewLine;
+                    constructor += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
+                    constructor += "    END" + Environment.NewLine;
                 }
                 else if (DB_Type_Array[i] == "datetime")
                 {
-                    Database_Script_Output_StringText += "	  IF @" + DB_Array[i] + " = '9/9/1900 12:00:00 AM'" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    BEGIN" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    END" + Environment.NewLine;
+                    constructor += "	  IF @" + DB_Array[i] + " = '9/9/1900 12:00:00 AM'" + Environment.NewLine;
+                    constructor += "    BEGIN" + Environment.NewLine;
+                    constructor += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
+                    constructor += "    END" + Environment.NewLine;
                 }
                 else if (DB_Type_Array[i] == "text" || DB_Type_Array[i] == "geography" || DB_Type_Array[i] == "image")
                 {
                 }
                 else
                 {
-                    Database_Script_Output_StringText += "	  IF @" + DB_Array[i] + " = 0" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    BEGIN" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    END" + Environment.NewLine;
+                    constructor += "	  IF @" + DB_Array[i] + " = 0" + Environment.NewLine;
+                    constructor += "    BEGIN" + Environment.NewLine;
+                    constructor += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
+                    constructor += "    END" + Environment.NewLine;
                 }
             }
-            Database_Script_Output_StringText += "	UPDATE [dbo].[" + Table_Name + "]" + Environment.NewLine;
-            Database_Script_Output_StringText += "       SET" + Environment.NewLine;
+            constructor += "	UPDATE [dbo].[" + Table_Name + "]" + Environment.NewLine;
+            constructor += "       SET" + Environment.NewLine;
 
             for (int i = 1; i < DB_Array.Length - 1; i++)
             {
                 if (i == DB_Array.Length - 1 - 1)
                 {
-                    Database_Script_Output_StringText += "		   [" + DB_Array[i] + "] = @" + DB_Array[i] + Environment.NewLine;
+                    constructor += "		   [" + DB_Array[i] + "] = @" + DB_Array[i] + Environment.NewLine;
                 }
                 else
                 {
-                    Database_Script_Output_StringText += "		   [" + DB_Array[i] + "] = @" + DB_Array[i] + "," + Environment.NewLine;
+                    constructor += "		   [" + DB_Array[i] + "] = @" + DB_Array[i] + "," + Environment.NewLine;
                 }
             }
 
 
-            Database_Script_Output_StringText += "       WHERE " + DB_Array[0] + " = @" + DB_Array[0] + Environment.NewLine;
-            Database_Script_Output_StringText += "END" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
+            constructor += "       WHERE " + DB_Array[0] + " = @" + DB_Array[0] + Environment.NewLine;
+            constructor += "END" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
 
         }
         public void GENERATE_DB_SCRIPT_Delete()
@@ -604,32 +604,32 @@ namespace Web.App
 
 
 
-            Database_Script_Output_StringText += "/***********************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/****** - DELETE STORED PROCEDURE -  ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/****** - DELETE STORED PROCEDURE -  ******/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
             //DELETE
 
-            Database_Script_Output_StringText += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_DELETE_" + Table_Name.ToUpper() + "]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_DELETE_" + Table_Name.ToUpper() + "]') AND type in (N'P', N'PC'))" + Environment.NewLine;
-            Database_Script_Output_StringText += "DROP PROCEDURE [dbo].[SP_DMCS_DELETE_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET ANSI_NULLS ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "CREATE PROCEDURE [dbo].[SP_DMCS_DELETE_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
-            Database_Script_Output_StringText += "	@" + DB_Array[0] + " " + DB_Type_Array[0] + Environment.NewLine;
-            Database_Script_Output_StringText += "AS" + Environment.NewLine;
-            Database_Script_Output_StringText += "BEGIN" + Environment.NewLine;
-            Database_Script_Output_StringText += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
-            Database_Script_Output_StringText += "	-- interfering with SELECT statements." + Environment.NewLine;
-            Database_Script_Output_StringText += "	SET NOCOUNT ON;" + Environment.NewLine;
-            Database_Script_Output_StringText += "	Delete dbo." + Table_Name + Environment.NewLine;
-            Database_Script_Output_StringText += "	where " + DB_Array[0] + " = @" + DB_Array[0] + Environment.NewLine;
-            Database_Script_Output_StringText += "END" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
+            constructor += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_DELETE_" + Table_Name.ToUpper() + "]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
+            constructor += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_DELETE_" + Table_Name.ToUpper() + "]') AND type in (N'P', N'PC'))" + Environment.NewLine;
+            constructor += "DROP PROCEDURE [dbo].[SP_DMCS_DELETE_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET ANSI_NULLS ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "CREATE PROCEDURE [dbo].[SP_DMCS_DELETE_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
+            constructor += "	@" + DB_Array[0] + " " + DB_Type_Array[0] + Environment.NewLine;
+            constructor += "AS" + Environment.NewLine;
+            constructor += "BEGIN" + Environment.NewLine;
+            constructor += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
+            constructor += "	-- interfering with SELECT statements." + Environment.NewLine;
+            constructor += "	SET NOCOUNT ON;" + Environment.NewLine;
+            constructor += "	Delete dbo." + Table_Name + Environment.NewLine;
+            constructor += "	where " + DB_Array[0] + " = @" + DB_Array[0] + Environment.NewLine;
+            constructor += "END" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
 
         }
         public void GENERATE_DB_SCRIPT_GET()
@@ -646,21 +646,21 @@ namespace Web.App
 
 
             //GET SP
-            Database_Script_Output_StringText += "/***********************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/****** - GET STORED PROCEDURE -  ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/****** - GET STORED PROCEDURE -  ******/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
 
-            Database_Script_Output_StringText += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_GET_" + Table_Name.ToUpper() + "]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_GET_" + Table_Name.ToUpper() + "]') AND type in (N'P', N'PC'))" + Environment.NewLine;
-            Database_Script_Output_StringText += "DROP PROCEDURE [dbo].[SP_DMCS_GET_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET ANSI_NULLS ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "CREATE PROCEDURE [dbo].[SP_DMCS_GET_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
+            constructor += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_GET_" + Table_Name.ToUpper() + "]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
+            constructor += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_GET_" + Table_Name.ToUpper() + "]') AND type in (N'P', N'PC'))" + Environment.NewLine;
+            constructor += "DROP PROCEDURE [dbo].[SP_DMCS_GET_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET ANSI_NULLS ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "CREATE PROCEDURE [dbo].[SP_DMCS_GET_" + Table_Name.ToUpper() + "]" + Environment.NewLine;
             for (int i = 1; i < DB_Array.Length - 1; i++)
             {
                 script_generator script_generator = new script_generator();
@@ -670,11 +670,11 @@ namespace Web.App
                 {
                     if (i == DB_Array.Length - 2)
                     {
-                        Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + Environment.NewLine;
+                        constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + Environment.NewLine;
                     }
                     else
                     {
-                        Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "," + Environment.NewLine;
+                        constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "," + Environment.NewLine;
                     }
                 }
                 //check for MAX
@@ -682,11 +682,11 @@ namespace Web.App
                 {
                     if (i == DB_Array.Length - 2)
                     {
-                        Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)" + Environment.NewLine;
+                        constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)" + Environment.NewLine;
                     }
                     else
                     {
-                        Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)," + Environment.NewLine;
+                        constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(MAX)," + Environment.NewLine;
                     }
                 }
                 //All others
@@ -694,48 +694,48 @@ namespace Web.App
                 {
                     if (i == DB_Array.Length - 2)
                     {
-                        Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")" + Environment.NewLine;
+                        constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")" + Environment.NewLine;
                     }
                     else
                     {
-                        Database_Script_Output_StringText += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")," + Environment.NewLine;
+                        constructor += "	  @" + DB_Array[i] + " as " + DB_Type_Array[i] + "(" + script_generator.result + ")," + Environment.NewLine;
                     }
                 }
             }
-            Database_Script_Output_StringText += "AS" + Environment.NewLine;
-            Database_Script_Output_StringText += "BEGIN" + Environment.NewLine;
-            Database_Script_Output_StringText += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
-            Database_Script_Output_StringText += "	-- interfering with SELECT statements." + Environment.NewLine;
-            Database_Script_Output_StringText += "	SET NOCOUNT ON;" + Environment.NewLine;
+            constructor += "AS" + Environment.NewLine;
+            constructor += "BEGIN" + Environment.NewLine;
+            constructor += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
+            constructor += "	-- interfering with SELECT statements." + Environment.NewLine;
+            constructor += "	SET NOCOUNT ON;" + Environment.NewLine;
             for (int i = 1; i < DB_Array.Length - 1; i++)
             {
                 if (DB_Type_Array[i] == "varchar" || DB_Type_Array[i] == "char")
                 {
-                    Database_Script_Output_StringText += "	  IF @" + DB_Array[i] + " = ''" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    BEGIN" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    END" + Environment.NewLine;
+                    constructor += "	  IF @" + DB_Array[i] + " = ''" + Environment.NewLine;
+                    constructor += "    BEGIN" + Environment.NewLine;
+                    constructor += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
+                    constructor += "    END" + Environment.NewLine;
                 }
                 else if (DB_Type_Array[i] == "datetime")
                 {
-                    Database_Script_Output_StringText += "	  IF @" + DB_Array[i] + " = '9/9/1900 12:00:00 AM'" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    BEGIN" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    END" + Environment.NewLine;
+                    constructor += "	  IF @" + DB_Array[i] + " = '9/9/1900 12:00:00 AM'" + Environment.NewLine;
+                    constructor += "    BEGIN" + Environment.NewLine;
+                    constructor += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
+                    constructor += "    END" + Environment.NewLine;
                 }
                 else if (DB_Type_Array[i] == "text" || DB_Type_Array[i] == "geography" || DB_Type_Array[i] == "image")
                 {
                 }
                 else
                 {
-                    Database_Script_Output_StringText += "	  IF @" + DB_Array[i] + " = 0" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    BEGIN" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
-                    Database_Script_Output_StringText += "    END" + Environment.NewLine;
+                    constructor += "	  IF @" + DB_Array[i] + " = 0" + Environment.NewLine;
+                    constructor += "    BEGIN" + Environment.NewLine;
+                    constructor += "    SET @" + DB_Array[i] + " = null" + Environment.NewLine;
+                    constructor += "    END" + Environment.NewLine;
                 }
             }
-            Database_Script_Output_StringText += "    SELECT [" + DB_Array[0] + "] " + Environment.NewLine;
-            Database_Script_Output_StringText += "      FROM [dbo].[" + Table_Name + "] " + Environment.NewLine;
+            constructor += "    SELECT [" + DB_Array[0] + "] " + Environment.NewLine;
+            constructor += "      FROM [dbo].[" + Table_Name + "] " + Environment.NewLine;
             for (int i = 1; i < DB_Array.Length - 1; i++)
             {
                 String Equal_Sign;
@@ -746,28 +746,28 @@ namespace Web.App
                 {
                     if (DB_Type_Array[i] != "geography" && DB_Type_Array[i] != "image" && Null_Array[i] == "NOT NULL")
                     {
-                        Database_Script_Output_StringText += "       WHERE ([" + DB_Array[i] + "] " + Equal_Sign + " @" + DB_Array[i] + ")" + Environment.NewLine;
+                        constructor += "       WHERE ([" + DB_Array[i] + "] " + Equal_Sign + " @" + DB_Array[i] + ")" + Environment.NewLine;
                     }
                     else if (DB_Type_Array[i] != "geography" && DB_Type_Array[i] != "image" && Null_Array[i] == "NULL")
                     {
-                        Database_Script_Output_StringText += "       WHERE ([" + DB_Array[i] + "] " + Equal_Sign + " @" + DB_Array[i] + " or [" + DB_Array[i] + "] is null)" + Environment.NewLine;
+                        constructor += "       WHERE ([" + DB_Array[i] + "] " + Equal_Sign + " @" + DB_Array[i] + " or [" + DB_Array[i] + "] is null)" + Environment.NewLine;
                     }
                 }
                 else
                 {
                     if (DB_Type_Array[i] != "geography" && DB_Type_Array[i] != "image" && Null_Array[i] == "NOT NULL")
                     {
-                        Database_Script_Output_StringText += "       AND ([" + DB_Array[i] + "] " + Equal_Sign + " @" + DB_Array[i] + ")" + Environment.NewLine;
+                        constructor += "       AND ([" + DB_Array[i] + "] " + Equal_Sign + " @" + DB_Array[i] + ")" + Environment.NewLine;
                     }
                     else if (DB_Type_Array[i] != "geography" && DB_Type_Array[i] != "image" && Null_Array[i] == "NULL")
                     {
-                        Database_Script_Output_StringText += "       AND ([" + DB_Array[i] + "] " + Equal_Sign + " @" + DB_Array[i] + " or [" + DB_Array[i] + "] is null)" + Environment.NewLine;
+                        constructor += "       AND ([" + DB_Array[i] + "] " + Equal_Sign + " @" + DB_Array[i] + " or [" + DB_Array[i] + "] is null)" + Environment.NewLine;
                     }
                 }
             }
 
-            Database_Script_Output_StringText += "END" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
+            constructor += "END" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
 
 
 
@@ -791,30 +791,59 @@ namespace Web.App
 
 
             //Select_WC
-            Database_Script_Output_StringText += "/***********************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/****** - WHERE CLAUSE STORED PROCEDURE -  ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/*************************************************/" + Environment.NewLine;
-            Database_Script_Output_StringText += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/****** - WHERE CLAUSE STORED PROCEDURE -  ******/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
 
-            Database_Script_Output_StringText += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "_WC]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
-            Database_Script_Output_StringText += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "_WC]') AND type in (N'P', N'PC'))" + Environment.NewLine;
-            Database_Script_Output_StringText += "DROP PROCEDURE [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "_WC]" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET ANSI_NULLS ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "CREATE PROCEDURE [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "_WC]" + Environment.NewLine;
-            Database_Script_Output_StringText += "	  @wareclause as varchar(MAX)" + Environment.NewLine;
-            Database_Script_Output_StringText += "AS" + Environment.NewLine;
-            Database_Script_Output_StringText += "Begin" + Environment.NewLine;
-            Database_Script_Output_StringText += "    Declare @string as varchar(MAX)" + Environment.NewLine;
-            Database_Script_Output_StringText += "	Set @string = 'Select * from " + Table_Name + " where ' + @wareclause" + Environment.NewLine;
-            Database_Script_Output_StringText += "	Exec(@string)" + Environment.NewLine;
-            Database_Script_Output_StringText += "END" + Environment.NewLine;
-            Database_Script_Output_StringText += "GO" + Environment.NewLine;
-            Database_Script_Output_StringText += "" + Environment.NewLine;
+            constructor += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "_WC]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
+            constructor += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "_WC]') AND type in (N'P', N'PC'))" + Environment.NewLine;
+            constructor += "DROP PROCEDURE [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "_WC]" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET ANSI_NULLS ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "CREATE PROCEDURE [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "_WC]" + Environment.NewLine;
+            constructor += "	  @wareclause as varchar(MAX)" + Environment.NewLine;
+            constructor += "AS" + Environment.NewLine;
+            constructor += "Begin" + Environment.NewLine;
+            constructor += "    Declare @string as varchar(MAX)" + Environment.NewLine;
+            constructor += "	Set @string = 'Select * from " + Table_Name + " where ' + @wareclause" + Environment.NewLine;
+            constructor += "	Exec(@string)" + Environment.NewLine;
+            constructor += "END" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "" + Environment.NewLine;
+
+
+
+            //Select_WC
+            constructor += "/***********************************************************/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/****** - WHERE CLAUSE STORED PROCEDURE -  ******/" + Environment.NewLine;
+            constructor += "/*************************************************/" + Environment.NewLine;
+            constructor += "/***********************************************************/" + Environment.NewLine;
+
+            constructor += "/****** Object:  StoredProcedure [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "_WC]    Script Date: " + DateTime.Now + " ******/" + Environment.NewLine;
+            constructor += "IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "_WC]') AND type in (N'P', N'PC'))" + Environment.NewLine;
+            constructor += "DROP PROCEDURE [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "_WC]" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET ANSI_NULLS ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "CREATE PROCEDURE [dbo].[SP_DMCS_SELECT_" + Table_Name.ToUpper() + "_WC]" + Environment.NewLine;
+            constructor += "	  @wareclause as varchar(MAX)" + Environment.NewLine;
+            constructor += "AS" + Environment.NewLine;
+            constructor += "Begin" + Environment.NewLine;
+            constructor += "    Declare @string as varchar(MAX)" + Environment.NewLine;
+            constructor += "	Set @string = 'Select * from " + Table_Name + " where ' + @wareclause" + Environment.NewLine;
+            constructor += "	Exec(@string)" + Environment.NewLine;
+            constructor += "END" + Environment.NewLine;
+            constructor += "GO" + Environment.NewLine;
+            constructor += "" + Environment.NewLine;
+
 
 
 
@@ -3012,7 +3041,7 @@ namespace Web.App
         protected void Restart_Click(object sender, EventArgs e)
         {
 
-            Database_Script_Output_StringText = string.Empty;
+            constructor = string.Empty;
             Object_Output_StringText = string.Empty;
 
             Select_Screen_Output_StringText = string.Empty;

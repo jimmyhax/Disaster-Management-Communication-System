@@ -13,13 +13,13 @@ namespace Web.App {
     public partial class ScriptGenerator_V2 {
         
         /// <summary>
-        /// The_Table_Name control.
+        /// Table_Name_DDL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList The_Table_Name;
+        protected global::System.Web.UI.WebControls.DropDownList Table_Name_DDL;
         
         /// <summary>
         /// tableDataSource control.
