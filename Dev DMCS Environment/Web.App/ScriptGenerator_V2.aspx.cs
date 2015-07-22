@@ -434,7 +434,7 @@ namespace Web.App
             constructor += "            " + tableName + " = " + tableName + ".Select(ID);" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count - 1; i++)
             {
-                if (DB_Types[i] != "byte[]")
+                if (C_Types[i] != "byte[]")
                 {
                     constructor += "            " + DB_Names[i] + "_Insert_TextBox.Text = Convert.ToString(" + tableName + "." + DB_Names[i] + ");" + Environment.NewLine;
                 }
@@ -450,7 +450,7 @@ namespace Web.App
             constructor += "            " + tableName + ". = " + tableName + ".Select(ID);" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count - 1; i++)
             {
-                if (DB_Types[i] != "byte[]")
+                if (C_Types[i] != "byte[]")
                 {
                     constructor += "            " + DB_Names[i] + "_Update_TextBox.Text = Convert.ToString(" + tableName + "." + DB_Names[i] + ");" + Environment.NewLine;
                 }
@@ -466,7 +466,7 @@ namespace Web.App
             constructor += "            " + tableName + ". = " + tableName + ".Select(ID);" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count - 1; i++)
             {
-                if (DB_Types[i] != "byte[]")
+                if (C_Types[i] != "byte[]")
                 {
                     constructor += "            " + DB_Names[i] + "_Delete_TextBox.Text = Convert.ToString(" + tableName + "." + DB_Names[i] + ");" + Environment.NewLine;
                 }
@@ -482,39 +482,39 @@ namespace Web.App
             constructor += "        {" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count - 1; i++)
             {
-                if (DB_Types[i] == "Int32")
+                if (C_Types[i] == "Int32")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToInt32(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "Double")
+                if (C_Types[i] == "Double")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDouble(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "double")
+                if (C_Types[i] == "double")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDouble(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "String")
+                if (C_Types[i] == "String")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = " + DB_Names[i] + "_Insert_TextBox.Text;" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "Char")
+                if (C_Types[i] == "Char")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToString(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "DateTime")
+                if (C_Types[i] == "DateTime")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDateTime(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "Boolean")
+                if (C_Types[i] == "Boolean")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToBoolean(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "Decimal")
+                if (C_Types[i] == "Decimal")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDecimal(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "byte[]")
+                if (C_Types[i] == "byte[]")
                 {
                     constructor += "            byte[] uploaded_picture = " + DB_Names[i] + "_Insert_FileUpload.FileBytes;" + Environment.NewLine;
                     constructor += "            " + tableName + "." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
@@ -531,39 +531,39 @@ namespace Web.App
             constructor += "            " + tableName + ". = " + tableName + ".Select(ID);" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count - 1; i++)
             {
-                if (DB_Types[i] == "Int32")
+                if (C_Types[i] == "Int32")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToInt32(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "Double")
+                if (C_Types[i] == "Double")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDouble(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "double")
+                if (C_Types[i] == "double")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDouble(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "String")
+                if (C_Types[i] == "String")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = " + DB_Names[i] + "_Update_TextBox.Text;" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "Char")
+                if (C_Types[i] == "Char")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToString(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "DateTime")
+                if (C_Types[i] == "DateTime")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDateTime(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "Boolean")
+                if (C_Types[i] == "Boolean")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToBoolean(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "Decimal")
+                if (C_Types[i] == "Decimal")
                 {
                     constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDecimal(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
                 }
-                if (DB_Types[i] == "byte[]")
+                if (C_Types[i] == "byte[]")
                 {
                     constructor += "            byte[] uploaded_picture = " + DB_Names[i] + "_Update_FileUpload.FileBytes;" + Environment.NewLine;
                     constructor += "            " + tableName + "." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
@@ -619,7 +619,7 @@ namespace Web.App
             constructor += "    {" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count - 1; i++)
             {
-                constructor += "        public " + DB_Types[i] + " " + DB_Names[i] + Environment.NewLine;
+                constructor += "        public " + C_Types[i] + " " + DB_Names[i] + Environment.NewLine;
                 constructor += "        {" + Environment.NewLine;
                 constructor += "            get;" + Environment.NewLine;
                 constructor += "            set;" + Environment.NewLine;
@@ -631,19 +631,19 @@ namespace Web.App
             for (int i = 0; i < DB_Names.Count - 1; i++)
             {
                 String currentType = "";
-                if (DB_Types[i] == "Int32") { currentType = "0"; }
-                if (DB_Types[i] == "Double") { currentType = "0.0"; }
-                if (DB_Types[i] == "double") { currentType = "0.0"; }
-                if (DB_Types[i] == "String") { currentType = "\" \""; }
-                if (DB_Types[i] == "Char") { currentType = "'x'"; }
-                if (DB_Types[i] == "DateTime") { currentType = "DateTime.Now"; }
-                if (DB_Types[i] == "Boolean") { currentType = "false"; }
-                if (DB_Types[i] == "Decimal") { currentType = "0"; }
-                if (DB_Types[i] == "byte[]") { currentType = "null"; }
+                if (C_Types[i] == "Int32") { currentType = "0"; }
+                if (C_Types[i] == "Double") { currentType = "0.0"; }
+                if (C_Types[i] == "double") { currentType = "0.0"; }
+                if (C_Types[i] == "String") { currentType = "\"\""; }
+                if (C_Types[i] == "Char") { currentType = "'x'"; }
+                if (C_Types[i] == "DateTime") { currentType = "DateTime.Now"; }
+                if (C_Types[i] == "Boolean") { currentType = "false"; }
+                if (C_Types[i] == "Decimal") { currentType = "0"; }
+                if (C_Types[i] == "byte[]") { currentType = "null"; }
 
                 constructor += "            " + DB_Names[i] + " = " + currentType + ";" + Environment.NewLine;
             }
-
+            constructor += "        }" + Environment.NewLine;
             constructor += "        public " + tableName + " Select(int id)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
             constructor += "            " + tableName + " " + tableName + " = new " + tableName + "();" + Environment.NewLine;
@@ -662,16 +662,16 @@ namespace Web.App
             for (int i = 0; i < DB_Names.Count - 1; i++)
             {
                 String currentType = "";
-                if (DB_Types[i] == "Int32") { currentType = "rdr.GetInt32(" + i + ");"; }
-                if (DB_Types[i] == "Double") { currentType = "rdr.GetDouble(" + i + ");"; }
-                if (DB_Types[i] == "double") { currentType = "rdr.GetDouble(" + i + ");"; }
-                if (DB_Types[i] == "geography") { currentType = "rdr.GetString(" + i + ");"; }
-                if (DB_Types[i] == "String") { currentType = "rdr.GetString(" + i + ");"; }
-                if (DB_Types[i] == "Char") { currentType = "rdr.GetString(" + i + ");"; }
-                if (DB_Types[i] == "DateTime") { currentType = "rdr.GetDateTime(" + i + ");"; }
-                if (DB_Types[i] == "Boolean") { currentType = "rdr.GetBoolean(" + i + ");"; }
-                if (DB_Types[i] == "Decimal") { currentType = "rdr.GetDecimal(" + i + ");"; }
-                if (DB_Types[i] == "byte[]") { currentType = "(byte[])rdr[\"" + DB_Names[i] + "\"];"; }
+                if (C_Types[i] == "Int32") { currentType = "rdr.GetInt32(" + i + ");"; }
+                if (C_Types[i] == "Double") { currentType = "rdr.GetDouble(" + i + ");"; }
+                if (C_Types[i] == "double") { currentType = "rdr.GetDouble(" + i + ");"; }
+                if (C_Types[i] == "geography") { currentType = "rdr.GetString(" + i + ");"; }
+                if (C_Types[i] == "String") { currentType = "rdr.GetString(" + i + ");"; }
+                if (C_Types[i] == "Char") { currentType = "rdr.GetString(" + i + ");"; }
+                if (C_Types[i] == "DateTime") { currentType = "rdr.GetDateTime(" + i + ");"; }
+                if (C_Types[i] == "Boolean") { currentType = "rdr.GetBoolean(" + i + ");"; }
+                if (C_Types[i] == "Decimal") { currentType = "rdr.GetDecimal(" + i + ");"; }
+                if (C_Types[i] == "byte[]") { currentType = "(byte[])rdr[\"" + DB_Names[i] + "\"];"; }
 
                 constructor += "                    if (!rdr.IsDBNull(" + i + "))" + Environment.NewLine;
                 constructor += "                    {" + Environment.NewLine;
@@ -679,16 +679,16 @@ namespace Web.App
                 constructor += "                    }" + Environment.NewLine;
 
                 currentType = "";
-                if (DB_Types[i] == "Int32") { currentType = "0"; }
-                if (DB_Types[i] == "Double") { currentType = "0.0"; }
-                if (DB_Types[i] == "double") { currentType = "0.0"; }
-                if (DB_Types[i] == "geography") { currentType = "\" \""; }
-                if (DB_Types[i] == "String") { currentType = "\" \""; }
-                if (DB_Types[i] == "Char") { currentType = "\" \""; }
-                if (DB_Types[i] == "DateTime") { currentType = "DateTime.Now"; }
-                if (DB_Types[i] == "Boolean") { currentType = "false"; }
-                if (DB_Types[i] == "Decimal") { currentType = "0"; }
-                if (DB_Types[i] == "byte[]") { currentType = "null"; }
+                if (C_Types[i] == "Int32") { currentType = "0"; }
+                if (C_Types[i] == "Double") { currentType = "0.0"; }
+                if (C_Types[i] == "double") { currentType = "0.0"; }
+                if (C_Types[i] == "geography") { currentType = "\" \""; }
+                if (C_Types[i] == "String") { currentType = "\" \""; }
+                if (C_Types[i] == "Char") { currentType = "\" \""; }
+                if (C_Types[i] == "DateTime") { currentType = "DateTime.Now"; }
+                if (C_Types[i] == "Boolean") { currentType = "false"; }
+                if (C_Types[i] == "Decimal") { currentType = "0"; }
+                if (C_Types[i] == "byte[]") { currentType = "null"; }
 
                 constructor += "                    else" + Environment.NewLine;
                 constructor += "                    {" + Environment.NewLine;

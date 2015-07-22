@@ -3,7 +3,8 @@
     <div class="sg-container">
         <asp:DropDownList 
             runat="server" 
-            ID="Table_Name_DDL" 
+            ID="Table_Name_DDL"
+            class="form-control" 
             AutoPostBack="True" 
             DataSourceID="tableDataSource" 
             DataTextField="TABLE_NAME" 
