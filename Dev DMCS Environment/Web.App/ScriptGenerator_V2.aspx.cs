@@ -105,13 +105,14 @@ namespace Web.App
         //--------------------------------------------------------------------------
         protected String htmlFactory()
         {
+            int rowcount = 0;
             String constructor = "";
             constructor += "<%@ Page Language=\"C#\" AutoEventWireup=\"true\" MasterPageFile=\"~/Site.Master\" CodeBehind=\"" + tableName + ".aspx.cs\" Inherits=\"Web.App." + tableName + "Class\" EnableEventValidation=\"True\" ValidateRequest=\"True\" %>" + Environment.NewLine;
             constructor += "<asp:Content ID=\"BodyContent\" ContentPlaceHolderID=\"MainContent\" runat=\"server\">" + Environment.NewLine;
             constructor += "    <div class=\"container-fluid\" ng-controller=\"" + tableName + "Ctrl\">" + Environment.NewLine;
             constructor += "        <div class=\"body-header\">" + Environment.NewLine;
             constructor += "            <a class=\"back-link\"><span class=\"glyphicon glyphicon-menu-left back-arrow\"></span><span> Home</span></a>" + Environment.NewLine;
-            constructor += "            <h1><span>Address CRUD</span></h1>" + Environment.NewLine;
+            constructor += "            <h1><span>" + tableName + " CRUD Operations:</span></h1>" + Environment.NewLine;
             constructor += "        </div>" + Environment.NewLine;
             constructor += "        <div class=\"body-contents col-lg-12\">" + Environment.NewLine;
             constructor += "            <ajaxToolkit:TabContainer ID=\"TabContainer\" runat=\"server\" ActiveTabIndex=\"0\" Height=\"100%\">" + Environment.NewLine;
@@ -125,8 +126,8 @@ namespace Web.App
             constructor += "                                    AllowPaging=\"True\"" + Environment.NewLine;
             constructor += "                                    AllowSorting=\"True\"" + Environment.NewLine;
             constructor += "                                    AutoGenerateColumns=\"False\"" + Environment.NewLine;
-            constructor += "                                    DataKeyNames=\"address_id\"" + Environment.NewLine;
-            constructor += "                                    DataSourceID=\"Address_Insert_DS\"" + Environment.NewLine;
+            constructor += "                                    DataKeyNames=\"" + DB_Names[0] + "\"" + Environment.NewLine;
+            constructor += "                                    DataSourceID=\"" + tableName + "_Insert_DS\"" + Environment.NewLine;
             constructor += "                                    OnSelectedIndexChanged=\"Insert_GridView_OnSelectedIndexChanged\"" + Environment.NewLine;
             constructor += "                                    GridLines=\"None\"" + Environment.NewLine;
             constructor += "                                    CssClass=\"mGrid\"" + Environment.NewLine;
@@ -135,76 +136,68 @@ namespace Web.App
             constructor += "                                    SelectedRowStyle-CssClass=\"selected-row\">" + Environment.NewLine;
             constructor += "                                    <Columns>" + Environment.NewLine;
             constructor += "                                        <asp:CommandField ShowSelectButton=\"True\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"address_id\" HeaderText=\"address_id\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"address_id\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"address_type_id\" HeaderText=\"address_type_id\" SortExpression=\"address_type_id\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"city\" HeaderText=\"city\" SortExpression=\"city\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"country\" HeaderText=\"country\" SortExpression=\"country\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"County_Township\" HeaderText=\"County_Township\" SortExpression=\"County_Township\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"longitude\" HeaderText=\"longitude\" SortExpression=\"longitude\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"latitude\" HeaderText=\"latitude\" SortExpression=\"latitude\" />" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count - 1; i++)
+            {
+                if (DB_Types[i] != "byte[]")
+                {
+                    if (i < 3)
+                    {
+                constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" />" + Environment.NewLine;
+                    }
+                    else
+                    {
+                constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" Visible=\"false\" />" + Environment.NewLine;
+                    }
+
+                }
+                else
+                {
+                    if (i < 3)
+                    {
+                        constructor += "                            <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" ControlStyle-Width = \"150\" ControlStyle-Height = \"100\" HeaderText = \"Preview Image\"/>" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        constructor += "                            <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" ControlStyle-Width = \"150\" ControlStyle-Height = \"100\" HeaderText = \"Preview Image\" Visible=\"false\" />" + Environment.NewLine;
+                    }
+                }
+
+            }
             constructor += "                                    </Columns>" + Environment.NewLine;
             constructor += "                                </asp:GridView>" + Environment.NewLine;
-            constructor += "                                <asp:SqlDataSource ID=\"Address_Insert_DS\" runat=\"server\" ConnectionString=\"<%$ ConnectionStrings:DefaultConnection %>\" SelectCommand=\"SELECT * FROM [address]\"></asp:SqlDataSource>" + Environment.NewLine;
+            constructor += "                                <asp:SqlDataSource ID=\"" + tableName + "_Insert_DS\" runat=\"server\" ConnectionString=\"<%$ ConnectionStrings:DefaultConnection %>\" SelectCommand=\"SELECT * FROM [" + tableName + "]\"></asp:SqlDataSource>" + Environment.NewLine;
             constructor += "                            </div>" + Environment.NewLine;
             constructor += "                        </div>" + Environment.NewLine;
             constructor += "                        <div class=\"col-lg-12\">" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">address_type_id</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"address_type_id_Insert_TextBox\" ID=\"address_type_id_Insert_TextBox_RequiredFieldValidator\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Insert_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"address_type_id_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">city</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"city_Insert_TextBox\" ID=\"city_Insert_TextBox_RequiredFieldValidator\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Insert_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"city_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">country</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"country_Insert_TextBox\" ID=\"country_Insert_TextBox_RequiredFieldValidator\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Insert_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"country_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">County_Township</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"County_Township_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">longitude</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"longitude_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">latitude</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"latitude_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">state</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"state_Insert_TextBox\" ID=\"state_Insert_TextBox_RequiredFieldValidator\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Insert_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"state_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">str_add</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"str_add_Insert_TextBox\" ID=\"str_add_Insert_TextBox_RequiredFieldValidator\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Insert_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"str_add_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">str_add2</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"str_add2_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">zip_plus_four</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"zip_plus_four_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
+            rowcount = 0;
+            for (int i = 1; i < DB_Names.Count - 1; i++)
+            {
+                if (i == 0){
+                    constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                    constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                    constructor += "                                <asp:TextBox disabled class=\"pull-right form-control form-control-disabled\" ID=\"" + DB_Names[i] + "_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                    constructor += "                            </div>" + Environment.NewLine;
+                }
+                else {
+
+                    if (DB_Types[i] == "byte[]")
+                    {
+                        constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                        constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                        constructor += "                                 <asp:Image ID=\"" + DB_Names[i] + "_Insert_Image\" runat=\"server\" ImageUrl=\"~/Images/Default_Person.jpg\" />" + Environment.NewLine;
+                        constructor += "                                 <asp:FileUpload ID=\"" + DB_Names[i] + "_Insert_FileUpload\" runat=\"server\" />" + Environment.NewLine;
+                        constructor += "                            </div>" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                        constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                        constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"" + DB_Names[i] + "_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                        constructor += "                            </div>" + Environment.NewLine;
+                    }
+                }
+                rowcount++;
+            }
             constructor += "                        </div>" + Environment.NewLine;
             constructor += "                        <hr />" + Environment.NewLine;
             constructor += "                        <div class=\"bottom-btn-container col-lg-12\">" + Environment.NewLine;
@@ -222,8 +215,8 @@ namespace Web.App
             constructor += "                                    AllowPaging=\"True\"" + Environment.NewLine;
             constructor += "                                    AllowSorting=\"True\"" + Environment.NewLine;
             constructor += "                                    AutoGenerateColumns=\"False\"" + Environment.NewLine;
-            constructor += "                                    DataKeyNames=\"address_id\"" + Environment.NewLine;
-            constructor += "                                    DataSourceID=\"Address_Update_DS\"" + Environment.NewLine;
+            constructor += "                                    DataKeyNames=\"" + DB_Names[0] + "\"" + Environment.NewLine;
+            constructor += "                                    DataSourceID=\"" + tableName + "_Update_DS\"" + Environment.NewLine;
             constructor += "                                    OnSelectedIndexChanged=\"Update_GridView_OnSelectedIndexChanged\"" + Environment.NewLine;
             constructor += "                                    GridLines=\"None\"" + Environment.NewLine;
             constructor += "                                    CssClass=\"mGrid\"" + Environment.NewLine;
@@ -232,85 +225,68 @@ namespace Web.App
             constructor += "                                    SelectedRowStyle-CssClass=\"selected-row\">" + Environment.NewLine;
             constructor += "                                    <Columns>" + Environment.NewLine;
             constructor += "                                        <asp:CommandField ShowSelectButton=\"True\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"address_id\" HeaderText=\"address_id\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"address_id\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"address_type_id\" HeaderText=\"address_type_id\" SortExpression=\"address_type_id\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"city\" HeaderText=\"city\" SortExpression=\"city\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"country\" HeaderText=\"country\" SortExpression=\"country\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"County_Township\" HeaderText=\"County_Township\" SortExpression=\"County_Township\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"longitude\" HeaderText=\"longitude\" SortExpression=\"longitude\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"latitude\" HeaderText=\"latitude\" SortExpression=\"latitude\" />" + Environment.NewLine;
-            constructor += "                                        <%--<asp:BoundField DataField=\"state\" HeaderText=\"state\" SortExpression=\"state\" />" + Environment.NewLine;
-            constructor += "                    <asp:BoundField DataField=\"str_add\" HeaderText=\"str_add\" SortExpression=\"str_add\" />" + Environment.NewLine;
-            constructor += "                    <asp:BoundField DataField=\"str_add2\" HeaderText=\"str_add2\" SortExpression=\"str_add2\" />" + Environment.NewLine;
-            constructor += "                    <asp:BoundField DataField=\"zip_plus_four\" HeaderText=\"zip_plus_four\" SortExpression=\"zip_plus_four\" />--%>" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count - 1; i++)
+            {
+                if (DB_Types[i] != "byte[]")
+                {
+                    if (i < 3)
+                    {
+                constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" />" + Environment.NewLine;
+                    }
+                    else
+                    {
+                constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" Visible=\"false\" />" + Environment.NewLine;
+                    }
+
+                }
+                else
+                {
+                    if (i < 3)
+                    {
+                        constructor += "                            <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" ControlStyle-Width = \"150\" ControlStyle-Height = \"100\" HeaderText = \"Preview Image\"/>" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        constructor += "                            <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" ControlStyle-Width = \"150\" ControlStyle-Height = \"100\" HeaderText = \"Preview Image\" Visible=\"false\" />" + Environment.NewLine;
+                    }
+                }
+
+            }
             constructor += "                                    </Columns>" + Environment.NewLine;
             constructor += "                                </asp:GridView>" + Environment.NewLine;
-            constructor += "                                <asp:SqlDataSource ID=\"Address_Update_DS\" runat=\"server\" ConnectionString=\"<%$ ConnectionStrings:DefaultConnection %>\" SelectCommand=\"SELECT * FROM [address]\"></asp:SqlDataSource>" + Environment.NewLine;
+            constructor += "                                <asp:SqlDataSource ID=\"" + tableName + "_Update_DS\" runat=\"server\" ConnectionString=\"<%$ ConnectionStrings:DefaultConnection %>\" SelectCommand=\"SELECT * FROM [" + tableName + "]\"></asp:SqlDataSource>" + Environment.NewLine;
             constructor += "                            </div>" + Environment.NewLine;
             constructor += "                        </div>" + Environment.NewLine;
             constructor += "                        <div class=\"col-lg-12\">" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">address_id</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox disabled class=\"pull-right form-control disabled\" ID=\"address_id_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">address_type_id</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"address_type_id_Update_TextBox\" ID=\"RequiredFieldValidator1\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Update_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"address_type_id_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">city</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"city_Update_TextBox\" ID=\"RequiredFieldValidator2\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Update_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"city_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">country</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"country_Update_TextBox\" ID=\"RequiredFieldValidator3\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Update_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"country_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">County_Township</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"County_Township_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">longitude</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"longitude_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">latitude</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"latitude_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">state</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"state_Update_TextBox\" ID=\"RequiredFieldValidator4\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Update_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"state_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">str_add</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"str_add_Update_TextBox\" ID=\"RequiredFieldValidator5\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Update_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"str_add_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">str_add2</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"str_add2_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">zip_plus_four</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"zip_plus_four_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <%--FREE SPACE--%>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
+            rowcount = 0;
+            for (int i = 1; i < DB_Names.Count - 1; i++)
+            {
+                if (i == 0){
+                    constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                    constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                    constructor += "                                <asp:TextBox disabled class=\"pull-right form-control form-control-disabled\" ID=\"" + DB_Names[i] + "_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                    constructor += "                            </div>" + Environment.NewLine;
+                }
+                else {
+
+                    if (DB_Types[i] == "byte[]")
+                    {
+                        constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                        constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                        constructor += "                                 <asp:Image ID=\"" + DB_Names[i] + "_Update_Image\" runat=\"server\" ImageUrl=\"~/Images/Default_Person.jpg\" />" + Environment.NewLine;
+                        constructor += "                                 <asp:FileUpload ID=\"" + DB_Names[i] + "_Update_FileUpload\" runat=\"server\" />" + Environment.NewLine;
+                        constructor += "                            </div>" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                        constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                        constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"" + DB_Names[i] + "_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                        constructor += "                            </div>" + Environment.NewLine;
+                    }
+                }
+                rowcount++;
+            }
             constructor += "                        </div>" + Environment.NewLine;
             constructor += "                        <hr />" + Environment.NewLine;
             constructor += "                        <div class=\"bottom-btn-container col-lg-12\">" + Environment.NewLine;
@@ -328,8 +304,8 @@ namespace Web.App
             constructor += "                                    AllowPaging=\"True\"" + Environment.NewLine;
             constructor += "                                    AllowSorting=\"True\"" + Environment.NewLine;
             constructor += "                                    AutoGenerateColumns=\"False\"" + Environment.NewLine;
-            constructor += "                                    DataKeyNames=\"address_id\"" + Environment.NewLine;
-            constructor += "                                    DataSourceID=\"Address_Delete_DS\"" + Environment.NewLine;
+            constructor += "                                    DataKeyNames=\"" + DB_Names[0] + "\"" + Environment.NewLine;
+            constructor += "                                    DataSourceID=\"" + tableName + "_Delete_DS\"" + Environment.NewLine;
             constructor += "                                    OnSelectedIndexChanged=\"Delete_GridView_OnSelectedIndexChanged\"" + Environment.NewLine;
             constructor += "                                    GridLines=\"None\"" + Environment.NewLine;
             constructor += "                                    CssClass=\"mGrid\"" + Environment.NewLine;
@@ -338,85 +314,68 @@ namespace Web.App
             constructor += "                                    SelectedRowStyle-CssClass=\"selected-row\">" + Environment.NewLine;
             constructor += "                                    <Columns>" + Environment.NewLine;
             constructor += "                                        <asp:CommandField ShowSelectButton=\"True\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"address_id\" HeaderText=\"address_id\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"address_id\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"address_type_id\" HeaderText=\"address_type_id\" SortExpression=\"address_type_id\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"city\" HeaderText=\"city\" SortExpression=\"city\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"country\" HeaderText=\"country\" SortExpression=\"country\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"County_Township\" HeaderText=\"County_Township\" SortExpression=\"County_Township\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"longitude\" HeaderText=\"longitude\" SortExpression=\"longitude\" />" + Environment.NewLine;
-            constructor += "                                        <asp:BoundField DataField=\"latitude\" HeaderText=\"latitude\" SortExpression=\"latitude\" />" + Environment.NewLine;
-            constructor += "                                        <%--<asp:BoundField DataField=\"state\" HeaderText=\"state\" SortExpression=\"state\" />" + Environment.NewLine;
-            constructor += "                        <asp:BoundField DataField=\"str_add\" HeaderText=\"str_add\" SortExpression=\"str_add\" />" + Environment.NewLine;
-            constructor += "                        <asp:BoundField DataField=\"str_add2\" HeaderText=\"str_add2\" SortExpression=\"str_add2\" />" + Environment.NewLine;
-            constructor += "                        <asp:BoundField DataField=\"zip_plus_four\" HeaderText=\"zip_plus_four\" SortExpression=\"zip_plus_four\" />--%>" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count - 1; i++)
+            {
+                if (DB_Types[i] != "byte[]")
+                {
+                    if (i < 3)
+                    {
+                constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" />" + Environment.NewLine;
+                    }
+                    else
+                    {
+                constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" Visible=\"false\" />" + Environment.NewLine;
+                    }
+
+                }
+                else
+                {
+                    if (i < 3)
+                    {
+                        constructor += "                            <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" ControlStyle-Width = \"150\" ControlStyle-Height = \"100\" HeaderText = \"Preview Image\"/>" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        constructor += "                            <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" ControlStyle-Width = \"150\" ControlStyle-Height = \"100\" HeaderText = \"Preview Image\" Visible=\"false\" />" + Environment.NewLine;
+                    }
+                }
+
+            }
             constructor += "                                    </Columns>" + Environment.NewLine;
             constructor += "                                </asp:GridView>" + Environment.NewLine;
-            constructor += "                                <asp:SqlDataSource ID=\"Address_Delete_DS\" runat=\"server\" ConnectionString=\"<%$ ConnectionStrings:DefaultConnection %>\" SelectCommand=\"SELECT * FROM [address]\"></asp:SqlDataSource>" + Environment.NewLine;
+            constructor += "                                <asp:SqlDataSource ID=\"" + tableName + "_Delete_DS\" runat=\"server\" ConnectionString=\"<%$ ConnectionStrings:DefaultConnection %>\" SelectCommand=\"SELECT * FROM [" + tableName + "]\"></asp:SqlDataSource>" + Environment.NewLine;
             constructor += "                            </div>" + Environment.NewLine;
             constructor += "                        </div>" + Environment.NewLine;
             constructor += "                        <div class=\"col-lg-12\">" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">address_id</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox disabled class=\"pull-right form-control form-control-disabled\" ID=\"address_id_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">address_type_id</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"address_type_id_Delete_TextBox\" ID=\"RequiredFieldValidator6\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Delete_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"address_type_id_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">city</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"city_Delete_TextBox\" ID=\"RequiredFieldValidator7\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Delete_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"city_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">country</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"country_Delete_TextBox\" ID=\"RequiredFieldValidator8\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Delete_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"country_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">County_Township</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"County_Township_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">longitude</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"longitude_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">latitude</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"latitude_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">state</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"state_Delete_TextBox\" ID=\"RequiredFieldValidator9\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Delete_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"state_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">str_add</span>" + Environment.NewLine;
-            constructor += "                                <div class=\"required-container\">" + Environment.NewLine;
-            constructor += "                                    <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"str_add_Delete_TextBox\" ID=\"RequiredFieldValidator10\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Delete_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
-            constructor += "                                </div>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"str_add_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">str_add2</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"str_add2_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <span class=\"pull-left\">zip_plus_four</span>" + Environment.NewLine;
-            constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"zip_plus_four_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
-            constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-            constructor += "                                <%--FREE SPACE--%>" + Environment.NewLine;
-            constructor += "                            </div>" + Environment.NewLine;
+            rowcount = 0;
+            for (int i = 1; i < DB_Names.Count - 1; i++)
+            {
+                if (i == 0){
+                    constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                    constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                    constructor += "                                <asp:TextBox disabled class=\"pull-right form-control form-control-disabled\" ID=\"" + DB_Names[i] + "_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                    constructor += "                            </div>" + Environment.NewLine;
+                }
+                else {
+
+                    if (DB_Types[i] == "byte[]")
+                    {
+                        constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                        constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                        constructor += "                                 <asp:Image ID=\"" + DB_Names[i] + "_Delete_Image\" runat=\"server\" ImageUrl=\"~/Images/Default_Person.jpg\" />" + Environment.NewLine;
+                        constructor += "                                 <asp:FileUpload ID=\"" + DB_Names[i] + "_Delete_FileUpload\" runat=\"server\" />" + Environment.NewLine;
+                        constructor += "                            </div>" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                        constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                        constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"" + DB_Names[i] + "_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                        constructor += "                            </div>" + Environment.NewLine;
+                    }
+                }
+                rowcount++;
+            }
             constructor += "                        </div>" + Environment.NewLine;
             constructor += "                        <hr />" + Environment.NewLine;
             constructor += "                        <div class=\"bottom-btn-container col-lg-12\">" + Environment.NewLine;
@@ -449,119 +408,176 @@ namespace Web.App
             constructor += "{" + Environment.NewLine;
             constructor += "    public partial class " + tableName + "Class : System.Web.UI.Page" + Environment.NewLine;
             constructor += "    {" + Environment.NewLine;
-            constructor += "        public address address = new address();" + Environment.NewLine;
+            constructor += "        public " + tableName + " " + tableName + " = new " + tableName + "();" + Environment.NewLine;
             constructor += "        protected void Page_Load(object sender, EventArgs e)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
             constructor += "            if (!Page.IsPostBack) {" + Environment.NewLine;
             constructor += "            " + Environment.NewLine;
             constructor += "            }" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
-
             constructor += "" + Environment.NewLine;        //GridView Functions" + Environment.NewLine;
             constructor += "        protected void Insert_GridView_OnSelectedIndexChanged(object sender, EventArgs e)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address = address_selectForInsert(Convert.ToInt32(Insert_GridView.SelectedValue));" + Environment.NewLine;
+            constructor += "            " + tableName + " = " + tableName + "_selectForInsert(Convert.ToInt32(Insert_GridView.SelectedValue));" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
             constructor += "        protected void Update_GridView_OnSelectedIndexChanged(object sender, EventArgs e)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address = address_selectForUpdate(Convert.ToInt32(Update_GridView.SelectedValue));" + Environment.NewLine;
+            constructor += "            " + tableName + " = " + tableName + "_selectForUpdate(Convert.ToInt32(Update_GridView.SelectedValue));" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
             constructor += "        protected void Delete_GridView_OnSelectedIndexChanged(object sender, EventArgs e)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address = address_selectForDelete(Convert.ToInt32(Delete_GridView.SelectedValue));" + Environment.NewLine;
+            constructor += "            " + tableName + " = " + tableName + "_selectForDelete(Convert.ToInt32(Delete_GridView.SelectedValue));" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
             constructor += "        //Create Object Functions" + Environment.NewLine;
-            constructor += "        public address address_selectForInsert(int ID)" + Environment.NewLine;
+            constructor += "        public " + tableName + " " + tableName + "_selectForInsert(int ID)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address = address.Select(ID);" + Environment.NewLine;
-            constructor += "            address_type_id_Insert_TextBox.Text = Convert.ToString(address.address_type_id);" + Environment.NewLine;
-            constructor += "            city_Insert_TextBox.Text = Convert.ToString(address.city);" + Environment.NewLine;
-            constructor += "            country_Insert_TextBox.Text = Convert.ToString(address.country);" + Environment.NewLine;
-            constructor += "            County_Township_Insert_TextBox.Text = Convert.ToString(address.County_Township);" + Environment.NewLine;
-            constructor += "            longitude_Insert_TextBox.Text = Convert.ToString(address.longitude);" + Environment.NewLine;
-            constructor += "            latitude_Insert_TextBox.Text = Convert.ToString(address.latitude);" + Environment.NewLine;
-            constructor += "            state_Insert_TextBox.Text = Convert.ToString(address.state);" + Environment.NewLine;
-            constructor += "            str_add_Insert_TextBox.Text = Convert.ToString(address.str_add);" + Environment.NewLine;
-            constructor += "            str_add2_Insert_TextBox.Text = Convert.ToString(address.str_add2);" + Environment.NewLine;
-            constructor += "            zip_plus_four_Insert_TextBox.Text = Convert.ToString(address.zip_plus_four);" + Environment.NewLine;
-            constructor += "            return address;" + Environment.NewLine;
+            constructor += "            " + tableName + " = " + tableName + ".Select(ID);" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count - 1; i++)
+            {
+                if (DB_Types[i] != "byte[]")
+                {
+                    constructor += "            " + DB_Names[i] + "_Insert_TextBox.Text = Convert.ToString(" + tableName + "." + DB_Names[i] + ");" + Environment.NewLine;
+                }
+                else
+                {
+                    constructor += "            " + DB_Names[i] + "_Insert_Image.Attributes[\"src\"] = ResolveUrl(\"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "=\" + ID);" + Environment.NewLine;
+                }
+            }
+            constructor += "            return " + tableName + ".;" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
-            constructor += "        public address address_selectForUpdate(int ID)" + Environment.NewLine;
+            constructor += "        public " + tableName + ". " + tableName + "._selectForUpdate(int ID)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address = address.Select(ID);" + Environment.NewLine;
-            constructor += "            address_id_Update_TextBox.Text = Convert.ToString(address.address_id);" + Environment.NewLine;
-            constructor += "            address_type_id_Update_TextBox.Text = Convert.ToString(address.address_type_id);" + Environment.NewLine;
-            constructor += "            address_type_id_Update_TextBox.Text = Convert.ToString(address.address_type_id);" + Environment.NewLine;
-            constructor += "            city_Update_TextBox.Text = Convert.ToString(address.city);" + Environment.NewLine;
-            constructor += "            country_Update_TextBox.Text = Convert.ToString(address.country);" + Environment.NewLine;
-            constructor += "            County_Township_Update_TextBox.Text = Convert.ToString(address.County_Township);" + Environment.NewLine;
-            constructor += "            longitude_Update_TextBox.Text = Convert.ToString(address.longitude);" + Environment.NewLine;
-            constructor += "            latitude_Update_TextBox.Text = Convert.ToString(address.latitude);" + Environment.NewLine;
-            constructor += "            state_Update_TextBox.Text = Convert.ToString(address.state);" + Environment.NewLine;
-            constructor += "            str_add_Update_TextBox.Text = Convert.ToString(address.str_add);" + Environment.NewLine;
-            constructor += "            str_add2_Update_TextBox.Text = Convert.ToString(address.str_add2);" + Environment.NewLine;
-            constructor += "            zip_plus_four_Update_TextBox.Text = Convert.ToString(address.zip_plus_four);" + Environment.NewLine;
-            constructor += "            return address;" + Environment.NewLine;
+            constructor += "            " + tableName + ". = " + tableName + ".Select(ID);" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count - 1; i++)
+            {
+                if (DB_Types[i] != "byte[]")
+                {
+                    constructor += "            " + DB_Names[i] + "_Update_TextBox.Text = Convert.ToString(" + tableName + "." + DB_Names[i] + ");" + Environment.NewLine;
+                }
+                else
+                {
+                    constructor += "            " + DB_Names[i] + "_Update_Image.Attributes[\"src\"] = ResolveUrl(\"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "=\" + ID);" + Environment.NewLine;
+                }
+            }
+            constructor += "            return " + tableName + ".;" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
-            constructor += "        public address address_selectForDelete(int ID)" + Environment.NewLine;
+            constructor += "        public " + tableName + ". " + tableName + "._selectForDelete(int ID)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address = address.Select(ID);" + Environment.NewLine;
-            constructor += "            address_id_Delete_TextBox.Text = Convert.ToString(address.address_id);" + Environment.NewLine;
-            constructor += "            address_type_id_Delete_TextBox.Text = Convert.ToString(address.address_type_id);" + Environment.NewLine;
-            constructor += "            address_type_id_Delete_TextBox.Text = Convert.ToString(address.address_type_id);" + Environment.NewLine;
-            constructor += "            city_Delete_TextBox.Text = Convert.ToString(address.city);" + Environment.NewLine;
-            constructor += "            country_Delete_TextBox.Text = Convert.ToString(address.country);" + Environment.NewLine;
-            constructor += "            County_Township_Delete_TextBox.Text = Convert.ToString(address.County_Township);" + Environment.NewLine;
-            constructor += "            longitude_Delete_TextBox.Text = Convert.ToString(address.longitude);" + Environment.NewLine;
-            constructor += "            latitude_Delete_TextBox.Text = Convert.ToString(address.latitude);" + Environment.NewLine;
-            constructor += "            state_Delete_TextBox.Text = Convert.ToString(address.state);" + Environment.NewLine;
-            constructor += "            str_add_Delete_TextBox.Text = Convert.ToString(address.str_add);" + Environment.NewLine;
-            constructor += "            str_add2_Delete_TextBox.Text = Convert.ToString(address.str_add2);" + Environment.NewLine;
-            constructor += "            zip_plus_four_Delete_TextBox.Text = Convert.ToString(address.zip_plus_four);" + Environment.NewLine;
-            constructor += "            return address;" + Environment.NewLine;
+            constructor += "            " + tableName + ". = " + tableName + ".Select(ID);" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count - 1; i++)
+            {
+                if (DB_Types[i] != "byte[]")
+                {
+                    constructor += "            " + DB_Names[i] + "_Delete_TextBox.Text = Convert.ToString(" + tableName + "." + DB_Names[i] + ");" + Environment.NewLine;
+                }
+                else
+                {
+                    constructor += "            " + DB_Names[i] + "_Delete_Image.Attributes[\"src\"] = ResolveUrl(\"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "=\" + ID);" + Environment.NewLine;
+                }
+            }
+            constructor += "            return " + tableName + ".;" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
             constructor += "        //Database CRUD Call Functions" + Environment.NewLine;
-            constructor += "        public address address_insert()" + Environment.NewLine;
+            constructor += "        public " + tableName + ". " + tableName + "._insert()" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address.address_type_id = Convert.ToInt32(address_type_id_Insert_TextBox.Text);" + Environment.NewLine;
-            constructor += "            address.city = city_Insert_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.country = country_Insert_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.County_Township = County_Township_Insert_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.longitude = Convert.ToDecimal(longitude_Insert_TextBox.Text);" + Environment.NewLine;
-            constructor += "            address.latitude = Convert.ToDecimal(latitude_Insert_TextBox.Text);" + Environment.NewLine;
-            constructor += "            address.state = state_Insert_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.str_add = str_add_Insert_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.str_add2 = str_add2_Insert_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.zip_plus_four = zip_plus_four_Insert_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address = address.Insert(address);" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count - 1; i++)
+            {
+                if (DB_Types[i] == "Int32")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToInt32(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "Double")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDouble(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "double")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDouble(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "String")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = " + DB_Names[i] + "_Insert_TextBox.Text;" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "Char")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToString(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "DateTime")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDateTime(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "Boolean")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToBoolean(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "Decimal")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDecimal(" + DB_Names[i] + "_Insert_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "byte[]")
+                {
+                    constructor += "            byte[] uploaded_picture = " + DB_Names[i] + "_Insert_FileUpload.FileBytes;" + Environment.NewLine;
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
+                }
+            }
+            constructor += "            " + tableName + ". = " + tableName + ".Insert(" + tableName + ".);" + Environment.NewLine;
             constructor += "            Insert_GridView.DataBind();" + Environment.NewLine;
             constructor += "            Update_GridView.DataBind();" + Environment.NewLine;
             constructor += "            Delete_GridView.DataBind();" + Environment.NewLine;
-            constructor += "            return address;" + Environment.NewLine;
+            constructor += "            return " + tableName + ".;" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
-            constructor += "        public address address_update(int ID)" + Environment.NewLine;
+            constructor += "        public " + tableName + ". " + tableName + "._update(int ID)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address = address.Select(ID);" + Environment.NewLine;
-            constructor += "            address.address_id = Convert.ToInt32(address_id_Update_TextBox.Text);" + Environment.NewLine;
-            constructor += "            address.address_type_id = Convert.ToInt32(address_type_id_Update_TextBox.Text);" + Environment.NewLine;
-            constructor += "            address.city = city_Update_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.country = country_Update_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.County_Township = County_Township_Update_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.longitude = Convert.ToDecimal(longitude_Update_TextBox.Text);" + Environment.NewLine;
-            constructor += "            address.latitude = Convert.ToDecimal(latitude_Update_TextBox.Text);" + Environment.NewLine;
-            constructor += "            address.state = state_Update_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.str_add = str_add_Update_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.str_add2 = str_add2_Update_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.zip_plus_four = zip_plus_four_Update_TextBox.Text;" + Environment.NewLine;
-            constructor += "            address.Update(address);" + Environment.NewLine;
+            constructor += "            " + tableName + ". = " + tableName + ".Select(ID);" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count - 1; i++)
+            {
+                if (DB_Types[i] == "Int32")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToInt32(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "Double")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDouble(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "double")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDouble(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "String")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = " + DB_Names[i] + "_Update_TextBox.Text;" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "Char")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToString(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "DateTime")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDateTime(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "Boolean")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToBoolean(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "Decimal")
+                {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDecimal(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                }
+                if (DB_Types[i] == "byte[]")
+                {
+                    constructor += "            byte[] uploaded_picture = " + DB_Names[i] + "_Update_FileUpload.FileBytes;" + Environment.NewLine;
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
+                }
+            }
+            constructor += "            " + tableName + ".Update(" + tableName + ".);" + Environment.NewLine;
             constructor += "            Insert_GridView.DataBind();" + Environment.NewLine;
             constructor += "            Update_GridView.DataBind();" + Environment.NewLine;
             constructor += "            Delete_GridView.DataBind();" + Environment.NewLine;
-            constructor += "            return address;" + Environment.NewLine;
+            constructor += "            return " + tableName + ".;" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
-            constructor += "        public void address_delete(int ID)" + Environment.NewLine;
+            constructor += "        public void " + tableName + "._delete(int ID)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address.Delete(ID);" + Environment.NewLine;
+            constructor += "            " + tableName + ".Delete(ID);" + Environment.NewLine;
             constructor += "            Insert_GridView.DataBind();" + Environment.NewLine;
             constructor += "            Update_GridView.DataBind();" + Environment.NewLine;
             constructor += "            Delete_GridView.DataBind();" + Environment.NewLine;
@@ -569,15 +585,15 @@ namespace Web.App
             constructor += "        //Button Functions" + Environment.NewLine;
             constructor += "        protected void Insert_Button_Click(object sender, EventArgs e)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address = address_insert();" + Environment.NewLine;
+            constructor += "            " + tableName + ". = " + tableName + "._insert();" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
             constructor += "        protected void Update_Button_Click(object sender, EventArgs e)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address = address_update(Convert.ToInt32(Update_GridView.SelectedValue));" + Environment.NewLine;
+            constructor += "            " + tableName + ". = " + tableName + "._update(Convert.ToInt32(Update_GridView.SelectedValue));" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
             constructor += "        protected void Delete_Button_Click(object sender, EventArgs e)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address_delete(Convert.ToInt32(Delete_GridView.SelectedValue));" + Environment.NewLine;
+            constructor += "            " + tableName + "._delete(Convert.ToInt32(Delete_GridView.SelectedValue));" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
             constructor += "        " + Environment.NewLine;
             constructor += "    }" + Environment.NewLine;
@@ -601,237 +617,145 @@ namespace Web.App
             constructor += "{" + Environment.NewLine;
             constructor += "    public class " + tableName + Environment.NewLine;
             constructor += "    {" + Environment.NewLine;
-            constructor += "        public Int32 address_id" + Environment.NewLine;
-            constructor += "        {" + Environment.NewLine;
-            constructor += "            get;" + Environment.NewLine;
-            constructor += "            set;" + Environment.NewLine;
-            constructor += "        }" + Environment.NewLine;
-            constructor += "        public Int32 address_type_id" + Environment.NewLine;
-            constructor += "        {" + Environment.NewLine;
-            constructor += "            get;" + Environment.NewLine;
-            constructor += "            set;" + Environment.NewLine;
-            constructor += "        }" + Environment.NewLine;
-            constructor += "        public String city" + Environment.NewLine;
-            constructor += "        {" + Environment.NewLine;
-            constructor += "            get;" + Environment.NewLine;
-            constructor += "            set;" + Environment.NewLine;
-            constructor += "        }" + Environment.NewLine;
-            constructor += "        public String country" + Environment.NewLine;
-            constructor += "        {" + Environment.NewLine;
-            constructor += "            get;" + Environment.NewLine;
-            constructor += "            set;" + Environment.NewLine;
-            constructor += "        }" + Environment.NewLine;
-            constructor += "        public String County_Township" + Environment.NewLine;
-            constructor += "        {" + Environment.NewLine;
-            constructor += "            get;" + Environment.NewLine;
-            constructor += "            set;" + Environment.NewLine;
-            constructor += "        }" + Environment.NewLine;
-            constructor += "        public Decimal longitude" + Environment.NewLine;
-            constructor += "        {" + Environment.NewLine;
-            constructor += "            get;" + Environment.NewLine;
-            constructor += "            set;" + Environment.NewLine;
-            constructor += "        }" + Environment.NewLine;
-            constructor += "        public Decimal latitude" + Environment.NewLine;
-            constructor += "        {" + Environment.NewLine;
-            constructor += "            get;" + Environment.NewLine;
-            constructor += "            set;" + Environment.NewLine;
-            constructor += "        }" + Environment.NewLine;
-            constructor += "        public String state" + Environment.NewLine;
-            constructor += "        {" + Environment.NewLine;
-            constructor += "            get;" + Environment.NewLine;
-            constructor += "            set;" + Environment.NewLine;
-            constructor += "        }" + Environment.NewLine;
-            constructor += "        public String str_add" + Environment.NewLine;
-            constructor += "        {" + Environment.NewLine;
-            constructor += "            get;" + Environment.NewLine;
-            constructor += "            set;" + Environment.NewLine;
-            constructor += "        }" + Environment.NewLine;
-            constructor += "        public String str_add2" + Environment.NewLine;
-            constructor += "        {" + Environment.NewLine;
-            constructor += "            get;" + Environment.NewLine;
-            constructor += "            set;" + Environment.NewLine;
-            constructor += "        }" + Environment.NewLine;
-            constructor += "        public String zip_plus_four" + Environment.NewLine;
-            constructor += "        {" + Environment.NewLine;
-            constructor += "            get;" + Environment.NewLine;
-            constructor += "            set;" + Environment.NewLine;
-            constructor += "        }" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count - 1; i++)
+            {
+                constructor += "        public " + DB_Types[i] + " " + DB_Names[i] + Environment.NewLine;
+                constructor += "        {" + Environment.NewLine;
+                constructor += "            get;" + Environment.NewLine;
+                constructor += "            set;" + Environment.NewLine;
+                constructor += "        }" + Environment.NewLine;
+            }
             constructor += "" + Environment.NewLine;
-
             constructor += "        public void SetColumnDefaults()" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address_id = 0;" + Environment.NewLine;
-            constructor += "            address_type_id = 0;" + Environment.NewLine;
-            constructor += "            city = \" \";" + Environment.NewLine;
-            constructor += "            country = \" \";" + Environment.NewLine;
-            constructor += "            County_Township = \" \";" + Environment.NewLine;
-            constructor += "            longitude = 0;" + Environment.NewLine;
-            constructor += "            latitude = 0;" + Environment.NewLine;
-            constructor += "            state = \" \";" + Environment.NewLine;
-            constructor += "            str_add = \" \";" + Environment.NewLine;
-            constructor += "            str_add2 = \" \";" + Environment.NewLine;
-            constructor += "            zip_plus_four = \" \";" + Environment.NewLine;
-            constructor += "        }" + Environment.NewLine;
-            constructor += "        public address Select(int id)" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count - 1; i++)
+            {
+                String currentType = "";
+                if (DB_Types[i] == "Int32") { currentType = "0"; }
+                if (DB_Types[i] == "Double") { currentType = "0.0"; }
+                if (DB_Types[i] == "double") { currentType = "0.0"; }
+                if (DB_Types[i] == "String") { currentType = "\" \""; }
+                if (DB_Types[i] == "Char") { currentType = "'x'"; }
+                if (DB_Types[i] == "DateTime") { currentType = "DateTime.Now"; }
+                if (DB_Types[i] == "Boolean") { currentType = "false"; }
+                if (DB_Types[i] == "Decimal") { currentType = "0"; }
+                if (DB_Types[i] == "byte[]") { currentType = "null"; }
+
+                constructor += "            " + DB_Names[i] + " = " + currentType + ";" + Environment.NewLine;
+            }
+
+            constructor += "        public " + tableName + " Select(int id)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            address address = new address();" + Environment.NewLine;
+            constructor += "            " + tableName + " " + tableName + " = new " + tableName + "();" + Environment.NewLine;
             constructor += "            string ConnectionString = IDManager.connection();" + Environment.NewLine;
             constructor += "            SqlConnection con = new SqlConnection(ConnectionString);" + Environment.NewLine;
             constructor += "            try" + Environment.NewLine;
             constructor += "            {" + Environment.NewLine;
             constructor += "                con.Open();" + Environment.NewLine;
-            constructor += "                SqlCommand cmd = new SqlCommand(\"SP_DMCS_SELECT_ADDRESS\", con);" + Environment.NewLine;
+            constructor += "                SqlCommand cmd = new SqlCommand(\"SP_DMCS_SELECT_" + tableName.ToUpper() + "\", con);" + Environment.NewLine;
             constructor += "                cmd.CommandType = System.Data.CommandType.StoredProcedure;" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@address_id\", id);" + Environment.NewLine;
+            constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[0] + "\", id);" + Environment.NewLine;
             constructor += "                SqlDataReader rdr = cmd.ExecuteReader();" + Environment.NewLine;
             constructor += "                if (rdr.HasRows)" + Environment.NewLine;
             constructor += "                {" + Environment.NewLine;
             constructor += "                    rdr.Read();" + Environment.NewLine;
-            constructor += "                    if (!rdr.IsDBNull(0))" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.address_id = rdr.GetInt32(0);" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count - 1; i++)
+            {
+                String currentType = "";
+                if (DB_Types[i] == "Int32") { currentType = "rdr.GetInt32(" + i + ");"; }
+                if (DB_Types[i] == "Double") { currentType = "rdr.GetDouble(" + i + ");"; }
+                if (DB_Types[i] == "double") { currentType = "rdr.GetDouble(" + i + ");"; }
+                if (DB_Types[i] == "geography") { currentType = "rdr.GetString(" + i + ");"; }
+                if (DB_Types[i] == "String") { currentType = "rdr.GetString(" + i + ");"; }
+                if (DB_Types[i] == "Char") { currentType = "rdr.GetString(" + i + ");"; }
+                if (DB_Types[i] == "DateTime") { currentType = "rdr.GetDateTime(" + i + ");"; }
+                if (DB_Types[i] == "Boolean") { currentType = "rdr.GetBoolean(" + i + ");"; }
+                if (DB_Types[i] == "Decimal") { currentType = "rdr.GetDecimal(" + i + ");"; }
+                if (DB_Types[i] == "byte[]") { currentType = "(byte[])rdr[\"" + DB_Names[i] + "\"];"; }
+
+                constructor += "                    if (!rdr.IsDBNull(" + i + "))" + Environment.NewLine;
+                constructor += "                    {" + Environment.NewLine;
+                constructor += "                        " + tableName + "." + DB_Names[i] + " = " + currentType + Environment.NewLine;
+                constructor += "                    }" + Environment.NewLine;
+
+                currentType = "";
+                if (DB_Types[i] == "Int32") { currentType = "0"; }
+                if (DB_Types[i] == "Double") { currentType = "0.0"; }
+                if (DB_Types[i] == "double") { currentType = "0.0"; }
+                if (DB_Types[i] == "geography") { currentType = "\" \""; }
+                if (DB_Types[i] == "String") { currentType = "\" \""; }
+                if (DB_Types[i] == "Char") { currentType = "\" \""; }
+                if (DB_Types[i] == "DateTime") { currentType = "DateTime.Now"; }
+                if (DB_Types[i] == "Boolean") { currentType = "false"; }
+                if (DB_Types[i] == "Decimal") { currentType = "0"; }
+                if (DB_Types[i] == "byte[]") { currentType = "null"; }
+
+                constructor += "                    else" + Environment.NewLine;
+                constructor += "                    {" + Environment.NewLine;
+                constructor += "                        " + tableName + "." + DB_Names[i] + " = " + currentType + ";" + Environment.NewLine;
+                constructor += "                    }" + Environment.NewLine;
+            }
             constructor += "                    }" + Environment.NewLine;
             constructor += "                    else" + Environment.NewLine;
             constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.address_id = 0;" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    if (!rdr.IsDBNull(1))" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.address_type_id = rdr.GetInt32(1);" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    else" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.address_type_id = 0;" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    if (!rdr.IsDBNull(2))" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.city = rdr.GetString(2);" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    else" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.city = \" \";" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    if (!rdr.IsDBNull(3))" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.country = rdr.GetString(3);" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    else" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.country = \" \";" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    if (!rdr.IsDBNull(4))" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.County_Township = rdr.GetString(4);" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    else" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.County_Township = \" \";" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    if (!rdr.IsDBNull(5))" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.longitude = rdr.GetDecimal(5);" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    else" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.longitude = 0;" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    if (!rdr.IsDBNull(6))" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.latitude = rdr.GetDecimal(6);" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    else" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.latitude = 0;" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    if (!rdr.IsDBNull(7))" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.state = rdr.GetString(7);" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    else" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.state = \" \";" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    if (!rdr.IsDBNull(8))" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.str_add = rdr.GetString(8);" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    else" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.str_add = \" \";" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    if (!rdr.IsDBNull(9))" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.str_add2 = rdr.GetString(9);" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    else" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.str_add2 = \" \";" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    if (!rdr.IsDBNull(10))" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.zip_plus_four = rdr.GetString(10);" + Environment.NewLine;
-            constructor += "                    }" + Environment.NewLine;
-            constructor += "                    else" + Environment.NewLine;
-            constructor += "                    {" + Environment.NewLine;
-            constructor += "                        address.zip_plus_four = \" \";" + Environment.NewLine;
+            constructor += "                    " + tableName + ".SetColumnDefaults();" + Environment.NewLine;
             constructor += "                    }" + Environment.NewLine;
             constructor += "                }" + Environment.NewLine;
-            constructor += "                else" + Environment.NewLine;
+            constructor += "                catch (Exception ex)" + Environment.NewLine;
             constructor += "                {" + Environment.NewLine;
-            constructor += "                    address.SetColumnDefaults();" + Environment.NewLine;
+            constructor += "                " + tableName + ".SetColumnDefaults();" + Environment.NewLine;
+            constructor += "                return " + tableName + ";" + Environment.NewLine;
             constructor += "                }" + Environment.NewLine;
-            constructor += "            }" + Environment.NewLine;
-            constructor += "            catch (Exception ex)" + Environment.NewLine;
-            constructor += "            {" + Environment.NewLine;
-            constructor += "                address.SetColumnDefaults();" + Environment.NewLine;
-            constructor += "                return address;" + Environment.NewLine;
-            constructor += "            }" + Environment.NewLine;
             constructor += "            finally" + Environment.NewLine;
             constructor += "            {" + Environment.NewLine;
             constructor += "                con.Close();" + Environment.NewLine;
             constructor += "            }" + Environment.NewLine;
-            constructor += "            return address;" + Environment.NewLine;
+            constructor += "            return " + tableName + ";" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
-
-            constructor += "        public address Insert(address id)" + Environment.NewLine;
+            constructor += "" + Environment.NewLine;
+            constructor += "        public " + tableName + " Insert(" + tableName + " id)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
             constructor += "            string ConnectionString = IDManager.connection();" + Environment.NewLine;
             constructor += "            SqlConnection con = new SqlConnection(ConnectionString);" + Environment.NewLine;
             constructor += "            try" + Environment.NewLine;
             constructor += "            {" + Environment.NewLine;
             constructor += "                con.Open();" + Environment.NewLine;
-            constructor += "                SqlCommand cmd = new SqlCommand(\"SP_DMCS_INSERT_ADDRESS\", con);" + Environment.NewLine;
+            constructor += "                SqlCommand cmd = new SqlCommand(\"SP_DMCS_INSERT_" + tableName.ToUpper() + "\", con);" + Environment.NewLine;
             constructor += "                cmd.CommandType = System.Data.CommandType.StoredProcedure;" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@address_type_id\", id.address_type_id);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@city\", id.city);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@country\", id.country);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@County_Township\", id.County_Township);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@longitude\", id.longitude);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@latitude\", id.latitude);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@state\", id.state);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@str_add\", id.str_add);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@str_add2\", id.str_add2);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@zip_plus_four\", id.zip_plus_four);" + Environment.NewLine;
+            //check to see if tables PK is sequential
+            script_generator = script_generator.Check_Identity(tableName);
+            //if not..
+            if (script_generator.result == 0)
+            {
+                for (int i = 0; i < DB_Names.Count - 1; i++)
+                {
+                    constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
+                }
+            }
+            else
+            {
+                for (int i = 1; i < DB_Names.Count - 1; i++)
+                {
+                    constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
+                }
+            }
             constructor += "                cmd.ExecuteReader();" + Environment.NewLine;
+
             constructor += "                con.Close();" + Environment.NewLine;
             constructor += "                con.Open();" + Environment.NewLine;
-            constructor += "                cmd = new SqlCommand(\"SP_DMCS_GET_ADDRESS\", con);" + Environment.NewLine;
+            constructor += "                cmd = new SqlCommand(\"SP_DMCS_GET_" + tableName.ToUpper() + "\", con);" + Environment.NewLine;
             constructor += "                cmd.CommandType = System.Data.CommandType.StoredProcedure;" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@address_type_id\", id.address_type_id);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@city\", id.city);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@country\", id.country);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@County_Township\", id.County_Township);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@longitude\", id.longitude);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@latitude\", id.latitude);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@state\", id.state);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@str_add\", id.str_add);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@str_add2\", id.str_add2);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@zip_plus_four\", id.zip_plus_four);" + Environment.NewLine;
+            for (int i = 1; i < DB_Names.Count - 1; i++)
+            {
+                constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
+            }
+
             constructor += "                SqlDataReader rdr = cmd.ExecuteReader();" + Environment.NewLine;
+
             constructor += "                if (rdr.HasRows)" + Environment.NewLine;
             constructor += "                {" + Environment.NewLine;
             constructor += "                    rdr.Read();" + Environment.NewLine;
-            constructor += "                    id.address_id = rdr.GetInt32(0);" + Environment.NewLine;
+            constructor += "                    id." + DB_Names[0] + " = rdr.GetInt32(0);" + Environment.NewLine;
             constructor += "                }" + Environment.NewLine;
             constructor += "            }" + Environment.NewLine;
             constructor += "            catch (Exception ex)" + Environment.NewLine;
@@ -844,26 +768,19 @@ namespace Web.App
             constructor += "            }" + Environment.NewLine;
             constructor += "            return id;" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
-            constructor += "        public Boolean Update(address id)" + Environment.NewLine;
+            constructor += "        public Boolean Update(" + tableName + " id)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
             constructor += "            string ConnectionString = IDManager.connection();" + Environment.NewLine;
             constructor += "            SqlConnection con = new SqlConnection(ConnectionString);" + Environment.NewLine;
             constructor += "            try" + Environment.NewLine;
             constructor += "            {" + Environment.NewLine;
             constructor += "                con.Open();" + Environment.NewLine;
-            constructor += "                SqlCommand cmd = new SqlCommand(\"SP_DMCS_UPDATE_ADDRESS\", con);" + Environment.NewLine;
+            constructor += "                SqlCommand cmd = new SqlCommand(\"SP_DMCS_UPDATE_" + tableName.ToUpper() + "\", con);" + Environment.NewLine;
             constructor += "                cmd.CommandType = System.Data.CommandType.StoredProcedure;" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@address_id\", id.address_id);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@address_type_id\", id.address_type_id);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@city\", id.city);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@country\", id.country);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@County_Township\", id.County_Township);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@longitude\", id.longitude);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@latitude\", id.latitude);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@state\", id.state);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@str_add\", id.str_add);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@str_add2\", id.str_add2);" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@zip_plus_four\", id.zip_plus_four);" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count - 1; i++)
+            {
+                constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
+            }
             constructor += "                cmd.ExecuteReader();" + Environment.NewLine;
             constructor += "                con.Close();" + Environment.NewLine;
             constructor += "                return true;" + Environment.NewLine;
@@ -884,9 +801,9 @@ namespace Web.App
             constructor += "            try" + Environment.NewLine;
             constructor += "            {" + Environment.NewLine;
             constructor += "                con.Open();" + Environment.NewLine;
-            constructor += "                SqlCommand cmd = new SqlCommand(\"SP_DMCS_DELETE_ADDRESS\", con);" + Environment.NewLine;
+            constructor += "                SqlCommand cmd = new SqlCommand(\"SP_DMCS_DELETE_" + tableName.ToUpper() + "\", con);" + Environment.NewLine;
             constructor += "                cmd.CommandType = System.Data.CommandType.StoredProcedure;" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@address_id\", id);" + Environment.NewLine;
+            constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[0] + "\", id);" + Environment.NewLine;
             constructor += "                cmd.ExecuteReader();" + Environment.NewLine;
             constructor += "                con.Close();" + Environment.NewLine;
             constructor += "                return true;" + Environment.NewLine;
@@ -900,7 +817,7 @@ namespace Web.App
             constructor += "                con.Close();" + Environment.NewLine;
             constructor += "            }" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
-
+            constructor += "" + Environment.NewLine;
             constructor += "        public DataTable Select(string whereclause)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
             constructor += "            DataTable alrows = new DataTable();" + Environment.NewLine;
@@ -909,9 +826,9 @@ namespace Web.App
             constructor += "            try" + Environment.NewLine;
             constructor += "            {" + Environment.NewLine;
             constructor += "                con.Open();" + Environment.NewLine;
-            constructor += "                SqlCommand cmd = new SqlCommand(\"SP_DMCS_SELECT_ADDRESS_WC\", con);" + Environment.NewLine;
+            constructor += "                SqlCommand cmd = new SqlCommand(\"SP_DMCS_SELECT_" + tableName.ToUpper() + "_WC\", con);" + Environment.NewLine;
             constructor += "                cmd.CommandType = System.Data.CommandType.StoredProcedure;" + Environment.NewLine;
-            constructor += "                cmd.Parameters.AddWithValue(\"@wareclause\", whereclause);" + Environment.NewLine;
+            constructor += "                cmd.Parameters.AddWithValue(\"" + "@wareclause" + "\", whereclause);" + Environment.NewLine;
             constructor += "                SqlDataReader rdr = cmd.ExecuteReader();" + Environment.NewLine;
             constructor += "                alrows.Load(rdr);" + Environment.NewLine;
             constructor += "                return alrows;" + Environment.NewLine;
@@ -927,6 +844,9 @@ namespace Web.App
             constructor += "        }" + Environment.NewLine;
             constructor += "    }" + Environment.NewLine;
             constructor += "}" + Environment.NewLine;
+            constructor += "" + Environment.NewLine;
+            constructor += "" + Environment.NewLine;
+            constructor += "" + Environment.NewLine;
 
             return constructor;
         }
