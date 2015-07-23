@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Data;
 using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
-
 namespace Web.App
 {
     public class address
@@ -65,20 +64,19 @@ namespace Web.App
             set;
         }
 
-
         public void SetColumnDefaults()
         {
             address_id = 0;
             address_type_id = 0;
-            city = " ";
-            country = " ";
-            County_Township = " ";
+            city = "";
+            country = "";
+            County_Township = "";
             longitude = 0;
             latitude = 0;
-            state = " ";
-            str_add = " ";
-            str_add2 = " ";
-            zip_plus_four = " ";
+            state = "";
+            str_add = "";
+            str_add2 = "";
+            zip_plus_four = "";
         }
         public address Select(int id)
         {
@@ -183,17 +181,17 @@ namespace Web.App
                     {
                         address.zip_plus_four = " ";
                     }
-                }
-                else
-                {
+                    }
+                    else
+                    {
                     address.SetColumnDefaults();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
+                catch (Exception ex)
+                {
                 address.SetColumnDefaults();
                 return address;
-            }
+                }
             finally
             {
                 con.Close();
@@ -335,3 +333,7 @@ namespace Web.App
         }
     }
 }
+
+
+
+

@@ -136,7 +136,7 @@ namespace Web.App
             constructor += "                                    SelectedRowStyle-CssClass=\"selected-row\">" + Environment.NewLine;
             constructor += "                                    <Columns>" + Environment.NewLine;
             constructor += "                                        <asp:CommandField ShowSelectButton=\"True\" />" + Environment.NewLine;
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            for (int i = 0; i < DB_Names.Count; i++)
             {
                 if (DB_Types[i] != "byte[]")
                 {
@@ -170,7 +170,7 @@ namespace Web.App
             constructor += "                        </div>" + Environment.NewLine;
             constructor += "                        <div class=\"col-lg-12\">" + Environment.NewLine;
             rowcount = 0;
-            for (int i = 1; i < DB_Names.Count - 1; i++)
+            for (int i = 1; i < DB_Names.Count; i++)
             {
                 if (i == 0){
                     constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
@@ -225,7 +225,7 @@ namespace Web.App
             constructor += "                                    SelectedRowStyle-CssClass=\"selected-row\">" + Environment.NewLine;
             constructor += "                                    <Columns>" + Environment.NewLine;
             constructor += "                                        <asp:CommandField ShowSelectButton=\"True\" />" + Environment.NewLine;
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            for (int i = 0; i < DB_Names.Count; i++)
             {
                 if (DB_Types[i] != "byte[]")
                 {
@@ -259,7 +259,7 @@ namespace Web.App
             constructor += "                        </div>" + Environment.NewLine;
             constructor += "                        <div class=\"col-lg-12\">" + Environment.NewLine;
             rowcount = 0;
-            for (int i = 1; i < DB_Names.Count - 1; i++)
+            for (int i = 0; i < DB_Names.Count; i++)
             {
                 if (i == 0){
                     constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
@@ -314,7 +314,7 @@ namespace Web.App
             constructor += "                                    SelectedRowStyle-CssClass=\"selected-row\">" + Environment.NewLine;
             constructor += "                                    <Columns>" + Environment.NewLine;
             constructor += "                                        <asp:CommandField ShowSelectButton=\"True\" />" + Environment.NewLine;
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            for (int i = 0; i < DB_Names.Count; i++)
             {
                 if (DB_Types[i] != "byte[]")
                 {
@@ -348,31 +348,22 @@ namespace Web.App
             constructor += "                        </div>" + Environment.NewLine;
             constructor += "                        <div class=\"col-lg-12\">" + Environment.NewLine;
             rowcount = 0;
-            for (int i = 1; i < DB_Names.Count - 1; i++)
+            for (int i = 0; i < DB_Names.Count; i++)
             {
-                if (i == 0){
+                if (DB_Types[i] == "byte[]")
+                {
                     constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
                     constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
-                    constructor += "                                <asp:TextBox disabled class=\"pull-right form-control form-control-disabled\" ID=\"" + DB_Names[i] + "_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                    constructor += "                                 <asp:Image ID=\"" + DB_Names[i] + "_Delete_Image\" runat=\"server\" ImageUrl=\"~/Images/Default_Person.jpg\" />" + Environment.NewLine;
+                    constructor += "                                 <asp:FileUpload ID=\"" + DB_Names[i] + "_Delete_FileUpload\" runat=\"server\" />" + Environment.NewLine;
                     constructor += "                            </div>" + Environment.NewLine;
                 }
-                else {
-
-                    if (DB_Types[i] == "byte[]")
-                    {
-                        constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-                        constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
-                        constructor += "                                 <asp:Image ID=\"" + DB_Names[i] + "_Delete_Image\" runat=\"server\" ImageUrl=\"~/Images/Default_Person.jpg\" />" + Environment.NewLine;
-                        constructor += "                                 <asp:FileUpload ID=\"" + DB_Names[i] + "_Delete_FileUpload\" runat=\"server\" />" + Environment.NewLine;
-                        constructor += "                            </div>" + Environment.NewLine;
-                    }
-                    else
-                    {
-                        constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-                        constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
-                        constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"" + DB_Names[i] + "_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-                        constructor += "                            </div>" + Environment.NewLine;
-                    }
+                else
+                {
+                    constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                    constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                    constructor += "                                <asp:TextBox disabled class=\"pull-right form-control\" ID=\"" + DB_Names[i] + "_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                    constructor += "                            </div>" + Environment.NewLine;
                 }
                 rowcount++;
             }
@@ -432,7 +423,7 @@ namespace Web.App
             constructor += "        public " + tableName + " " + tableName + "_selectForInsert(int ID)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
             constructor += "            " + tableName + " = " + tableName + ".Select(ID);" + Environment.NewLine;
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            for (int i = 1; i < DB_Names.Count; i++)
             {
                 if (C_Types[i] != "byte[]")
                 {
@@ -443,12 +434,12 @@ namespace Web.App
                     constructor += "            " + DB_Names[i] + "_Insert_Image.Attributes[\"src\"] = ResolveUrl(\"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "=\" + ID);" + Environment.NewLine;
                 }
             }
-            constructor += "            return " + tableName + ".;" + Environment.NewLine;
+            constructor += "            return " + tableName + ";" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
-            constructor += "        public " + tableName + ". " + tableName + "._selectForUpdate(int ID)" + Environment.NewLine;
+            constructor += "        public " + tableName + " " + tableName + "_selectForUpdate(int ID)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            " + tableName + ". = " + tableName + ".Select(ID);" + Environment.NewLine;
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            constructor += "            " + tableName + " = " + tableName + ".Select(ID);" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count; i++)
             {
                 if (C_Types[i] != "byte[]")
                 {
@@ -459,12 +450,12 @@ namespace Web.App
                     constructor += "            " + DB_Names[i] + "_Update_Image.Attributes[\"src\"] = ResolveUrl(\"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "=\" + ID);" + Environment.NewLine;
                 }
             }
-            constructor += "            return " + tableName + ".;" + Environment.NewLine;
+            constructor += "            return " + tableName + ";" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
-            constructor += "        public " + tableName + ". " + tableName + "._selectForDelete(int ID)" + Environment.NewLine;
+            constructor += "        public " + tableName + " " + tableName + "_selectForDelete(int ID)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            " + tableName + ". = " + tableName + ".Select(ID);" + Environment.NewLine;
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            constructor += "            " + tableName + " = " + tableName + ".Select(ID);" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count; i++)
             {
                 if (C_Types[i] != "byte[]")
                 {
@@ -475,12 +466,12 @@ namespace Web.App
                     constructor += "            " + DB_Names[i] + "_Delete_Image.Attributes[\"src\"] = ResolveUrl(\"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "=\" + ID);" + Environment.NewLine;
                 }
             }
-            constructor += "            return " + tableName + ".;" + Environment.NewLine;
+            constructor += "            return " + tableName + ";" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
             constructor += "        //Database CRUD Call Functions" + Environment.NewLine;
-            constructor += "        public " + tableName + ". " + tableName + "._insert()" + Environment.NewLine;
+            constructor += "        public " + tableName + " " + tableName + "_insert()" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            for (int i = 1; i < DB_Names.Count; i++)
             {
                 if (C_Types[i] == "Int32")
                 {
@@ -520,16 +511,16 @@ namespace Web.App
                     constructor += "            " + tableName + "." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
                 }
             }
-            constructor += "            " + tableName + ". = " + tableName + ".Insert(" + tableName + ".);" + Environment.NewLine;
+            constructor += "            " + tableName + " = " + tableName + ".Insert(" + tableName + ");" + Environment.NewLine;
             constructor += "            Insert_GridView.DataBind();" + Environment.NewLine;
             constructor += "            Update_GridView.DataBind();" + Environment.NewLine;
             constructor += "            Delete_GridView.DataBind();" + Environment.NewLine;
-            constructor += "            return " + tableName + ".;" + Environment.NewLine;
+            constructor += "            return " + tableName + ";" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
-            constructor += "        public " + tableName + ". " + tableName + "._update(int ID)" + Environment.NewLine;
+            constructor += "        public " + tableName + " " + tableName + "_update(int ID)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            " + tableName + ". = " + tableName + ".Select(ID);" + Environment.NewLine;
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            constructor += "            " + tableName + " = " + tableName + ".Select(ID);" + Environment.NewLine;
+            for (int i = 0; i < DB_Names.Count; i++)
             {
                 if (C_Types[i] == "Int32")
                 {
@@ -569,13 +560,13 @@ namespace Web.App
                     constructor += "            " + tableName + "." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
                 }
             }
-            constructor += "            " + tableName + ".Update(" + tableName + ".);" + Environment.NewLine;
+            constructor += "            " + tableName + ".Update(" + tableName + ");" + Environment.NewLine;
             constructor += "            Insert_GridView.DataBind();" + Environment.NewLine;
             constructor += "            Update_GridView.DataBind();" + Environment.NewLine;
             constructor += "            Delete_GridView.DataBind();" + Environment.NewLine;
-            constructor += "            return " + tableName + ".;" + Environment.NewLine;
+            constructor += "            return " + tableName + ";" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
-            constructor += "        public void " + tableName + "._delete(int ID)" + Environment.NewLine;
+            constructor += "        public void " + tableName + "_delete(int ID)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
             constructor += "            " + tableName + ".Delete(ID);" + Environment.NewLine;
             constructor += "            Insert_GridView.DataBind();" + Environment.NewLine;
@@ -585,15 +576,15 @@ namespace Web.App
             constructor += "        //Button Functions" + Environment.NewLine;
             constructor += "        protected void Insert_Button_Click(object sender, EventArgs e)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            " + tableName + ". = " + tableName + "._insert();" + Environment.NewLine;
+            constructor += "            " + tableName + " = " + tableName + "_insert();" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
             constructor += "        protected void Update_Button_Click(object sender, EventArgs e)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            " + tableName + ". = " + tableName + "._update(Convert.ToInt32(Update_GridView.SelectedValue));" + Environment.NewLine;
+            constructor += "            " + tableName + " = " + tableName + "_update(Convert.ToInt32(Update_GridView.SelectedValue));" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
             constructor += "        protected void Delete_Button_Click(object sender, EventArgs e)" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            constructor += "            " + tableName + "._delete(Convert.ToInt32(Delete_GridView.SelectedValue));" + Environment.NewLine;
+            constructor += "            " + tableName + "_delete(Convert.ToInt32(Delete_GridView.SelectedValue));" + Environment.NewLine;
             constructor += "        }" + Environment.NewLine;
             constructor += "        " + Environment.NewLine;
             constructor += "    }" + Environment.NewLine;
@@ -617,7 +608,7 @@ namespace Web.App
             constructor += "{" + Environment.NewLine;
             constructor += "    public class " + tableName + Environment.NewLine;
             constructor += "    {" + Environment.NewLine;
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            for (int i = 0; i < DB_Names.Count; i++)
             {
                 constructor += "        public " + C_Types[i] + " " + DB_Names[i] + Environment.NewLine;
                 constructor += "        {" + Environment.NewLine;
@@ -628,7 +619,7 @@ namespace Web.App
             constructor += "" + Environment.NewLine;
             constructor += "        public void SetColumnDefaults()" + Environment.NewLine;
             constructor += "        {" + Environment.NewLine;
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            for (int i = 0; i < DB_Names.Count; i++)
             {
                 String currentType = "";
                 if (C_Types[i] == "Int32") { currentType = "0"; }
@@ -659,7 +650,7 @@ namespace Web.App
             constructor += "                if (rdr.HasRows)" + Environment.NewLine;
             constructor += "                {" + Environment.NewLine;
             constructor += "                    rdr.Read();" + Environment.NewLine;
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            for (int i = 0; i < DB_Names.Count; i++)
             {
                 String currentType = "";
                 if (C_Types[i] == "Int32") { currentType = "rdr.GetInt32(" + i + ");"; }
@@ -727,14 +718,14 @@ namespace Web.App
             //if not..
             if (script_generator.result == 0)
             {
-                for (int i = 0; i < DB_Names.Count - 1; i++)
+                for (int i = 0; i < DB_Names.Count; i++)
                 {
                     constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
                 }
             }
             else
             {
-                for (int i = 1; i < DB_Names.Count - 1; i++)
+                for (int i = 1; i < DB_Names.Count; i++)
                 {
                     constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
                 }
@@ -745,7 +736,7 @@ namespace Web.App
             constructor += "                con.Open();" + Environment.NewLine;
             constructor += "                cmd = new SqlCommand(\"SP_DMCS_GET_" + tableName.ToUpper() + "\", con);" + Environment.NewLine;
             constructor += "                cmd.CommandType = System.Data.CommandType.StoredProcedure;" + Environment.NewLine;
-            for (int i = 1; i < DB_Names.Count - 1; i++)
+            for (int i = 1; i < DB_Names.Count; i++)
             {
                 constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
             }
@@ -777,7 +768,7 @@ namespace Web.App
             constructor += "                con.Open();" + Environment.NewLine;
             constructor += "                SqlCommand cmd = new SqlCommand(\"SP_DMCS_UPDATE_" + tableName.ToUpper() + "\", con);" + Environment.NewLine;
             constructor += "                cmd.CommandType = System.Data.CommandType.StoredProcedure;" + Environment.NewLine;
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            for (int i = 0; i < DB_Names.Count; i++)
             {
                 constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
             }
@@ -866,7 +857,7 @@ namespace Web.App
 
             constructor += "  [" + DB_Names[0] + "] " + DB_Types[0] + " IDENTITY(1,1) " + Null_Names[0] + "," + Environment.NewLine;
 
-            for (int i = 1; i < DB_Names.Count - 1; i++)
+            for (int i = 1; i < DB_Names.Count; i++)
             {
                 script_generator = script_generator.Select(tableName, DB_Names[i]);
                 //check for percisionable value
@@ -930,7 +921,7 @@ namespace Web.App
             constructor += "	SET NOCOUNT ON;" + Environment.NewLine;
             constructor += "SELECT [" + DB_Names[0] + "]" + Environment.NewLine;
 
-            for (int i = 1; i < DB_Names.Count - 1; i++)
+            for (int i = 1; i < DB_Names.Count; i++)
             {
                 constructor += "      ,[" + DB_Names[i] + "]" + Environment.NewLine;
             }
@@ -960,7 +951,7 @@ namespace Web.App
             //if not..
             if (script_generator.result == 0)
             {
-                for (int i = 0; i < DB_Names.Count - 1; i++)
+                for (int i = 0; i < DB_Names.Count; i++)
                 {
 
                     script_generator = script_generator.Select(tableName, DB_Names[i]);
@@ -1004,7 +995,7 @@ namespace Web.App
             }
             else
             {
-                for (int i = 1; i < DB_Names.Count - 1; i++)
+                for (int i = 1; i < DB_Names.Count; i++)
                 {
                     script_generator = script_generator.Select(tableName, DB_Names[i]);
                     //check for percisionable value
@@ -1051,7 +1042,7 @@ namespace Web.App
             constructor += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
             constructor += "	-- interfering with SELECT statements." + Environment.NewLine;
             constructor += "	SET NOCOUNT ON;" + Environment.NewLine;
-            for (int i = 1; i < DB_Names.Count - 1; i++)
+            for (int i = 1; i < DB_Names.Count; i++)
             {
                 if (DB_Types[i] == "varchar" || DB_Types[i] == "char")
                 {
@@ -1085,7 +1076,7 @@ namespace Web.App
             //if not..
             if (script_generator.result == 0)
             {
-                for (int i = 0; i < DB_Names.Count - 1; i++)
+                for (int i = 0; i < DB_Names.Count; i++)
                 {
                     if (i == 0)
                     {
@@ -1099,7 +1090,7 @@ namespace Web.App
                 constructor += "            )" + Environment.NewLine;
                 constructor += "     VALUES (" + Environment.NewLine;
 
-                for (int i = 0; i < DB_Names.Count - 1; i++)
+                for (int i = 0; i < DB_Names.Count; i++)
                 {
                     if (i == 0)
                     {
@@ -1113,7 +1104,7 @@ namespace Web.App
             }
             else
             {
-                for (int i = 1; i < DB_Names.Count - 1; i++)
+                for (int i = 1; i < DB_Names.Count; i++)
                 {
                     if (i == 1)
                     {
@@ -1127,7 +1118,7 @@ namespace Web.App
                 constructor += "            )" + Environment.NewLine;
                 constructor += "     VALUES (" + Environment.NewLine;
 
-                for (int i = 1; i < DB_Names.Count - 1; i++)
+                for (int i = 1; i < DB_Names.Count; i++)
                 {
                     if (i == 1)
                     {
@@ -1160,7 +1151,7 @@ namespace Web.App
             constructor += "GO" + Environment.NewLine;
             constructor += "CREATE PROCEDURE [dbo].[SP_DMCS_UPDATE_" + tableName.ToUpper() + "]" + Environment.NewLine;
 
-            for (int i = 0; i < DB_Names.Count - 1; i++)
+            for (int i = 0; i < DB_Names.Count; i++)
             {
                 script_generator = script_generator.Select(tableName, DB_Names[i]);
                 //check for percisionable value
@@ -1206,7 +1197,7 @@ namespace Web.App
             constructor += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
             constructor += "	-- interfering with SELECT statements." + Environment.NewLine;
             constructor += "	SET NOCOUNT ON;" + Environment.NewLine;
-            for (int i = 1; i < DB_Names.Count - 1; i++)
+            for (int i = 1; i < DB_Names.Count; i++)
             {
                 if (DB_Types[i] == "varchar" || DB_Types[i] == "char")
                 {
@@ -1236,9 +1227,9 @@ namespace Web.App
             constructor += "	UPDATE [dbo].[" + tableName + "]" + Environment.NewLine;
             constructor += "       SET" + Environment.NewLine;
 
-            for (int i = 1; i < DB_Names.Count - 1; i++)
+            for (int i = 1; i < DB_Names.Count; i++)
             {
-                if (i == DB_Names.Count - 1 - 1)
+                if (i == DB_Names.Count - 1)
                 {
                     constructor += "		   [" + DB_Names[i] + "] = @" + DB_Names[i] + Environment.NewLine;
                 }
@@ -1299,7 +1290,7 @@ namespace Web.App
             constructor += "SET QUOTED_IDENTIFIER ON" + Environment.NewLine;
             constructor += "GO" + Environment.NewLine;
             constructor += "CREATE PROCEDURE [dbo].[SP_DMCS_GET_" + tableName.ToUpper() + "]" + Environment.NewLine;
-            for (int i = 1; i < DB_Names.Count - 1; i++)
+            for (int i = 1; i < DB_Names.Count; i++)
             {
                 script_generator = script_generator.Select(tableName, DB_Names[i]);
                 //check for percisionable value
@@ -1344,7 +1335,7 @@ namespace Web.App
             constructor += "	-- SET NOCOUNT ON added to prevent extra result sets from" + Environment.NewLine;
             constructor += "	-- interfering with SELECT statements." + Environment.NewLine;
             constructor += "	SET NOCOUNT ON;" + Environment.NewLine;
-            for (int i = 1; i < DB_Names.Count - 1; i++)
+            for (int i = 1; i < DB_Names.Count; i++)
             {
                 if (DB_Types[i] == "varchar" || DB_Types[i] == "char")
                 {
@@ -1373,7 +1364,7 @@ namespace Web.App
             }
             constructor += "    SELECT [" + DB_Names[0] + "] " + Environment.NewLine;
             constructor += "      FROM [dbo].[" + tableName + "] " + Environment.NewLine;
-            for (int i = 1; i < DB_Names.Count - 1; i++)
+            for (int i = 1; i < DB_Names.Count; i++)
             {
                 String Equal_Sign;
                 if (DB_Types[i] == "varchar" || DB_Types[i] == "text")

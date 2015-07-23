@@ -173,6 +173,7 @@
   <ItemGroup>
     <Content Include=".patterns\controller.js" />
     <Content Include=".patterns\directive.js" />
+    <Content Include="address.aspx" />
     <Content Include="Content\grd_alt.png" />
     <Content Include="Content\grd_head.png" />
     <Content Include="Content\grd_pgr.png" />
@@ -1201,6 +1202,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="address.aspx.cs">
+      <DependentUpon>address.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="address.aspx.designer.cs">
+      <DependentUpon>address.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Code\address.cs" />
     <Compile Include="Register_Client.aspx.cs">
       <DependentUpon>Register_Client.aspx</DependentUpon>
