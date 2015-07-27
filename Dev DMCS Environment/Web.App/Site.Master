@@ -6,6 +6,7 @@
 <link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
 <link href="Content/ng-table.css" rel="stylesheet" />
 <link href="Content/app.scss" rel="stylesheet" />
+<link href="Content/jquery.datetimepicker.css" rel="stylesheet" />
 
 <%--/////////////////////////////////////////////////////////////--%>
 
@@ -90,6 +91,7 @@
 <%--////////////////////////////Java Script///////////////////////--%>
 <%--Framework Scripts Start--%>
 <script src="Scripts/jquery-1.10.2.js"></script>
+<script src="Scripts/jquery.datetimepicker.js"></script>
 <script src="Scripts/bootstrap.js"></script>
 <script src="Scripts/respond.js"></script>
 
@@ -124,5 +126,7 @@
 <script src="Angular_Scripts/app/controllers/gridCtrl.js"></script>
 <script src="Angular_Scripts/app/controllers/modalCtrl.js"></script>
 <script src="Angular_Scripts/app/controllers/ScriptGeneratorTemplateCtrl.js"></script>
+<script src="Angular_Scripts/app/controllers/PetCtrl.js"></script>
 <%--Controller Scripts End--%>
 <%--/////////////////////////////////////////////////////////////--%>
+

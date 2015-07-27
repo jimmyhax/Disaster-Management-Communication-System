@@ -12,6 +12,6 @@
             OnSelectedIndexChanged="DDL_SelectedIndexChanged">
             <asp:ListItem Selected="True" Enabled="true">Select Table</asp:ListItem>
         </asp:DropDownList>
-        <asp:SqlDataSource ID="tableDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>" SelectCommand="SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME != 'sysdiagrams'"></asp:SqlDataSource>
+        <asp:SqlDataSource ID="tableDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>" SelectCommand="SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME != 'sysdiagrams' ORDER BY TABLE_NAME"></asp:SqlDataSource>
     </div>
 </asp:Content>

@@ -174,12 +174,19 @@
     <Content Include=".patterns\controller.js" />
     <Content Include=".patterns\directive.js" />
     <Content Include="address.aspx" />
+    <Content Include="Angular_Scripts\app\controllers\PetCtrl.js" />
     <Content Include="Content\grd_alt.png" />
     <Content Include="Content\grd_head.png" />
     <Content Include="Content\grd_pgr.png" />
     <Content Include="Content\images\css\grd_alt.png" />
     <Content Include="Content\images\css\grd_head.png" />
     <Content Include="Content\images\css\grd_pgr.png" />
+    <Content Include="Content\images\placeholders\Default_Person.jpg" />
+    <Content Include="Content\images\placeholders\Image_Placeholder.jpg" />
+    <Content Include="Content\images\placeholders\petPlaceHolder.png" />
+    <Content Include="Content\images\ShowImage.aspx" />
+    <Content Include="Content\jquery.datetimepicker.css" />
+    <Content Include="Pet.aspx" />
     <Content Include="Register_Client.aspx" />
     <Content Include="modalExample.aspx" />
     <Content Include=".patterns\service.js" />
@@ -1146,6 +1153,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Scripts\jquery.datetimepicker.js" />
     <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -1210,6 +1218,22 @@
       <DependentUpon>address.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Code\address.cs" />
+    <Compile Include="App_Code\Pet.cs" />
+    <Compile Include="App_Code\Show_Image.cs" />
+    <Compile Include="Content\images\ShowImage.aspx.cs">
+      <DependentUpon>ShowImage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Content\images\ShowImage.aspx.designer.cs">
+      <DependentUpon>ShowImage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pet.aspx.cs">
+      <DependentUpon>Pet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pet.aspx.designer.cs">
+      <DependentUpon>Pet.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Register_Client.aspx.cs">
       <DependentUpon>Register_Client.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

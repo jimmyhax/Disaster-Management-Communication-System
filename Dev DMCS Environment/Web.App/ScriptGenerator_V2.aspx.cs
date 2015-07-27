@@ -138,28 +138,22 @@ namespace Web.App
             constructor += "                                        <asp:CommandField ShowSelectButton=\"True\" />" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count; i++)
             {
-                if (DB_Types[i] != "byte[]")
+                if (C_Types[i] != "byte[]")
                 {
                     if (i < 3)
                     {
-                constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" />" + Environment.NewLine;
+                        constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" />" + Environment.NewLine;
                     }
                     else
                     {
-                constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" Visible=\"false\" />" + Environment.NewLine;
+                        constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" Visible=\"false\" />" + Environment.NewLine;
                     }
 
                 }
                 else
                 {
-                    if (i < 3)
-                    {
-                        constructor += "                            <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" ControlStyle-Width = \"150\" ControlStyle-Height = \"100\" HeaderText = \"Preview Image\"/>" + Environment.NewLine;
-                    }
-                    else
-                    {
-                        constructor += "                            <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" ControlStyle-Width = \"150\" ControlStyle-Height = \"100\" HeaderText = \"Preview Image\" Visible=\"false\" />" + Environment.NewLine;
-                    }
+
+                    constructor += "                                        <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Content/images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" HeaderText = \"Preview Image\" ControlStyle-Height = \"50\" ControlStyle-Width=\"50\" HeaderStyle-ForeColor=\"#F5F5F5\" ItemStyle-VerticalAlign=\"Middle\" ItemStyle-HorizontalAlign=\"Center\" />" + Environment.NewLine;
                 }
 
             }
@@ -172,29 +166,39 @@ namespace Web.App
             rowcount = 0;
             for (int i = 1; i < DB_Names.Count; i++)
             {
-                if (i == 0){
+                
+                if (C_Types[i] == "byte[]")
+                {
                     constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
                     constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
-                    constructor += "                                <asp:TextBox disabled class=\"pull-right form-control form-control-disabled\" ID=\"" + DB_Names[i] + "_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                    constructor += "                                 <asp:Image ID=\"" + DB_Names[i] + "_Insert_Image\" CssClass=\"image-preview\" runat=\"server\" ImageUrl=\"~/Content/images/placeholders/Default_Person.jpg\" />" + Environment.NewLine;
+                    constructor += "                                 <asp:FileUpload ID=\"" + DB_Names[i] + "_Insert_FileUpload\" runat=\"server\" />" + Environment.NewLine;
                     constructor += "                            </div>" + Environment.NewLine;
                 }
-                else {
-
-                    if (DB_Types[i] == "byte[]")
+                else if (C_Types[i] == "DateTime") {
+                    constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                    constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                    if (Null_Names[i] == "NOT NULL")
                     {
-                        constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-                        constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
-                        constructor += "                                 <asp:Image ID=\"" + DB_Names[i] + "_Insert_Image\" runat=\"server\" ImageUrl=\"~/Images/Default_Person.jpg\" />" + Environment.NewLine;
-                        constructor += "                                 <asp:FileUpload ID=\"" + DB_Names[i] + "_Insert_FileUpload\" runat=\"server\" />" + Environment.NewLine;
-                        constructor += "                            </div>" + Environment.NewLine;
+                        constructor += "                          <div class=\"required-container\">" + Environment.NewLine;
+                        constructor += "                              <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"" + DB_Names[i] + "_Insert_TextBox\" ID=\"" + DB_Names[i] + "_Insert_RequiredFieldValidator\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Insert_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
+                        constructor += "                          </div>" + Environment.NewLine;
                     }
-                    else
+                    constructor += "                                <asp:TextBox class=\"pull-right form-control date-picker\" ID=\"" + DB_Names[i] + "_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                    constructor += "                            </div>" + Environment.NewLine;
+                }
+                else
+                {
+                    constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                    constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                    if (Null_Names[i] == "NOT NULL")
                     {
-                        constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-                        constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
-                        constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"" + DB_Names[i] + "_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-                        constructor += "                            </div>" + Environment.NewLine;
+                        constructor += "                          <div class=\"required-container\">" + Environment.NewLine;
+                        constructor += "                              <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"" + DB_Names[i] + "_Insert_TextBox\" ID=\"" + DB_Names[i] + "_Insert_RequiredFieldValidator\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Insert_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
+                        constructor += "                          </div>" + Environment.NewLine;
                     }
+                    constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"" + DB_Names[i] + "_Insert_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                    constructor += "                            </div>" + Environment.NewLine;
                 }
                 rowcount++;
             }
@@ -227,28 +231,21 @@ namespace Web.App
             constructor += "                                        <asp:CommandField ShowSelectButton=\"True\" />" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count; i++)
             {
-                if (DB_Types[i] != "byte[]")
+                if (C_Types[i] != "byte[]")
                 {
                     if (i < 3)
                     {
-                constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" />" + Environment.NewLine;
+                        constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" />" + Environment.NewLine;
                     }
                     else
                     {
-                constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" Visible=\"false\" />" + Environment.NewLine;
+                        constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" Visible=\"false\" />" + Environment.NewLine;
                     }
 
                 }
                 else
                 {
-                    if (i < 3)
-                    {
-                        constructor += "                            <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" ControlStyle-Width = \"150\" ControlStyle-Height = \"100\" HeaderText = \"Preview Image\"/>" + Environment.NewLine;
-                    }
-                    else
-                    {
-                        constructor += "                            <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" ControlStyle-Width = \"150\" ControlStyle-Height = \"100\" HeaderText = \"Preview Image\" Visible=\"false\" />" + Environment.NewLine;
-                    }
+                    constructor += "                                        <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Content/images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" HeaderText = \"Preview Image\" ControlStyle-Height = \"50\" ControlStyle-Width=\"50\" HeaderStyle-ForeColor=\"#F5F5F5\" ItemStyle-VerticalAlign=\"Middle\" ItemStyle-HorizontalAlign=\"Center\" />" + Environment.NewLine;
                 }
 
             }
@@ -261,29 +258,39 @@ namespace Web.App
             rowcount = 0;
             for (int i = 0; i < DB_Names.Count; i++)
             {
-                if (i == 0){
+                if (C_Types[i] == "byte[]")
+                {
                     constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
                     constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
-                    constructor += "                                <asp:TextBox disabled class=\"pull-right form-control form-control-disabled\" ID=\"" + DB_Names[i] + "_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                    constructor += "                                 <asp:Image ID=\"" + DB_Names[i] + "_Update_Image\" CssClass=\"image-preview\" runat=\"server\" ImageUrl=\"~/Content/images/placeholders/Default_Person.jpg\" />" + Environment.NewLine;
+                    constructor += "                                 <asp:FileUpload ID=\"" + DB_Names[i] + "_Update_FileUpload\" runat=\"server\" />" + Environment.NewLine;
                     constructor += "                            </div>" + Environment.NewLine;
                 }
-                else {
-
-                    if (DB_Types[i] == "byte[]")
+                else if (C_Types[i] == "DateTime")
+                {
+                    constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                    constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                    if (Null_Names[i] == "NOT NULL")
                     {
-                        constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-                        constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
-                        constructor += "                                 <asp:Image ID=\"" + DB_Names[i] + "_Update_Image\" runat=\"server\" ImageUrl=\"~/Images/Default_Person.jpg\" />" + Environment.NewLine;
-                        constructor += "                                 <asp:FileUpload ID=\"" + DB_Names[i] + "_Update_FileUpload\" runat=\"server\" />" + Environment.NewLine;
-                        constructor += "                            </div>" + Environment.NewLine;
+                        constructor += "                          <div class=\"required-container\">" + Environment.NewLine;
+                        constructor += "                              <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"" + DB_Names[i] + "_Update_TextBox\" ID=\"" + DB_Names[i] + "_Update_RequiredFieldValidator\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Update_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
+                        constructor += "                          </div>" + Environment.NewLine;
                     }
-                    else
+                    constructor += "                                <asp:TextBox class=\"pull-right form-control date-picker\" ID=\"" + DB_Names[i] + "_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                    constructor += "                            </div>" + Environment.NewLine;
+                }
+                else
+                {
+                    constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                    constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                    if (Null_Names[i] == "NOT NULL")
                     {
-                        constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
-                        constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
-                        constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"" + DB_Names[i] + "_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
-                        constructor += "                            </div>" + Environment.NewLine;
+                        constructor += "                          <div class=\"required-container\">" + Environment.NewLine;
+                        constructor += "                              <asp:RequiredFieldValidator CssClass=\"required\" ControlToValidate=\"" + DB_Names[i] + "_Update_TextBox\" ID=\"" + DB_Names[i] + "_Update_RequiredFieldValidator\" runat=\"server\" Text=\"* Required Field\" ErrorMessage=\"Required Field\" ValidationGroup=\"Update_Group\"></asp:RequiredFieldValidator>" + Environment.NewLine;
+                        constructor += "                          </div>" + Environment.NewLine;
                     }
+                    constructor += "                                <asp:TextBox class=\"pull-right form-control\" ID=\"" + DB_Names[i] + "_Update_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
+                    constructor += "                            </div>" + Environment.NewLine;
                 }
                 rowcount++;
             }
@@ -316,28 +323,21 @@ namespace Web.App
             constructor += "                                        <asp:CommandField ShowSelectButton=\"True\" />" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count; i++)
             {
-                if (DB_Types[i] != "byte[]")
+                if (C_Types[i] != "byte[]")
                 {
                     if (i < 3)
                     {
-                constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" />" + Environment.NewLine;
+                        constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" />" + Environment.NewLine;
                     }
                     else
                     {
-                constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" Visible=\"false\" />" + Environment.NewLine;
+                        constructor += "                                        <asp:BoundField DataField=\"" + DB_Names[i] + "\" HeaderText=\"" + DB_Names[i] + "\" InsertVisible=\"False\" ReadOnly=\"True\" SortExpression=\"" + DB_Names[i] + "\" Visible=\"false\" />" + Environment.NewLine;
                     }
 
                 }
                 else
                 {
-                    if (i < 3)
-                    {
-                        constructor += "                            <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" ControlStyle-Width = \"150\" ControlStyle-Height = \"100\" HeaderText = \"Preview Image\"/>" + Environment.NewLine;
-                    }
-                    else
-                    {
-                        constructor += "                            <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" ControlStyle-Width = \"150\" ControlStyle-Height = \"100\" HeaderText = \"Preview Image\" Visible=\"false\" />" + Environment.NewLine;
-                    }
+                    constructor += "                                        <asp:ImageField DataImageUrlField = \"" + DB_Names[0] + "\" DataImageUrlFormatString = \"~/Content/images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "={0}\" HeaderText = \"Preview Image\" ControlStyle-Height = \"50\" ControlStyle-Width=\"50\" HeaderStyle-ForeColor=\"#F5F5F5\" ItemStyle-VerticalAlign=\"Middle\" ItemStyle-HorizontalAlign=\"Center\" />" + Environment.NewLine;
                 }
 
             }
@@ -350,12 +350,19 @@ namespace Web.App
             rowcount = 0;
             for (int i = 0; i < DB_Names.Count; i++)
             {
-                if (DB_Types[i] == "byte[]")
+                if (C_Types[i] == "byte[]")
                 {
                     constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
                     constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
-                    constructor += "                                 <asp:Image ID=\"" + DB_Names[i] + "_Delete_Image\" runat=\"server\" ImageUrl=\"~/Images/Default_Person.jpg\" />" + Environment.NewLine;
-                    constructor += "                                 <asp:FileUpload ID=\"" + DB_Names[i] + "_Delete_FileUpload\" runat=\"server\" />" + Environment.NewLine;
+                    constructor += "                                 <asp:Image ID=\"" + DB_Names[i] + "_Delete_Image\" CssClass=\"image-preview\" runat=\"server\" ImageUrl=\"~/Content/images/placeholders/Default_Person.jpg\" />" + Environment.NewLine;
+                    constructor += "                                 <asp:FileUpload disabled ID=\"" + DB_Names[i] + "_Delete_FileUpload\" runat=\"server\" />" + Environment.NewLine;
+                    constructor += "                            </div>" + Environment.NewLine;
+                }
+                else if (C_Types[i] == "DateTime")
+                {
+                    constructor += "                            <div class=\"input-group text-center form-group\">" + Environment.NewLine;
+                    constructor += "                                <span class=\"pull-left\">" + DB_Names[i] + "</span>" + Environment.NewLine;
+                    constructor += "                                <asp:TextBox disabled class=\"pull-right form-control date-picker\" ID=\"" + DB_Names[i] + "_Delete_TextBox\" runat=\"server\"></asp:TextBox>" + Environment.NewLine;
                     constructor += "                            </div>" + Environment.NewLine;
                 }
                 else
@@ -425,13 +432,17 @@ namespace Web.App
             constructor += "            " + tableName + " = " + tableName + ".Select(ID);" + Environment.NewLine;
             for (int i = 1; i < DB_Names.Count; i++)
             {
-                if (C_Types[i] != "byte[]")
+                if (C_Types[i] == "byte[]")
+                {
+                    constructor += "            " + DB_Names[i] + "_Insert_Image.Attributes[\"src\"] = ResolveUrl(\"~/Content/images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "=\" + ID);" + Environment.NewLine;
+                }
+                else if (C_Types[i] == "DateTime")
                 {
                     constructor += "            " + DB_Names[i] + "_Insert_TextBox.Text = Convert.ToString(" + tableName + "." + DB_Names[i] + ");" + Environment.NewLine;
                 }
                 else
                 {
-                    constructor += "            " + DB_Names[i] + "_Insert_Image.Attributes[\"src\"] = ResolveUrl(\"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "=\" + ID);" + Environment.NewLine;
+                    constructor += "            " + DB_Names[i] + "_Insert_TextBox.Text = Convert.ToString(" + tableName + "." + DB_Names[i] + ");" + Environment.NewLine;
                 }
             }
             constructor += "            return " + tableName + ";" + Environment.NewLine;
@@ -441,13 +452,17 @@ namespace Web.App
             constructor += "            " + tableName + " = " + tableName + ".Select(ID);" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count; i++)
             {
-                if (C_Types[i] != "byte[]")
+                if (C_Types[i] == "byte[]")
+                {
+                    constructor += "            " + DB_Names[i] + "_Update_Image.Attributes[\"src\"] = ResolveUrl(\"~/Content/images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "=\" + ID);" + Environment.NewLine;
+                }
+                else if (C_Types[i] == "DateTime")
                 {
                     constructor += "            " + DB_Names[i] + "_Update_TextBox.Text = Convert.ToString(" + tableName + "." + DB_Names[i] + ");" + Environment.NewLine;
                 }
                 else
                 {
-                    constructor += "            " + DB_Names[i] + "_Update_Image.Attributes[\"src\"] = ResolveUrl(\"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "=\" + ID);" + Environment.NewLine;
+                    constructor += "            " + DB_Names[i] + "_Update_TextBox.Text = Convert.ToString(" + tableName + "." + DB_Names[i] + ");" + Environment.NewLine;
                 }
             }
             constructor += "            return " + tableName + ";" + Environment.NewLine;
@@ -457,13 +472,17 @@ namespace Web.App
             constructor += "            " + tableName + " = " + tableName + ".Select(ID);" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count; i++)
             {
-                if (C_Types[i] != "byte[]")
+                if (C_Types[i] == "byte[]")
+                {
+                    constructor += "            " + DB_Names[i] + "_Delete_Image.Attributes[\"src\"] = ResolveUrl(\"~/Content/images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "=\" + ID);" + Environment.NewLine;
+                }
+                else if (C_Types[i] == "DateTime")
                 {
                     constructor += "            " + DB_Names[i] + "_Delete_TextBox.Text = Convert.ToString(" + tableName + "." + DB_Names[i] + ");" + Environment.NewLine;
                 }
                 else
                 {
-                    constructor += "            " + DB_Names[i] + "_Delete_Image.Attributes[\"src\"] = ResolveUrl(\"~/Images/ShowImage.aspx?Table_Name=" + tableName + "&Image_Name=" + DB_Names[i] + "&ID=" + DB_Names[0] + "=\" + ID);" + Environment.NewLine;
+                    constructor += "            " + DB_Names[i] + "_Delete_TextBox.Text = Convert.ToString(" + tableName + "." + DB_Names[i] + ");" + Environment.NewLine;
                 }
             }
             constructor += "            return " + tableName + ";" + Environment.NewLine;
@@ -522,42 +541,47 @@ namespace Web.App
             constructor += "            " + tableName + " = " + tableName + ".Select(ID);" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count; i++)
             {
-                if (C_Types[i] == "Int32")
-                {
-                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToInt32(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                if (i == 0) {
+                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToInt32(Update_GridView.SelectedValue);" + Environment.NewLine;
                 }
-                if (C_Types[i] == "Double")
-                {
-                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDouble(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
-                }
-                if (C_Types[i] == "double")
-                {
-                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDouble(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
-                }
-                if (C_Types[i] == "String")
-                {
-                    constructor += "            " + tableName + "." + DB_Names[i] + " = " + DB_Names[i] + "_Update_TextBox.Text;" + Environment.NewLine;
-                }
-                if (C_Types[i] == "Char")
-                {
-                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToString(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
-                }
-                if (C_Types[i] == "DateTime")
-                {
-                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDateTime(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
-                }
-                if (C_Types[i] == "Boolean")
-                {
-                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToBoolean(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
-                }
-                if (C_Types[i] == "Decimal")
-                {
-                    constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDecimal(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
-                }
-                if (C_Types[i] == "byte[]")
-                {
-                    constructor += "            byte[] uploaded_picture = " + DB_Names[i] + "_Update_FileUpload.FileBytes;" + Environment.NewLine;
-                    constructor += "            " + tableName + "." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
+                else{
+                    if (C_Types[i] == "Int32")
+                    {
+                        constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToInt32(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                    }
+                    if (C_Types[i] == "Double")
+                    {
+                        constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDouble(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                    }
+                    if (C_Types[i] == "double")
+                    {
+                        constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDouble(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                    }
+                    if (C_Types[i] == "String")
+                    {
+                        constructor += "            " + tableName + "." + DB_Names[i] + " = " + DB_Names[i] + "_Update_TextBox.Text;" + Environment.NewLine;
+                    }
+                    if (C_Types[i] == "Char")
+                    {
+                        constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToString(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                    }
+                    if (C_Types[i] == "DateTime")
+                    {
+                        constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDateTime(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                    }
+                    if (C_Types[i] == "Boolean")
+                    {
+                        constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToBoolean(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                    }
+                    if (C_Types[i] == "Decimal")
+                    {
+                        constructor += "            " + tableName + "." + DB_Names[i] + " = Convert.ToDecimal(" + DB_Names[i] + "_Update_TextBox.Text);" + Environment.NewLine;
+                    }
+                    if (C_Types[i] == "byte[]")
+                    {
+                        constructor += "            byte[] uploaded_picture = " + DB_Names[i] + "_Update_FileUpload.FileBytes;" + Environment.NewLine;
+                        constructor += "            " + tableName + "." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
+                    }
                 }
             }
             constructor += "            " + tableName + ".Update(" + tableName + ");" + Environment.NewLine;
@@ -1421,8 +1445,15 @@ namespace Web.App
             constructor += "    var controllerId = '" + tableName + "Ctrl';" + Environment.NewLine;
             constructor += "    angular.module('app').controller(controllerId," + Environment.NewLine;
             constructor += "      ['$scope', " + tableName + "Ctrl]);" + Environment.NewLine;
+            constructor += "    function PetCtrl() {" + Environment.NewLine;
             constructor += "        // 'Controller As' syntax" + Environment.NewLine;
             constructor += "        var vm = this;" + Environment.NewLine;
+            constructor += "        init_jQuery();" + Environment.NewLine;
+            constructor += "" + Environment.NewLine;
+            constructor += "        function init_jQuery() {" + Environment.NewLine;
+            constructor += "            $('.date-picker').datetimepicker({mask: '9999/19/39 29:59'});" + Environment.NewLine;
+            constructor += "       }" + Environment.NewLine;
+            constructor += "   }" + Environment.NewLine;
             constructor += "})();" + Environment.NewLine;
 
             return constructor;

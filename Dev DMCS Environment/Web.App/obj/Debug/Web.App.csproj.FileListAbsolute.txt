@@ -11,7 +11,6 @@ C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-Sys
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Web.App\bin\DotNetOpenAuth.ApplicationBlock.dll
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Web.App\bin\EntityFramework.dll
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Web.App\bin\EntityFramework.SqlServer.dll
-C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Web.App\bin\Ionic.Zip.Reduced.dll
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Web.App\bin\IronRuby.dll
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Web.App\bin\IronRuby.Libraries.dll
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Web.App\bin\Microsoft.AspNet.FriendlyUrls.dll
