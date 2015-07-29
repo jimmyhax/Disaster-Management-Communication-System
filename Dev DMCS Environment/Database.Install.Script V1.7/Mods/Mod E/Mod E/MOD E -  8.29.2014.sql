@@ -86,13 +86,7 @@ Products
 
 
 
-
-
-
-
-
-
-
+BEGIN TRANSACTION
 
 /***********************************************************************/
 ALTER TABLE [dbo].[tier_req] DROP CONSTRAINT [tier_id_fk]
@@ -28085,8 +28079,6 @@ BEGIN
 END
 
 GO
-USE [disaster_management_DEV]
-GO
 
 /****** Object:  StoredProcedure [dbo].[SP_SCRIPT_GENERATOR_SELECT_PERCISION]    Script Date: 8/20/2014 5:40:09 PM ******/
 SET ANSI_NULLS ON
@@ -28182,6 +28174,4 @@ GO
 /************ - MOD E Complete -  ******/
 
 
-
-
-
+COMMIT

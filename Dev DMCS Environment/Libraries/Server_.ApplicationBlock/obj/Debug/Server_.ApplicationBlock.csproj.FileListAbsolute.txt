@@ -112,3 +112,4 @@ C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-Sys
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Libraries\Server_.ApplicationBlock\obj\Debug\Server_.ApplicationBlock.csproj.App.config
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Libraries\Server_.ApplicationBlock\obj\Debug\DotNetOpenAuth.ApplicationBlock.dll
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Libraries\Server_.ApplicationBlock\obj\Debug\DotNetOpenAuth.ApplicationBlock.pdb
+C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Libraries\Server_.ApplicationBlock\obj\Debug\Server_.ApplicationBlock.csprojResolveAssemblyReference.cache

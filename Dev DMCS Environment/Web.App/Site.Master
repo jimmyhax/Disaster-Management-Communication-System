@@ -113,6 +113,7 @@
 <%--/////////////////////////////////////////////////////////////--%>
 <%--Service Scripts Start--%>
 <script src="Angular_Scripts/app/services/homeFactory.js"></script>
+<script src="Angular_Scripts/app/services/dateTimeFactory.js"></script>
 
 <%--Service Scripts End--%>
 <%--/////////////////////////////////////////////////////////////--%>

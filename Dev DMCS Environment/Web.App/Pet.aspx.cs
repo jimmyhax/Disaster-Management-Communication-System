@@ -117,8 +117,11 @@ namespace Web.App
             Pet.Pet_Condition = Pet_Condition_Insert_TextBox.Text;
             Pet.Pet_Status = Pet_Status_Insert_TextBox.Text;
             Pet.Pet_Date_Of_Birth = Convert.ToDateTime(Pet_Date_Of_Birth_Insert_TextBox.Text);
-            byte[] uploaded_picture = Pet_Picture_Insert_FileUpload.FileBytes;
-            Pet.Pet_Picture = uploaded_picture;
+            if (Pet_Picture_Insert_FileUpload.HasFile)
+            {
+                byte[] uploaded_picture = Pet_Picture_Insert_FileUpload.FileBytes;
+                Pet.Pet_Picture = uploaded_picture;
+            }
             Pet.Pet_Sterilized = Pet_Sterilized_Insert_TextBox.Text;
             Pet.Date_Modified = Convert.ToDateTime(Date_Modified_Insert_TextBox.Text);
             Pet.Date_Created = Convert.ToDateTime(Date_Created_Insert_TextBox.Text);
@@ -146,8 +149,11 @@ namespace Web.App
             Pet.Pet_Condition = Pet_Condition_Update_TextBox.Text;
             Pet.Pet_Status = Pet_Status_Update_TextBox.Text;
             Pet.Pet_Date_Of_Birth = Convert.ToDateTime(Pet_Date_Of_Birth_Update_TextBox.Text);
-            byte[] uploaded_picture = Pet_Picture_Update_FileUpload.FileBytes;
-            Pet.Pet_Picture = uploaded_picture;
+            if (Pet_Picture_Update_FileUpload.HasFile)
+            {
+                byte[] uploaded_picture = Pet_Picture_Update_FileUpload.FileBytes;
+                Pet.Pet_Picture = uploaded_picture;
+            }
             Pet.Pet_Sterilized = Pet_Sterilized_Update_TextBox.Text;
             Pet.Date_Modified = Convert.ToDateTime(Date_Modified_Update_TextBox.Text);
             Pet.Date_Created = Convert.ToDateTime(Date_Created_Update_TextBox.Text);

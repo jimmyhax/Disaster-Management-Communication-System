@@ -2025,7 +2025,7 @@ CREATE TABLE [dbo].[Pet_Missing](
 	[Reward_Amt] [money] NULL,
 	[Pet_Height] [int] NULL,
 	[Breeder] [varchar](50) NULL,
-	[Pet_Sdisaster_management] [varchar](50) NULL,
+	[Pet_Sold] [varchar](50) NULL,
 	[Bill_Of_Sale] [varchar](50) NULL,
 	[Date_Created] [datetime] NULL,
 	[Date_Modified] [datetime] NULL,
@@ -6521,7 +6521,7 @@ ALTER PROCEDURE [dbo].[SP_DMCS_get_pet_missingID]
             @Reward_Amt as decimal = NULL,
             @Pet_Height as int = NULL,
             @Breeder as varchar (50) = NULL,
-            @Pet_Sdisaster_management as varchar (50) = NULL,
+            @Pet_Sold as varchar (50) = NULL,
             @Bill_Of_Sale as varchar (50) = NULL,
             @Date_Created AS DateTime = NULL,
             @Date_Modified AS DateTime = NULL
@@ -6543,7 +6543,7 @@ SELECT [pet_missing_id]
    or [Reward_Amt] = @Reward_Amt
    or [Pet_Height] = @Pet_Height
    or [Breeder] = @Breeder
-   or [Pet_Sdisaster_management] = @Pet_Sdisaster_management
+   or [Pet_Sold] = @Pet_Sold
    or [Date_Created] = @Date_Created
    or [Date_Modified] = @Date_Modified 
         
@@ -7105,7 +7105,7 @@ ALTER PROCEDURE [dbo].[SP_DMCS_Insert_Pet_Missing]
             @Reward_Amt as decimal,
             @Pet_Height as int,
             @Breeder as varchar (50),
-            @Pet_Sdisaster_management as varchar (50),
+            @Pet_Sold as varchar (50),
             @Bill_Of_Sale as varchar (50),
             @Date_Created AS DateTime,
             @Date_Modified AS DateTime
@@ -7134,7 +7134,7 @@ INSERT INTO [disaster_mngt_test].[dbo].[Pet_Missing]
            ,[Reward_Amt]
            ,[Pet_Height]
            ,[Breeder]
-           ,[Pet_Sdisaster_management]
+           ,[Pet_Sold]
            ,[Bill_Of_Sale]
            ,[Date_Created]
            ,[Date_Modified])
@@ -7149,7 +7149,7 @@ INSERT INTO [disaster_mngt_test].[dbo].[Pet_Missing]
             @Reward_Amt,
             @Pet_Height,
             @Breeder,
-            @Pet_Sdisaster_management,
+            @Pet_Sold,
             @Bill_Of_Sale,
             @Date_Created,
             @Date_Modified)
@@ -7475,7 +7475,7 @@ BEGIN
 						[Reward_Amt],
 						[Pet_Height],
 						[Breeder],
-						[Pet_Sdisaster_management],
+						[Pet_Sold],
 						[Bill_Of_Sale],
 						[Date_Created],
 						[Date_Modified]
@@ -7912,7 +7912,7 @@ ALTER PROCEDURE [dbo].[SP_DMCS_Update_Pet_Missing]
             @Reward_Amt as decimal,
             @Pet_Height as int,
             @Breeder as varchar (50),
-            @Pet_Sdisaster_management as varchar (50),
+            @Pet_Sold as varchar (50),
             @Bill_Of_Sale as varchar (50),
             @Date_Modified AS DateTime
        
@@ -7934,7 +7934,7 @@ BEGIN
       ,[Reward_Amt] = @Reward_Amt
       ,[Pet_Height] = @Pet_Height
       ,[Breeder] = @Breeder
-      ,[Pet_Sdisaster_management] = @Pet_Sdisaster_management
+      ,[Pet_Sold] = @Pet_Sold
       ,[Bill_Of_Sale] = @Bill_Of_Sale
       ,[Date_Modified] = @Date_Modified
  WHERE Pet_Missing.Pet_Missing_ID = @Pet_Missing_ID

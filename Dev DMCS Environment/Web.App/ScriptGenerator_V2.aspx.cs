@@ -526,8 +526,11 @@ namespace Web.App
                 }
                 if (C_Types[i] == "byte[]")
                 {
-                    constructor += "            byte[] uploaded_picture = " + DB_Names[i] + "_Insert_FileUpload.FileBytes;" + Environment.NewLine;
-                    constructor += "            " + tableName + "." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
+                    constructor += "            if (" + DB_Names[i] + "_Insert_FileUpload.HasFile)" + Environment.NewLine;
+                    constructor += "            {" + Environment.NewLine;
+                    constructor += "                byte[] uploaded_picture = " + DB_Names[i] + "_Insert_FileUpload.FileBytes;" + Environment.NewLine;
+                    constructor += "                " + tableName + "." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
+                    constructor += "            }" + Environment.NewLine;
                 }
             }
             constructor += "            " + tableName + " = " + tableName + ".Insert(" + tableName + ");" + Environment.NewLine;
@@ -579,8 +582,11 @@ namespace Web.App
                     }
                     if (C_Types[i] == "byte[]")
                     {
-                        constructor += "            byte[] uploaded_picture = " + DB_Names[i] + "_Update_FileUpload.FileBytes;" + Environment.NewLine;
-                        constructor += "            " + tableName + "." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
+                        constructor += "            if (" + DB_Names[i] + "_Update_FileUpload.HasFile)" + Environment.NewLine;
+                        constructor += "            {" + Environment.NewLine;
+                        constructor += "                byte[] uploaded_picture = " + DB_Names[i] + "_Update_FileUpload.FileBytes;" + Environment.NewLine;
+                        constructor += "                " + tableName + "." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
+                        constructor += "            }" + Environment.NewLine;
                     }
                 }
             }
@@ -627,10 +633,11 @@ namespace Web.App
             constructor += "using System.Collections.Generic;" + Environment.NewLine;
             constructor += "using System.Text;" + Environment.NewLine;
             constructor += "using System.Data.SqlClient;" + Environment.NewLine;
+            constructor += "using System.Drawing;" + Environment.NewLine;
 
             constructor += "namespace Web.App" + Environment.NewLine;
             constructor += "{" + Environment.NewLine;
-            constructor += "    public class " + tableName + Environment.NewLine;
+            constructor += "    public class " + tableName + " : System.Web.UI.Page" + Environment.NewLine;
             constructor += "    {" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count; i++)
             {
@@ -751,7 +758,22 @@ namespace Web.App
             {
                 for (int i = 1; i < DB_Names.Count; i++)
                 {
-                    constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
+                    if (C_Types[i] == "byte[]")
+                    {
+                        constructor += "                if (id." + DB_Names[i] + " == null)" + Environment.NewLine;
+                        constructor += "                {" + Environment.NewLine;
+                        constructor += "                    Size size = new Size(100, 100);" + Environment.NewLine;
+                        constructor += "                    System.Drawing.Image image = System.Drawing.Image.FromFile(Server.MapPath(\"~/Content/images/placeholders/petPlaceHolder.png\"));" + Environment.NewLine;
+                        constructor += "                    Web.App.ShowImage.resizeImage(image, size);" + Environment.NewLine;
+                        constructor += "                    byte[] uploaded_picture = Web.App.ShowImage.imageToByteArray(image);" + Environment.NewLine;
+                        constructor += "                    id." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
+                        constructor += "                }" + Environment.NewLine;
+                        constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
+                    }
                 }
             }
             constructor += "                cmd.ExecuteReader();" + Environment.NewLine;
@@ -794,7 +816,22 @@ namespace Web.App
             constructor += "                cmd.CommandType = System.Data.CommandType.StoredProcedure;" + Environment.NewLine;
             for (int i = 0; i < DB_Names.Count; i++)
             {
-                constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
+                if (C_Types[i] == "byte[]")
+                {
+                    constructor += "                if (id." + DB_Names[i] + " == null)" + Environment.NewLine;
+                    constructor += "                {" + Environment.NewLine;
+                    constructor += "                    Size size = new Size(100, 100);" + Environment.NewLine;
+                    constructor += "                    System.Drawing.Image image = System.Drawing.Image.FromFile(Server.MapPath(\"~/Content/images/placeholders/petPlaceHolder.png\"));" + Environment.NewLine;
+                    constructor += "                    Web.App.ShowImage.resizeImage(image, size);" + Environment.NewLine;
+                    constructor += "                    byte[] uploaded_picture = Web.App.ShowImage.imageToByteArray(image);" + Environment.NewLine;
+                    constructor += "                    id." + DB_Names[i] + " = uploaded_picture;" + Environment.NewLine;
+                    constructor += "                }" + Environment.NewLine;
+                    constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
+                }
+                else
+                {
+                    constructor += "                cmd.Parameters.AddWithValue(\"" + "@" + DB_Names[i] + "\", id." + DB_Names[i] + ");" + Environment.NewLine;
+                }
             }
             constructor += "                cmd.ExecuteReader();" + Environment.NewLine;
             constructor += "                con.Close();" + Environment.NewLine;
@@ -1444,15 +1481,13 @@ namespace Web.App
             constructor += "     */" + Environment.NewLine;
             constructor += "    var controllerId = '" + tableName + "Ctrl';" + Environment.NewLine;
             constructor += "    angular.module('app').controller(controllerId," + Environment.NewLine;
-            constructor += "      ['$scope', " + tableName + "Ctrl]);" + Environment.NewLine;
+            constructor += "      ['$scope', 'dateTimeFactory', " + tableName + "Ctrl]);" + Environment.NewLine;
             constructor += "    function PetCtrl() {" + Environment.NewLine;
             constructor += "        // 'Controller As' syntax" + Environment.NewLine;
             constructor += "        var vm = this;" + Environment.NewLine;
-            constructor += "        init_jQuery();" + Environment.NewLine;
+            constructor += "        //apply the date time picker to each date input box." + Environment.NewLine;
+            constructor += "        dateTimeFactory.applyDatePicker();" + Environment.NewLine;
             constructor += "" + Environment.NewLine;
-            constructor += "        function init_jQuery() {" + Environment.NewLine;
-            constructor += "            $('.date-picker').datetimepicker({mask: '9999/19/39 29:59'});" + Environment.NewLine;
-            constructor += "       }" + Environment.NewLine;
             constructor += "   }" + Environment.NewLine;
             constructor += "})();" + Environment.NewLine;
 

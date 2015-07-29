@@ -175,6 +175,7 @@
     <Content Include=".patterns\directive.js" />
     <Content Include="address.aspx" />
     <Content Include="Angular_Scripts\app\controllers\PetCtrl.js" />
+    <Content Include="Angular_Scripts\app\services\dateTimeFactory.js" />
     <Content Include="Content\grd_alt.png" />
     <Content Include="Content\grd_head.png" />
     <Content Include="Content\grd_pgr.png" />
@@ -1218,7 +1219,9 @@
       <DependentUpon>address.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Code\address.cs" />
-    <Compile Include="App_Code\Pet.cs" />
+    <Compile Include="App_Code\Pet.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="App_Code\Show_Image.cs" />
     <Compile Include="Content\images\ShowImage.aspx.cs">
       <DependentUpon>ShowImage.aspx</DependentUpon>

@@ -12,15 +12,13 @@
      */
     var controllerId = 'PetCtrl';
     angular.module('app').controller(controllerId,
-      ['$scope', PetCtrl]);
+      ['$scope', 'dateTimeFactory', PetCtrl]);
     function PetCtrl() {
         // 'Controller As' syntax
         var vm = this;
-        init_jQuery();
+        //apply the date time picker to each date input box.
+        dateTimeFactory.applyDatePicker();
 
-        function init_jQuery() {
-            $('.date-picker').datetimepicker();
-        }
     }
 })();
 

@@ -23,21 +23,25 @@ namespace Web.App
                 DataTable dt = Show_Image.Display(Where_Clause);
                 if (dt != null)
                 {
-                    Byte[] bytes = (Byte[])dt.Rows[0][Request.QueryString["Image_Name"]];
-                    //convert to image; resize; then convert back to byte array to display in redirect
-                    System.Drawing.Image image = byteArrayToImage(bytes);
-                    Size size = new Size(100, 100);
-                    resizeImage(image, size);
-                    bytes = imageToByteArray(image);
-                    Response.Buffer = true;
-                    Response.Charset = "";
-                    Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                    Response.ContentType = Request.QueryString["Image_Name"];
-                    Response.AddHeader("content-disposition", "attachment;filename="
-                    + Request.QueryString["Image_Name"]);
-                    Response.BinaryWrite(bytes);
-                    Response.Flush();
-                    Response.End();
+                    Console.Out.WriteLine(dt.Rows.Count);
+                    if (dt.Rows.Count != 0)
+                    {
+                        Byte[] bytes = (Byte[])dt.Rows[0][Request.QueryString["Image_Name"]];
+                        //convert to image; resize; then convert back to byte array to display in redirect
+                        System.Drawing.Image image = byteArrayToImage(bytes);
+                        Size size = new Size(100, 100);
+                        resizeImage(image, size);
+                        bytes = imageToByteArray(image);
+                        Response.Buffer = true;
+                        Response.Charset = "";
+                        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                        Response.ContentType = Request.QueryString["Image_Name"];
+                        Response.AddHeader("content-disposition", "attachment;filename="
+                        + Request.QueryString["Image_Name"]);
+                        Response.BinaryWrite(bytes);
+                        Response.Flush();
+                        Response.End();
+                    }
                 }
             }
         }
@@ -47,14 +51,14 @@ namespace Web.App
             return (System.Drawing.Image)(new Bitmap(imgToResize, size));
         }
         // convert image to byte array
-        public byte[] imageToByteArray(System.Drawing.Image imageIn)
+        public static byte[] imageToByteArray(System.Drawing.Image imageIn)
         {
             MemoryStream ms = new MemoryStream();
             imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
             return ms.ToArray();
         }
         //Byte array to photo
-        public System.Drawing.Image byteArrayToImage(byte[] byteArrayIn)
+        public static System.Drawing.Image byteArrayToImage(byte[] byteArrayIn)
         {
             MemoryStream ms = new MemoryStream(byteArrayIn);
             System.Drawing.Image returnImage = System.Drawing.Image.FromStream(ms);
