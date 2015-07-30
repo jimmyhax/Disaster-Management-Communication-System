@@ -16,7 +16,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %> - DMCS</title>
 
 </head>
 <body>
@@ -30,7 +30,6 @@
     </asp:PlaceHolder>
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
@@ -82,7 +81,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+                <p>&copy; <%: DateTime.Now.Year %> - DMCS</p>
             </footer>
         </div>
     </form>
@@ -123,6 +122,7 @@
 <%--Directive Scripts End--%>
 <%--/////////////////////////////////////////////////////////////--%>
 <%--Controller Scripts Start--%>
+<script src="Angular_Scripts/app/controllers/DashboardTemplateCtrl.js"></script>
 <script src="Angular_Scripts/app/controllers/homeCtrl.js"></script>
 <script src="Angular_Scripts/app/controllers/gridCtrl.js"></script>
 <script src="Angular_Scripts/app/controllers/modalCtrl.js"></script>

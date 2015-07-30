@@ -47,6 +47,7 @@
     <Reference Include="AjaxControlToolkit, Version=4.1.7.1213, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Downloads\AjaxControlToolkit.Binary.NET40\AjaxControlToolkit.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="AjaxMin">
       <HintPath>..\packages\AjaxMin.5.11.5295.12309\lib\net40\AjaxMin.dll</HintPath>
@@ -245,7 +246,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="CSS\scriptGenerator.css" />
-    <Content Include="demobilization.aspx" />
     <Content Include="DMCS.ico" />
     <Content Include="Download_All.aspx" />
     <Content Include="Images\accent.png" />
@@ -575,7 +575,6 @@
     <Content Include="Scripts\oms.min.js" />
     <Content Include="Scripts\util.js" />
     <Content Include="Script_Generator.aspx" />
-    <Content Include="Script_Generator_Files\Screens\demobilization.aspx" />
     <Content Include="users2.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
@@ -594,9 +593,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="demobilization.aspx.designer.cs">
-      <DependentUpon>demobilization.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Old_App_Code\test.cs" />
     <Compile Include="Old_App_Code\users2.cs" />
     <Compile Include="Old_App_Code\GeoLocation.cs" />
@@ -744,10 +740,6 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="demobilization.aspx.cs">
-      <DependentUpon>demobilization.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Download_All.aspx.cs">
       <DependentUpon>Download_All.aspx</DependentUpon>
@@ -1471,13 +1463,6 @@
     <Compile Include="Script_Generator.aspx.designer.cs">
       <DependentUpon>Script_Generator.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Script_Generator_Files\Screens\demobilization.aspx.cs">
-      <DependentUpon>demobilization.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Script_Generator_Files\Screens\demobilization.aspx.designer.cs">
-      <DependentUpon>demobilization.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1521,6 +1506,7 @@
     <Folder Include="Moduals\Missing_Pets\Pet_Images\200x200\" />
     <Folder Include="Moduals\Missing_Pets\Pet_Images\Original\" />
     <Folder Include="Script_Generator_Files\App_Code\" />
+    <Folder Include="Script_Generator_Files\Screens\" />
     <Folder Include="Script_Generator_Files\SQL\" />
     <Folder Include="upload\" />
   </ItemGroup>

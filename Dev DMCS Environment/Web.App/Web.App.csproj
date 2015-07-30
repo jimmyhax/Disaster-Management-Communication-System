@@ -174,6 +174,7 @@
     <Content Include=".patterns\controller.js" />
     <Content Include=".patterns\directive.js" />
     <Content Include="address.aspx" />
+    <Content Include="Angular_Scripts\app\controllers\DashboardTemplateCtrl.js" />
     <Content Include="Angular_Scripts\app\controllers\PetCtrl.js" />
     <Content Include="Angular_Scripts\app\services\dateTimeFactory.js" />
     <Content Include="Content\grd_alt.png" />
@@ -182,12 +183,14 @@
     <Content Include="Content\images\css\grd_alt.png" />
     <Content Include="Content\images\css\grd_head.png" />
     <Content Include="Content\images\css\grd_pgr.png" />
+    <Content Include="favicon.ico" />
     <Content Include="Content\images\placeholders\Default_Person.jpg" />
     <Content Include="Content\images\placeholders\Image_Placeholder.jpg" />
     <Content Include="Content\images\placeholders\petPlaceHolder.png" />
     <Content Include="Content\images\ShowImage.aspx" />
     <Content Include="Content\jquery.datetimepicker.css" />
-    <Content Include="Pet.aspx" />
+    <Content Include="Modules\Call_Center\Call_Center.aspx" />
+    <Content Include="Dashboard.aspx" />
     <Content Include="Register_Client.aspx" />
     <Content Include="modalExample.aspx" />
     <Content Include=".patterns\service.js" />
@@ -1190,7 +1193,6 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Default.aspx" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
@@ -1219,9 +1221,6 @@
       <DependentUpon>address.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Code\address.cs" />
-    <Compile Include="App_Code\Pet.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="App_Code\Show_Image.cs" />
     <Compile Include="Content\images\ShowImage.aspx.cs">
       <DependentUpon>ShowImage.aspx</DependentUpon>
@@ -1230,12 +1229,19 @@
     <Compile Include="Content\images\ShowImage.aspx.designer.cs">
       <DependentUpon>ShowImage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pet.aspx.cs">
-      <DependentUpon>Pet.aspx</DependentUpon>
+    <Compile Include="Modules\Call_Center\Call_Center.aspx.cs">
+      <DependentUpon>Call_Center.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pet.aspx.designer.cs">
-      <DependentUpon>Pet.aspx</DependentUpon>
+    <Compile Include="Modules\Call_Center\Call_Center.aspx.designer.cs">
+      <DependentUpon>Call_Center.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Register_Client.aspx.cs">
       <DependentUpon>Register_Client.aspx</DependentUpon>
