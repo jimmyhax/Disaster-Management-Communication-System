@@ -46,14 +46,23 @@
                         <div class="col-lg-12">
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">address_type_id</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="address_type_id_Insert_TextBox" ID="address_type_id_Insert_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Insert_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="address_type_id_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">city</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="city_Insert_TextBox" ID="city_Insert_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Insert_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="city_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">country</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="country_Insert_TextBox" ID="country_Insert_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Insert_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="country_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
@@ -70,10 +79,16 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">state</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="state_Insert_TextBox" ID="state_Insert_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Insert_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="state_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">str_add</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="str_add_Insert_TextBox" ID="str_add_Insert_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Insert_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="str_add_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
@@ -130,18 +145,30 @@
                         <div class="col-lg-12">
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">address_id</span>
-                                <asp:TextBox disabled class="pull-right form-control form-control-disabled" ID="address_id_Update_TextBox" runat="server"></asp:TextBox>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="address_id_Update_TextBox" ID="address_id_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
+                                <asp:TextBox class="pull-right form-control" ID="address_id_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">address_type_id</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="address_type_id_Update_TextBox" ID="address_type_id_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="address_type_id_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">city</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="city_Update_TextBox" ID="city_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="city_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">country</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="country_Update_TextBox" ID="country_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="country_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
@@ -158,10 +185,16 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">state</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="state_Update_TextBox" ID="state_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="state_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">str_add</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="str_add_Update_TextBox" ID="str_add_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="str_add_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
@@ -218,47 +251,47 @@
                         <div class="col-lg-12">
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">address_id</span>
-                                <asp:TextBox disabled class="pull-right form-control form-control-disabled" ID="address_id_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="address_id_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">address_type_id</span>
-                                <asp:TextBox class="pull-right form-control" ID="address_type_id_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="address_type_id_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">city</span>
-                                <asp:TextBox class="pull-right form-control" ID="city_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="city_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">country</span>
-                                <asp:TextBox class="pull-right form-control" ID="country_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="country_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">County_Township</span>
-                                <asp:TextBox class="pull-right form-control" ID="County_Township_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="County_Township_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">longitude</span>
-                                <asp:TextBox class="pull-right form-control" ID="longitude_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="longitude_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">latitude</span>
-                                <asp:TextBox class="pull-right form-control" ID="latitude_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="latitude_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">state</span>
-                                <asp:TextBox class="pull-right form-control" ID="state_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="state_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">str_add</span>
-                                <asp:TextBox class="pull-right form-control" ID="str_add_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="str_add_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">str_add2</span>
-                                <asp:TextBox class="pull-right form-control" ID="str_add2_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="str_add2_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">zip_plus_four</span>
-                                <asp:TextBox class="pull-right form-control" ID="zip_plus_four_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="zip_plus_four_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                         </div>
                         <hr />

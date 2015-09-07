@@ -98,7 +98,7 @@ namespace Web.App
         public address address_update(int ID)
         {
             address = address.Select(ID);
-            address.address_id = Convert.ToInt32(address_id_Update_TextBox.Text);
+            address.address_id = Convert.ToInt32(Update_GridView.SelectedValue);
             address.address_type_id = Convert.ToInt32(address_type_id_Update_TextBox.Text);
             address.city = city_Update_TextBox.Text;
             address.country = country_Update_TextBox.Text;

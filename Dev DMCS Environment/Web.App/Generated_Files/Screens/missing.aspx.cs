@@ -70,7 +70,7 @@ namespace Web.App
         public missing missing_update(int ID)
         {
             missing = missing.Select(ID);
-            missing.Missing_id = Convert.ToInt32(Missing_id_Update_TextBox.Text);
+            missing.Missing_id = Convert.ToInt32(Update_GridView.SelectedValue);
             missing.client_other_info = client_other_info_Update_TextBox.Text;
             missing.clothing = clothing_Update_TextBox.Text;
             missing.date_of_disappearance = Convert.ToDateTime(date_of_disappearance_Update_TextBox.Text);

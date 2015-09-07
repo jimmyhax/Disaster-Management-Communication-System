@@ -4,9 +4,10 @@ using System.Data;
 using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
+using System.Drawing;
 namespace Web.App
 {
-    public class Pet
+    public class Pet : System.Web.UI.Page
     {
         public Int32 Pet_Record_ID
         {
@@ -320,32 +321,32 @@ namespace Web.App
                 con.Open();
                 SqlCommand cmd = new SqlCommand("SP_DMCS_INSERT_PET", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Pet_Location_Found_ID", id.Pet_Location_Found_ID);
-            cmd.Parameters.AddWithValue("@Pet_Type_ID", id.Pet_Type_ID);
-            cmd.Parameters.AddWithValue("@Pet_Vet_ID", id.Pet_Vet_ID);
-            cmd.Parameters.AddWithValue("@Pet_License_Tag", id.Pet_License_Tag);
-            cmd.Parameters.AddWithValue("@Pet_RFID", id.Pet_RFID);
-            cmd.Parameters.AddWithValue("@Pet_Tatoo_No", id.Pet_Tatoo_No);
-            cmd.Parameters.AddWithValue("@Pet_Name", id.Pet_Name);
-            cmd.Parameters.AddWithValue("@Pet_Gender", id.Pet_Gender);
-            cmd.Parameters.AddWithValue("@Pet_Color", id.Pet_Color);
-            cmd.Parameters.AddWithValue("@Pet_Weight", id.Pet_Weight);
-            cmd.Parameters.AddWithValue("@Pet_Description", id.Pet_Description);
-            cmd.Parameters.AddWithValue("@Pet_Condition", id.Pet_Condition);
-            cmd.Parameters.AddWithValue("@Pet_Status", id.Pet_Status);
-            cmd.Parameters.AddWithValue("@Pet_Date_Of_Birth", id.Pet_Date_Of_Birth);
-            if (id.Pet_Picture == null)
-            {
-                Size size = new Size(100, 100);
-                System.Drawing.Image image = System.Drawing.Image.FromFile(Server.MapPath("~/Content/images/placeholders/petPlaceHolder.png"));
-                Web.App.ShowImage.resizeImage(image, size);
-                byte[] uploaded_picture = Web.App.ShowImage.imageToByteArray(image);
-                id.Pet_Picture = uploaded_picture;
-            }
+                cmd.Parameters.AddWithValue("@Pet_Location_Found_ID", id.Pet_Location_Found_ID);
+                cmd.Parameters.AddWithValue("@Pet_Type_ID", id.Pet_Type_ID);
+                cmd.Parameters.AddWithValue("@Pet_Vet_ID", id.Pet_Vet_ID);
+                cmd.Parameters.AddWithValue("@Pet_License_Tag", id.Pet_License_Tag);
+                cmd.Parameters.AddWithValue("@Pet_RFID", id.Pet_RFID);
+                cmd.Parameters.AddWithValue("@Pet_Tatoo_No", id.Pet_Tatoo_No);
+                cmd.Parameters.AddWithValue("@Pet_Name", id.Pet_Name);
+                cmd.Parameters.AddWithValue("@Pet_Gender", id.Pet_Gender);
+                cmd.Parameters.AddWithValue("@Pet_Color", id.Pet_Color);
+                cmd.Parameters.AddWithValue("@Pet_Weight", id.Pet_Weight);
+                cmd.Parameters.AddWithValue("@Pet_Description", id.Pet_Description);
+                cmd.Parameters.AddWithValue("@Pet_Condition", id.Pet_Condition);
+                cmd.Parameters.AddWithValue("@Pet_Status", id.Pet_Status);
+                cmd.Parameters.AddWithValue("@Pet_Date_Of_Birth", id.Pet_Date_Of_Birth);
+                if (id.Pet_Picture == null)
+                {
+                    Size size = new Size(100, 100);
+                    System.Drawing.Image image = System.Drawing.Image.FromFile(Server.MapPath("~/Content/images/placeholders/petPlaceHolder.png"));
+                    Web.App.ShowImage.resizeImage(image, size);
+                    byte[] uploaded_picture = Web.App.ShowImage.imageToByteArray(image);
+                    id.Pet_Picture = uploaded_picture;
+                }
                 cmd.Parameters.AddWithValue("@Pet_Picture", id.Pet_Picture);
-            cmd.Parameters.AddWithValue("@Pet_Sterilized", id.Pet_Sterilized);
-            cmd.Parameters.AddWithValue("@Date_Modified", id.Date_Modified);
-            cmd.Parameters.AddWithValue("@Date_Created", id.Date_Created);
+                cmd.Parameters.AddWithValue("@Pet_Sterilized", id.Pet_Sterilized);
+                cmd.Parameters.AddWithValue("@Date_Modified", id.Date_Modified);
+                cmd.Parameters.AddWithValue("@Date_Created", id.Date_Created);
                 cmd.ExecuteReader();
                 con.Close();
                 con.Open();
@@ -395,33 +396,33 @@ namespace Web.App
                 con.Open();
                 SqlCommand cmd = new SqlCommand("SP_DMCS_UPDATE_PET", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Pet_Record_ID", id.Pet_Record_ID);
-            cmd.Parameters.AddWithValue("@Pet_Location_Found_ID", id.Pet_Location_Found_ID);
-            cmd.Parameters.AddWithValue("@Pet_Type_ID", id.Pet_Type_ID);
-            cmd.Parameters.AddWithValue("@Pet_Vet_ID", id.Pet_Vet_ID);
-            cmd.Parameters.AddWithValue("@Pet_License_Tag", id.Pet_License_Tag);
-            cmd.Parameters.AddWithValue("@Pet_RFID", id.Pet_RFID);
-            cmd.Parameters.AddWithValue("@Pet_Tatoo_No", id.Pet_Tatoo_No);
-            cmd.Parameters.AddWithValue("@Pet_Name", id.Pet_Name);
-            cmd.Parameters.AddWithValue("@Pet_Gender", id.Pet_Gender);
-            cmd.Parameters.AddWithValue("@Pet_Color", id.Pet_Color);
-            cmd.Parameters.AddWithValue("@Pet_Weight", id.Pet_Weight);
-            cmd.Parameters.AddWithValue("@Pet_Description", id.Pet_Description);
-            cmd.Parameters.AddWithValue("@Pet_Condition", id.Pet_Condition);
-            cmd.Parameters.AddWithValue("@Pet_Status", id.Pet_Status);
-            cmd.Parameters.AddWithValue("@Pet_Date_Of_Birth", id.Pet_Date_Of_Birth);
-            if (id.Pet_Picture == null)
-            {
-                Size size = new Size(100, 100);
-                System.Drawing.Image image = System.Drawing.Image.FromFile(Server.MapPath("~/Content/images/placeholders/petPlaceHolder.png"));
-                Web.App.ShowImage.resizeImage(image, size);
-                byte[] uploaded_picture = Web.App.ShowImage.imageToByteArray(image);
-                id.Pet_Picture = uploaded_picture;
-            }
+                cmd.Parameters.AddWithValue("@Pet_Record_ID", id.Pet_Record_ID);
+                cmd.Parameters.AddWithValue("@Pet_Location_Found_ID", id.Pet_Location_Found_ID);
+                cmd.Parameters.AddWithValue("@Pet_Type_ID", id.Pet_Type_ID);
+                cmd.Parameters.AddWithValue("@Pet_Vet_ID", id.Pet_Vet_ID);
+                cmd.Parameters.AddWithValue("@Pet_License_Tag", id.Pet_License_Tag);
+                cmd.Parameters.AddWithValue("@Pet_RFID", id.Pet_RFID);
+                cmd.Parameters.AddWithValue("@Pet_Tatoo_No", id.Pet_Tatoo_No);
+                cmd.Parameters.AddWithValue("@Pet_Name", id.Pet_Name);
+                cmd.Parameters.AddWithValue("@Pet_Gender", id.Pet_Gender);
+                cmd.Parameters.AddWithValue("@Pet_Color", id.Pet_Color);
+                cmd.Parameters.AddWithValue("@Pet_Weight", id.Pet_Weight);
+                cmd.Parameters.AddWithValue("@Pet_Description", id.Pet_Description);
+                cmd.Parameters.AddWithValue("@Pet_Condition", id.Pet_Condition);
+                cmd.Parameters.AddWithValue("@Pet_Status", id.Pet_Status);
+                cmd.Parameters.AddWithValue("@Pet_Date_Of_Birth", id.Pet_Date_Of_Birth);
+                if (id.Pet_Picture == null)
+                {
+                    Size size = new Size(100, 100);
+                    System.Drawing.Image image = System.Drawing.Image.FromFile(Server.MapPath("~/Content/images/placeholders/petPlaceHolder.png"));
+                    Web.App.ShowImage.resizeImage(image, size);
+                    byte[] uploaded_picture = Web.App.ShowImage.imageToByteArray(image);
+                    id.Pet_Picture = uploaded_picture;
+                }
                 cmd.Parameters.AddWithValue("@Pet_Picture", id.Pet_Picture);
-            cmd.Parameters.AddWithValue("@Pet_Sterilized", id.Pet_Sterilized);
-            cmd.Parameters.AddWithValue("@Date_Modified", id.Date_Modified);
-            cmd.Parameters.AddWithValue("@Date_Created", id.Date_Created);
+                cmd.Parameters.AddWithValue("@Pet_Sterilized", id.Pet_Sterilized);
+                cmd.Parameters.AddWithValue("@Date_Modified", id.Date_Modified);
+                cmd.Parameters.AddWithValue("@Date_Created", id.Date_Created);
                 cmd.ExecuteReader();
                 con.Close();
                 return true;

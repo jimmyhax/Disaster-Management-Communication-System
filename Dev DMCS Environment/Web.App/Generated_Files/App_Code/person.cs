@@ -4,9 +4,10 @@ using System.Data;
 using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
+using System.Drawing;
 namespace Web.App
 {
-    public class person
+    public class person : System.Web.UI.Page
     {
         public Int32 person_id
         {

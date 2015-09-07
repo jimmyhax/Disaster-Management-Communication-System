@@ -30,7 +30,7 @@
     </asp:PlaceHolder>
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <form runat="server">
+    <form runat="server" height="100%">
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
@@ -64,11 +64,12 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">Hello World!</a>
                 </div>
                 <div class="navbar-collapse collapse">
+                    <asp:Image ID="nav_logo_image" CssClass="nav-logo-image" runat="server" ImageUrl="~/Content/images/DMCS_logo_Med_White.png" />
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
+                        <li><a runat="server" href="~/Home_Dashboard">Command Center</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                     </ul>
@@ -91,7 +92,6 @@
 <%--Framework Scripts Start--%>
 <script src="Scripts/jquery-1.10.2.js"></script>
 <script src="Scripts/jquery.datetimepicker.js"></script>
-<script src="Scripts/bootstrap.js"></script>
 <script src="Scripts/respond.js"></script>
 
 <script src="Scripts/angular.js"></script>
@@ -108,8 +108,12 @@
 <script src="Scripts/toaster.js"></script>
 <script src="Angular_Scripts/app/app.js"></script>
 
-<%--Framework Scripts End--%>
 <%--/////////////////////////////////////////////////////////////--%>
+<%--Framework Scripts End--%>
+<%--Routing Scripts Start--%>
+<%--/////////////////////////////////////////////////////////////--%>
+<%--/////////////////////////////////////////////////////////////--%>
+<%--Routing Scripts End--%>
 <%--Service Scripts Start--%>
 <script src="Angular_Scripts/app/services/homeFactory.js"></script>
 <script src="Angular_Scripts/app/services/dateTimeFactory.js"></script>
@@ -130,4 +134,5 @@
 <script src="Angular_Scripts/app/controllers/PetCtrl.js"></script>
 <%--Controller Scripts End--%>
 <%--/////////////////////////////////////////////////////////////--%>
+
 

@@ -2,8 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container" ng-controller="homeCtrl" ng-app="app">
-        <home-directive pass="vm.pass"></home-directive>
+    <div class="container">
         <div class="jumbotron">
             <h1>DMCS<h1>
                 <h2 style="color: #aaa !important">ASP.NET WebForm Application Using Angular JS</h2>

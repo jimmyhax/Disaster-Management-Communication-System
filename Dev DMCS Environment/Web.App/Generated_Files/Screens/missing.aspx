@@ -47,7 +47,10 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">date_of_disappearance</span>
-                                <asp:TextBox class="pull-right form-control" ID="date_of_disappearance_Insert_TextBox" runat="server"></asp:TextBox>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="date_of_disappearance_Insert_TextBox" ID="date_of_disappearance_Insert_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Insert_Group"></asp:RequiredFieldValidator>
+                          </div>
+                                <asp:TextBox class="pull-right form-control date-picker" ID="date_of_disappearance_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                         </div>
                         <hr />
@@ -88,7 +91,10 @@
                         <div class="col-lg-12">
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Missing_id</span>
-                                <asp:TextBox disabled class="pull-right form-control form-control-disabled" ID="Missing_id_Update_TextBox" runat="server"></asp:TextBox>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="Missing_id_Update_TextBox" ID="Missing_id_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
+                                <asp:TextBox class="pull-right form-control" ID="Missing_id_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">client_other_info</span>
@@ -100,7 +106,10 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">date_of_disappearance</span>
-                                <asp:TextBox class="pull-right form-control" ID="date_of_disappearance_Update_TextBox" runat="server"></asp:TextBox>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="date_of_disappearance_Update_TextBox" ID="date_of_disappearance_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
+                                <asp:TextBox class="pull-right form-control date-picker" ID="date_of_disappearance_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                         </div>
                         <hr />
@@ -141,19 +150,19 @@
                         <div class="col-lg-12">
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Missing_id</span>
-                                <asp:TextBox disabled class="pull-right form-control form-control-disabled" ID="Missing_id_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="Missing_id_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">client_other_info</span>
-                                <asp:TextBox class="pull-right form-control" ID="client_other_info_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="client_other_info_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">clothing</span>
-                                <asp:TextBox class="pull-right form-control" ID="clothing_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control" ID="clothing_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">date_of_disappearance</span>
-                                <asp:TextBox class="pull-right form-control" ID="date_of_disappearance_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control date-picker" ID="date_of_disappearance_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                         </div>
                         <hr />

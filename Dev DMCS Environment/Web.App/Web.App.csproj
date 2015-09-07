@@ -173,7 +173,6 @@
   <ItemGroup>
     <Content Include=".patterns\controller.js" />
     <Content Include=".patterns\directive.js" />
-    <Content Include="address.aspx" />
     <Content Include="Angular_Scripts\app\controllers\DashboardTemplateCtrl.js" />
     <Content Include="Angular_Scripts\app\controllers\PetCtrl.js" />
     <Content Include="Angular_Scripts\app\services\dateTimeFactory.js" />
@@ -183,16 +182,21 @@
     <Content Include="Content\images\css\grd_alt.png" />
     <Content Include="Content\images\css\grd_head.png" />
     <Content Include="Content\images\css\grd_pgr.png" />
+    <Content Include="Content\images\DMCS_logo_Med_White.png" />
+    <Content Include="Content\images\editor permissions.png" />
+    <Content Include="Content\images\viewer permissions.png" />
     <Content Include="favicon.ico" />
     <Content Include="Content\images\placeholders\Default_Person.jpg" />
     <Content Include="Content\images\placeholders\Image_Placeholder.jpg" />
     <Content Include="Content\images\placeholders\petPlaceHolder.png" />
     <Content Include="Content\images\ShowImage.aspx" />
     <Content Include="Content\jquery.datetimepicker.css" />
-    <Content Include="Modules\Call_Center\Call_Center.aspx" />
-    <Content Include="Dashboard.aspx" />
-    <Content Include="Register_Client.aspx" />
-    <Content Include="modalExample.aspx" />
+    <Content Include="Modules\Clients\Clients_Dashboard.aspx" />
+    <Content Include="Home_Dashboard.aspx" />
+    <Content Include="Modules\Evacuation\Evacuation_Dashboard.aspx" />
+    <Content Include="Modules\Alerts\Alerts_Dashboard.aspx" />
+    <Content Include="Modules\Resource_Allocation\Resource_Allocation_Dashboard.aspx" />
+    <Content Include="Modules\Clients\Register_Client.aspx" />
     <Content Include=".patterns\service.js" />
     <Content Include="About.aspx" />
     <Content Include="AccessDenied.aspx" />
@@ -338,7 +342,6 @@
     <Content Include="Icon.png" />
     <Content Include="Management\Editor.aspx" />
     <Content Include="Management\Viewer.aspx" />
-    <Content Include="ngTableExample.aspx" />
     <Content Include="packages.config" />
     <Content Include="Account\Web.config" />
     <Content Include="Management\Web.config" />
@@ -1213,13 +1216,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="address.aspx.cs">
-      <DependentUpon>address.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="address.aspx.designer.cs">
-      <DependentUpon>address.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Code\address.cs" />
     <Compile Include="App_Code\Show_Image.cs" />
     <Compile Include="Content\images\ShowImage.aspx.cs">
@@ -1229,33 +1225,47 @@
     <Compile Include="Content\images\ShowImage.aspx.designer.cs">
       <DependentUpon>ShowImage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Call_Center\Call_Center.aspx.cs">
-      <DependentUpon>Call_Center.aspx</DependentUpon>
+    <Compile Include="Modules\Clients\Clients_Dashboard.aspx.cs">
+      <DependentUpon>Clients_Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Modules\Call_Center\Call_Center.aspx.designer.cs">
-      <DependentUpon>Call_Center.aspx</DependentUpon>
+    <Compile Include="Modules\Clients\Clients_Dashboard.aspx.designer.cs">
+      <DependentUpon>Clients_Dashboard.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Dashboard.aspx.cs">
-      <DependentUpon>Dashboard.aspx</DependentUpon>
+    <Compile Include="Home_Dashboard.aspx.cs">
+      <DependentUpon>Home_Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Dashboard.aspx.designer.cs">
-      <DependentUpon>Dashboard.aspx</DependentUpon>
+    <Compile Include="Home_Dashboard.aspx.designer.cs">
+      <DependentUpon>Home_Dashboard.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Register_Client.aspx.cs">
+    <Compile Include="Modules\Evacuation\Evacuation_Dashboard.aspx.cs">
+      <DependentUpon>Evacuation_Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Evacuation\Evacuation_Dashboard.aspx.designer.cs">
+      <DependentUpon>Evacuation_Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Alerts\Alerts_Dashboard.aspx.cs">
+      <DependentUpon>Alerts_Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Alerts\Alerts_Dashboard.aspx.designer.cs">
+      <DependentUpon>Alerts_Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Resource_Allocation\Resource_Allocation_Dashboard.aspx.cs">
+      <DependentUpon>Resource_Allocation_Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Resource_Allocation\Resource_Allocation_Dashboard.aspx.designer.cs">
+      <DependentUpon>Resource_Allocation_Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Clients\Register_Client.aspx.cs">
       <DependentUpon>Register_Client.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Register_Client.aspx.designer.cs">
+    <Compile Include="Modules\Clients\Register_Client.aspx.designer.cs">
       <DependentUpon>Register_Client.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="modalExample.aspx.cs">
-      <DependentUpon>modalExample.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="modalExample.aspx.designer.cs">
-      <DependentUpon>modalExample.aspx</DependentUpon>
     </Compile>
     <Compile Include="AccessDenied.aspx.cs">
       <DependentUpon>AccessDenied.aspx</DependentUpon>
@@ -1356,13 +1366,6 @@
     </Compile>
     <Compile Include="Management\Viewer.aspx.designer.cs">
       <DependentUpon>Viewer.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ngTableExample.aspx.cs">
-      <DependentUpon>ngTableExample.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ngTableExample.aspx.designer.cs">
-      <DependentUpon>ngTableExample.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptGenerator.aspx.cs">

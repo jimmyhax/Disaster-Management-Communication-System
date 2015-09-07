@@ -16,11 +16,17 @@ body {
     box-shadow: 10px 0px 10px -10px rgba(0,0,0,0.5), -10px 0px 10px -10px rgba(0,0,0,0.5);
 }
 
+a {
+    text-decoration: none!important;
+}
+a:hover {
+    text-decoration: none!important;
+}
 /* Set widths on the form inputs since otherwise they're 100% wide */
 input[type="text"],
 input[type="password"],
 input[type="email"] {
-    max-width: 280px;
+    max-width: 175px!important;
 }
 /*////////////////////////////////ADD CLASSES HERE/////////////////////////////////////*/
 /*/HTML Structure Start*/
@@ -312,6 +318,12 @@ table {
 
 /*/Groups End//////////*/
 /*/////////////////////////////////////////////////////////////////////*/
+.nav-logo-image {
+    height: 50px;
+    margin-left: -20px;
+    float: left;
+
+}
 .gridview-container {
     padding: 50px;
     width: 100%;
@@ -320,6 +332,21 @@ table {
         border-radius: 10px;
         border: 10px solid #666;
     }
+}
+.dashboard-item {
+    margin: auto;
+    width: 160px;
+    height: 115px;
+    padding: 45px 10px;
+    vertical-align: middle;
+    font-size: 18px;
+    text-align: center;
+    color: #666;
+}
+.dashboard-item:hover {
+    border-radius: 10px;
+    color: whitesmoke;
+    background-color: #5BC0DE;
 }
 
 .form-content {

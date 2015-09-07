@@ -12,8 +12,13 @@
      */
     var controllerId = 'missingCtrl';
     angular.module('app').controller(controllerId,
-      ['$scope', missingCtrl]);
+      ['$scope', 'dateTimeFactory', missingCtrl]);
+    function PetCtrl() {
         // 'Controller As' syntax
         var vm = this;
+        //apply the date time picker to each date input box.
+        dateTimeFactory.applyDatePicker();
+
+   }
 })();
 

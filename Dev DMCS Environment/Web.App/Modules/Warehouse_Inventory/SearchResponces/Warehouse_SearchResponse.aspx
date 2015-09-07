@@ -1,0 +1,1 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" Inherits="ResourceNotInAWarehouse_SearchResponse" Codebehind="Warehouse_SearchResponse.aspx.vb" %>

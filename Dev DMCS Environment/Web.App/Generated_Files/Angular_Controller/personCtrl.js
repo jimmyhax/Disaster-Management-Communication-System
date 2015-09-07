@@ -12,8 +12,13 @@
      */
     var controllerId = 'personCtrl';
     angular.module('app').controller(controllerId,
-      ['$scope', personCtrl]);
+      ['$scope', 'dateTimeFactory', personCtrl]);
+    function PetCtrl() {
         // 'Controller As' syntax
         var vm = this;
+        //apply the date time picker to each date input box.
+        dateTimeFactory.applyDatePicker();
+
+   }
 })();
 

@@ -81,6 +81,9 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">address_id</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="address_id_Insert_TextBox" ID="address_id_Insert_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Insert_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="address_id_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
@@ -89,7 +92,7 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">birthdate</span>
-                                <asp:TextBox class="pull-right form-control" ID="birthdate_Insert_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox class="pull-right form-control date-picker" ID="birthdate_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">certification_number</span>
@@ -97,6 +100,9 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">f_name</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="f_name_Insert_TextBox" ID="f_name_Insert_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Insert_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="f_name_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
@@ -105,6 +111,9 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">l_name</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="l_name_Insert_TextBox" ID="l_name_Insert_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Insert_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="l_name_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
@@ -113,6 +122,9 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">person_type</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="person_type_Insert_TextBox" ID="person_type_Insert_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Insert_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="person_type_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
@@ -137,11 +149,11 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Visa_Issue_Date</span>
-                                <asp:TextBox class="pull-right form-control" ID="Visa_Issue_Date_Insert_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox class="pull-right form-control date-picker" ID="Visa_Issue_Date_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Visa_Expire_Date</span>
-                                <asp:TextBox class="pull-right form-control" ID="Visa_Expire_Date_Insert_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox class="pull-right form-control date-picker" ID="Visa_Expire_Date_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Visa_Selected_Value_B1</span>
@@ -201,11 +213,11 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Perm_Resident_Alien_Resid_Date</span>
-                                <asp:TextBox class="pull-right form-control" ID="Perm_Resident_Alien_Resid_Date_Insert_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox class="pull-right form-control date-picker" ID="Perm_Resident_Alien_Resid_Date_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Perm_Resident_Alien_Expire_Date</span>
-                                <asp:TextBox class="pull-right form-control" ID="Perm_Resident_Alien_Expire_Date_Insert_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox class="pull-right form-control date-picker" ID="Perm_Resident_Alien_Expire_Date_Insert_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Perm_Resident_Alien_A_number</span>
@@ -316,7 +328,10 @@
                         <div class="col-lg-12">
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">person_id</span>
-                                <asp:TextBox disabled class="pull-right form-control form-control-disabled" ID="person_id_Update_TextBox" runat="server"></asp:TextBox>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="person_id_Update_TextBox" ID="person_id_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
+                                <asp:TextBox class="pull-right form-control" ID="person_id_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Resource_ID</span>
@@ -324,6 +339,9 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">address_id</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="address_id_Update_TextBox" ID="address_id_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="address_id_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
@@ -332,7 +350,7 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">birthdate</span>
-                                <asp:TextBox class="pull-right form-control" ID="birthdate_Update_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox class="pull-right form-control date-picker" ID="birthdate_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">certification_number</span>
@@ -340,6 +358,9 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">f_name</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="f_name_Update_TextBox" ID="f_name_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="f_name_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
@@ -348,6 +369,9 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">l_name</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="l_name_Update_TextBox" ID="l_name_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="l_name_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
@@ -356,6 +380,9 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">person_type</span>
+                          <div class="required-container">
+                              <asp:RequiredFieldValidator CssClass="required" ControlToValidate="person_type_Update_TextBox" ID="person_type_Update_RequiredFieldValidator" runat="server" Text="* Required Field" ErrorMessage="Required Field" ValidationGroup="Update_Group"></asp:RequiredFieldValidator>
+                          </div>
                                 <asp:TextBox class="pull-right form-control" ID="person_type_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
@@ -380,11 +407,11 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Visa_Issue_Date</span>
-                                <asp:TextBox class="pull-right form-control" ID="Visa_Issue_Date_Update_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox class="pull-right form-control date-picker" ID="Visa_Issue_Date_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Visa_Expire_Date</span>
-                                <asp:TextBox class="pull-right form-control" ID="Visa_Expire_Date_Update_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox class="pull-right form-control date-picker" ID="Visa_Expire_Date_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Visa_Selected_Value_B1</span>
@@ -444,11 +471,11 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Perm_Resident_Alien_Resid_Date</span>
-                                <asp:TextBox class="pull-right form-control" ID="Perm_Resident_Alien_Resid_Date_Update_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox class="pull-right form-control date-picker" ID="Perm_Resident_Alien_Resid_Date_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Perm_Resident_Alien_Expire_Date</span>
-                                <asp:TextBox class="pull-right form-control" ID="Perm_Resident_Alien_Expire_Date_Update_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox class="pull-right form-control date-picker" ID="Perm_Resident_Alien_Expire_Date_Update_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Perm_Resident_Alien_A_number</span>
@@ -575,7 +602,7 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">birthdate</span>
-                                <asp:TextBox disabled class="pull-right form-control" ID="birthdate_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control date-picker" ID="birthdate_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">certification_number</span>
@@ -623,11 +650,11 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Visa_Issue_Date</span>
-                                <asp:TextBox disabled class="pull-right form-control" ID="Visa_Issue_Date_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control date-picker" ID="Visa_Issue_Date_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Visa_Expire_Date</span>
-                                <asp:TextBox disabled class="pull-right form-control" ID="Visa_Expire_Date_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control date-picker" ID="Visa_Expire_Date_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Visa_Selected_Value_B1</span>
@@ -687,11 +714,11 @@
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Perm_Resident_Alien_Resid_Date</span>
-                                <asp:TextBox disabled class="pull-right form-control" ID="Perm_Resident_Alien_Resid_Date_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control date-picker" ID="Perm_Resident_Alien_Resid_Date_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Perm_Resident_Alien_Expire_Date</span>
-                                <asp:TextBox disabled class="pull-right form-control" ID="Perm_Resident_Alien_Expire_Date_Delete_TextBox" runat="server"></asp:TextBox>
+                                <asp:TextBox disabled class="pull-right form-control date-picker" ID="Perm_Resident_Alien_Expire_Date_Delete_TextBox" runat="server"></asp:TextBox>
                             </div>
                             <div class="input-group text-center form-group">
                                 <span class="pull-left">Perm_Resident_Alien_A_number</span>
