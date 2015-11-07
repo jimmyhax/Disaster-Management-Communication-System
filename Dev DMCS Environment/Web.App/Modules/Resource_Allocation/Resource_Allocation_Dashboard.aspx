@@ -13,10 +13,10 @@
         <div class="body-contents col-lg-12">
             
             <div class="col-lg-3">
-                <a href="<asp:Literal runat="server" Text="<%$RouteUrl:RouteName=Clients%>" />">
+                <a href="<asp:Literal runat="server" Text="<%$RouteUrl:RouteName=Resource_Allocation%>" />">
                     <div class="dashboard-item">
                         <span class="glyphicon glyphicon-user"></span>
-                        Call Center
+                        Resource Search
                     </div>
                 </a>
             </div>

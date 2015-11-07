@@ -22,8 +22,9 @@ namespace Web.App
             routes.MapPageRoute("Register_Clients", "Register_Client", "~/Modules/Clients/Register_Client.aspx");
 
             routes.MapPageRoute("Evacuation", "Evacuation_Dashboard", "~/Modules/Evacuation/Evacuation_Dashboard.aspx");
-            
+
             routes.MapPageRoute("Resource_Allocation", "Resource_Allocation_Dashboard", "~/Modules/Resource_Allocation/Resource_Allocation_Dashboard.aspx");
+            routes.MapPageRoute("Resource_Search", "Resource_Allocation_Dashboard", "~/Modules/Resource_Allocation/Resource_Search.aspx");
 
             //routes.MapPageRoute("CustomerDetails", "Customers/{CustomerId}", "~/CustomerDetails.aspx");
         

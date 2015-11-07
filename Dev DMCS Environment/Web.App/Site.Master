@@ -66,7 +66,7 @@
                     </button>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <asp:Image ID="nav_logo_image" CssClass="nav-logo-image" runat="server" ImageUrl="~/Content/images/DMCS_logo_Med_White.png" />
+                    <%--<asp:Image ID="nav_logo_image" class="nav-logo-image" runat="server" ImageUrl="~/Content/images/DMCS_logo_Med_White.png" />--%>
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/Home_Dashboard">Command Center</a></li>

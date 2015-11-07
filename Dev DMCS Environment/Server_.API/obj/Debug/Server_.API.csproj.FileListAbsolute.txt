@@ -28,6 +28,6 @@ C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-Sys
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Server_.API\bin\Debug\System.Web.WebPages.xml
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Server_.API\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Server_.API\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Server_.API\obj\Debug\Server_.API.csprojResolveAssemblyReference.cache
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Server_.API\obj\Debug\Server_.API.dll
 C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Server_.API\obj\Debug\Server_.API.pdb
-C:\Users\James Miller\Documents\Purdue Dev\Disaster-Management-Communication-System\Dev DMCS Environment\Server_.API\obj\Debug\Server_.API.csprojResolveAssemblyReference.cache

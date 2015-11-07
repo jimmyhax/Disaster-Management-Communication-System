@@ -342,9 +342,11 @@
     <Content Include="Icon.png" />
     <Content Include="Management\Editor.aspx" />
     <Content Include="Management\Viewer.aspx" />
+    <Content Include="Modules\Resource_Allocation\Resource_Search.aspx" />
     <Content Include="packages.config" />
     <Content Include="Account\Web.config" />
     <Content Include="Management\Web.config" />
+    <Content Include="Pet.aspx" />
     <Content Include="ScriptGenerator.aspx" />
     <Content Include="ScriptGenerator_Template.aspx" />
     <Content Include="ScriptGenerator_V2.aspx" />
@@ -1216,7 +1218,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Code\address.cs" />
+    <Compile Include="App_Code\address.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Code\Pet.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="App_Code\Show_Image.cs" />
     <Compile Include="Content\images\ShowImage.aspx.cs">
       <DependentUpon>ShowImage.aspx</DependentUpon>
@@ -1366,6 +1373,20 @@
     </Compile>
     <Compile Include="Management\Viewer.aspx.designer.cs">
       <DependentUpon>Viewer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Resource_Allocation\Resource_Search.aspx.cs">
+      <DependentUpon>Resource_Search.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Resource_Allocation\Resource_Search.aspx.designer.cs">
+      <DependentUpon>Resource_Search.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pet.aspx.cs">
+      <DependentUpon>Pet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pet.aspx.designer.cs">
+      <DependentUpon>Pet.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptGenerator.aspx.cs">
